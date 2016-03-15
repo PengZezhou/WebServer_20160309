@@ -11,24 +11,44 @@ import com.succez.server.util.Constant;
 public class Connector {
 	private static final Logger LOGGER = Logger.getLogger(Connector.class);
 	public void requestMonitor(){
-		LOGGER.info("");
+		LOGGER.info("开始监听请求");
 		ServerSocket sv = Constant.SERVER_SOCKET;
 		while(!Constant.SHUTDOWN){
 			Socket socket = null;
 			try {
 				socket = sv.accept();
-
-		        socket.close(); 
+				connectToEnd(socket);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOGGER.error("监听异常");
 			}
 		}
 	}
-	public void connectToEnd(){
+
+	/**
+	 * 将连接请求分发给线程池处理
+	 * 
+	 * @param socket
+	 */
+	public void connectToEnd(Socket socket) {
 		// 多线程处理
+		Constant.THREAD_POOL.execute(new ThreadPoolTask(socket));
 	}
-	public void resourceCleaner(){
-		
+
+	/**
+	 * 清理服务器资源
+	 */
+	public void resourceCleaner() {
+		LOGGER.info("关闭线程池...");
+		Constant.THREAD_POOL.shutdown();
+		LOGGER.info("线程池已关闭");
+		LOGGER.info("关闭serverSocket...");
+		try {
+			if (Constant.SERVER_SOCKET != null) {
+				Constant.SERVER_SOCKET.close();
+				LOGGER.info("serverSocket已关闭");
+			}
+		} catch (IOException e) {
+			LOGGER.error("关闭serverSocket出现异常");
+		}
 	}
 }

@@ -9,15 +9,17 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.UnknownHostException;
 import java.util.Properties;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import org.apache.log4j.Logger;
-
 
 public class Method {
 	private static final Logger LOGGER = Logger.getLogger(Method.class);
 	private static final Properties pro = getProperties();
+
 	/**
 	 * 实例化一个ServerSocket
+	 * 
 	 * @return 返回ServerSocket实例，失败返回null
 	 */
 	public static final ServerSocket getOneServer() {
@@ -84,7 +86,11 @@ public class Method {
 		try {
 			result = Integer.parseInt(pro.getProperty("port", "80"));
 		} catch (NumberFormatException e) {
-			LOGGER.warn("端口号转换为整数异常，为避免系统推出，返回默认值‘80’");
+			LOGGER.warn("端口号转换为整数异常，为避免系统退出，返回默认值‘80’");
+		}
+		if (result < 1 || result > 65535) {
+			LOGGER.warn("端口号不在阈值间，系统使用默认值");
+			result = 80;
 		}
 		return result;
 	}
@@ -99,8 +105,84 @@ public class Method {
 		try {
 			result = Integer.parseInt(pro.getProperty("max-connection", "50"));
 		} catch (NumberFormatException e) {
-			LOGGER.warn("最大连接数转换为整数异常，为避免系统推出，返回默认值‘50’");
+			LOGGER.warn("最大连接数转换为整数异常，为避免系统退出，返回默认值‘50’");
+		}
+		if (result < 1 || result > 1000) {
+			LOGGER.warn("浏览器最大连接数不在阈值间，系统使用默认值");
+			result = 5;
 		}
 		return result;
+	}
+
+	/**
+	 * 获取配置文件线程池维护线程的最少数量
+	 * 
+	 * @return 线程池维护线程的最少数量
+	 */
+	public static final int getCorePoolSize() {
+		int result = 5;
+		try {
+			result = Integer.parseInt(pro.getProperty("corePoolSize", "5"));
+		} catch (NumberFormatException e) {
+			LOGGER.warn("最小线程数转换为整数异常，为避免系统退出，返回默认值‘5’");
+		}
+		if (result < 1 || result > 1000) {
+			LOGGER.warn("线程池配置警告，CorePoolSize不在阈值间，系统使用默认值");
+			result = 5;
+		}
+		return result;
+	}
+
+	/**
+	 * 获取配置文件线程池维护线程的最大数量
+	 * 
+	 * @return 线程池维护线程的最大数量
+	 */
+	public static final int getMaxNumPoolSize() {
+		int result = 20;
+		try {
+			result = Integer.parseInt(pro.getProperty("maximumPoolSize", "20"));
+		} catch (NumberFormatException e) {
+			LOGGER.warn("最大线程数转换为整数异常，为避免系统退出，返回默认值‘20’");
+		}
+		if (result < 1 || result > 10000) {
+			LOGGER.warn("线程池配置警告，CorePoolSize不在阈值间，系统使用默认值");
+			result = 20;
+		}
+		return result;
+	}
+
+	/**
+	 * 获取配置文件线程池维护线程所允许的空闲时间 (秒)
+	 * 
+	 * @return 线程池维护线程所允许的空闲时间
+	 */
+	public static final int getKeepAliveTime() {
+		int result = 30;
+		try {
+			result = Integer.parseInt(pro.getProperty("keepAliveTime", "60"));
+		} catch (NumberFormatException e) {
+			LOGGER.warn("线程允许空闲时间转换为整数异常，为避免系统退出，返回默认值‘30’");
+		}
+		if (result < 20 || result > 6000) {
+			LOGGER.warn("线程池配置警告，CorePoolSize不在阈值间，系统使用默认值");
+			result = 30;
+		}
+		return result;
+	}
+
+	/**
+	 * 获取一个线程池实例
+	 * 
+	 * @return 线程池实例
+	 */
+	public static final ThreadPoolExecutor getThreadPool() {
+		LOGGER.info("初始化线程池...");
+		ThreadPoolExecutor thread_pool = new ThreadPoolExecutor(
+				Constant.CORE_POOL_SIZE, Constant.MAX_NUM_POOL_SIZE,
+				Constant.KEEP_ALIVE_TIME, Constant.TIME_UNIT,
+				Constant.BLOCK_QUEUE, Constant.HANDLER);
+		LOGGER.info("线程池初始化结束");
+		return thread_pool;
 	}
 }
