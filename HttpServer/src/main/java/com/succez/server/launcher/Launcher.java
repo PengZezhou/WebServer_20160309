@@ -5,6 +5,7 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.succez.server.connector.Connector;
 import com.succez.server.util.Constant;
 
 /**
@@ -16,6 +17,7 @@ import com.succez.server.util.Constant;
 public class Launcher {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(Launcher.class);
+	private static Connector connector = new Connector();
 
 	/**
 	 * （程序）启动器入口函数
@@ -23,7 +25,6 @@ public class Launcher {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
 		LOGGER.info("initing server ...");
 		initServer();
 		LOGGER.info("start command monitor ...");
@@ -67,7 +68,12 @@ public class Launcher {
 			return;
 		}
 		LOGGER.info("SocketServer created");
-
+		if (Constant.THREAD_POOL == null) {
+			LOGGER.warn("thread pool init failed");
+			return;
+		}
+		LOGGER.info("thread pool inited");
+		connector.requestMonitor();
 		LOGGER.info("server inited");
 	}
 
@@ -76,6 +82,8 @@ public class Launcher {
 	 * 
 	 */
 	private static final void exitServer() {
+		LOGGER.info("server cleanning...");
+		connector.resourceCleaner();
 		LOGGER.info("server exited");
 	}
 }
