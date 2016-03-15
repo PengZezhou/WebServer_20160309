@@ -31,7 +31,7 @@ public class Constant {
 	public static final int PORT = Method.getPortValue();
 	public static final int MAX_CONNECTION = Method.getMaxConValue();
 	public static final ServerSocket SERVER_SOCKET = Method.getOneServer();
-	public static final Boolean SHUTDOWN = true;
+	public static final Boolean SHUTDOWN = false;
 
 	/**
 	 * 线程池相关设置，配置文件读取

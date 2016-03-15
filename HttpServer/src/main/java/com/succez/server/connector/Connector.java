@@ -10,18 +10,24 @@ import com.succez.server.util.Constant;
 
 public class Connector {
 	private static final Logger LOGGER = Logger.getLogger(Connector.class);
-	public void requestMonitor(){
+	public int requestMonitor(){
 		LOGGER.info("开始监听请求");
+		int flag = 0;
 		ServerSocket sv = Constant.SERVER_SOCKET;
-		while(!Constant.SHUTDOWN){
+		while (!Constant.SHUTDOWN) {
+			if (sv.isClosed() || Constant.THREAD_POOL.isShutdown()) {
+				break;
+			}
 			Socket socket = null;
 			try {
 				socket = sv.accept();
 				connectToEnd(socket);
 			} catch (IOException e) {
 				LOGGER.error("监听异常");
+				flag = -1;
 			}
 		}
+		return flag;
 	}
 
 	/**
@@ -29,7 +35,7 @@ public class Connector {
 	 * 
 	 * @param socket
 	 */
-	public void connectToEnd(Socket socket) {
+	private void connectToEnd(Socket socket) {
 		// 多线程处理
 		Constant.THREAD_POOL.execute(new ThreadPoolTask(socket));
 	}

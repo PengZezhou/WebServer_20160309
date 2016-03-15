@@ -17,8 +17,6 @@ import com.succez.server.util.Constant;
 public class Launcher {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(Launcher.class);
-	private static Connector connector = new Connector();
-
 	/**
 	 * （程序）启动器入口函数
 	 * 
@@ -73,8 +71,7 @@ public class Launcher {
 			return;
 		}
 		LOGGER.info("thread pool inited");
-		connector.requestMonitor();
-		LOGGER.info("server inited");
+		Constant.THREAD_POOL.execute(new ServerThread());
 	}
 
 	/**
@@ -83,6 +80,7 @@ public class Launcher {
 	 */
 	private static final void exitServer() {
 		LOGGER.info("server cleanning...");
+		Connector connector = new Connector();
 		connector.resourceCleaner();
 		LOGGER.info("server exited");
 	}
