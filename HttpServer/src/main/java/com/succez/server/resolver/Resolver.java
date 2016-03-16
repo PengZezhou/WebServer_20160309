@@ -3,6 +3,7 @@ package com.succez.server.resolver;
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URLDecoder;
 
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
@@ -10,7 +11,9 @@ import org.apache.http.impl.DefaultBHttpServerConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.succez.server.directory.DirectoryInfo;
 import com.succez.server.responser.Handler;
+import com.succez.server.util.Constant;
 
 public class Resolver {
 	private static final Logger LOGGER = LoggerFactory
@@ -33,11 +36,12 @@ public class Resolver {
 		LOGGER.info("开始解析url");
 		DefaultBHttpServerConnection con = null;
 		try {
-			con = new DefaultBHttpServerConnection(1024 * 2);
+			con = new DefaultBHttpServerConnection(Constant.SERVER_CHACHE);
 			con.bind(socket);
 			HttpRequest req = con.receiveRequestHeader();
-			String url = req.getRequestLine().getUri();
-			urlType(url);
+			String uri = URLDecoder.decode(req.getRequestLine().getUri(),
+					Constant.SERVER_ENCODE);
+			urlType(uri);
 		} catch (IOException e) {
 			LOGGER.info("解析url，出现IO异常");
 		} catch (HttpException e) {
@@ -62,13 +66,7 @@ public class Resolver {
 	private void urlType(String url) {
 		int tmp = 0;
 		File file = null;
-		String[] strs = url.split("/");
-		StringBuilder sb = new StringBuilder();
-		sb.append("D:");
-		for (String str : strs) {
-			sb.append("\\" + str);
-		}
-		file = new File(sb.toString());
+		file = new File(url);
 		if (file.isDirectory()) {
 			tmp = 1;
 		} else if (file.isFile()) {
@@ -87,10 +85,12 @@ public class Resolver {
 	 * @param flag
 	 */
 	private void assignment(int flag, File file) {
-		String str = null;
+		String str = "test";
 		Handler handler = new Handler(this.socket);
 		switch (flag) {
 		case 1:
+			DirectoryInfo d = new DirectoryInfo();
+			str = d.listFromDirectory(file);
 			break;
 		case 2:
 			break;

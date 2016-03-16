@@ -43,4 +43,10 @@ public class Constant {
 	public static final BlockingQueue<Runnable> BLOCK_QUEUE = new ArrayBlockingQueue<Runnable>(5);
 	public static final RejectedExecutionHandler HANDLER = new ThreadPoolExecutor.DiscardOldestPolicy();
 	public static final ThreadPoolExecutor THREAD_POOL = Method.getThreadPool();
+	
+	/**
+	 * 服务器常量
+	 */
+	public static final String SERVER_ENCODE = "utf-8";
+	public static final int SERVER_CHACHE = 1024*2;
 }
