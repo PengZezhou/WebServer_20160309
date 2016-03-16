@@ -13,6 +13,8 @@ public class DirectoryInfo {
 	 */
 	public String listFromDirectory(File file) {
 		StringBuilder sb = new StringBuilder();
+		sb.append("<a href='/'>.</a><br/>");
+		sb.append("<a href='javascript:history.go(-1)'>..</a><br/>");
 		File[] arr = file.listFiles();
 		for (File f : arr) {
 			char c = f.getName().charAt(0);
@@ -25,9 +27,6 @@ public class DirectoryInfo {
 			String s = String.format("<a href='%s'>%s</a><br/>", f.getPath(),
 					f.getName());
 			sb.append(s);
-		}
-		if (sb.length() == 0) {
-			sb.append("¸ÃÄ¿Â¼Îª¿Õ");
 		}
 		return sb.toString();
 	}

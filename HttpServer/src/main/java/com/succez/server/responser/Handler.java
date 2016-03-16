@@ -32,6 +32,7 @@ public class Handler {
 		try {
 			out = socket.getOutputStream();
 			out.write(bytes);
+			out.flush();
 		} catch (IOException e) {
 			LOGGER.error("ÏìÓ¦Òì³££¬IO´íÎó");
 		} finally {
