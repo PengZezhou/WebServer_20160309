@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.succez.server.directory.DirectoryInfo;
+import com.succez.server.reader.ReadFile;
 import com.succez.server.responser.Handler;
 import com.succez.server.util.Constant;
 
@@ -67,14 +68,19 @@ public class Resolver {
 		int tmp = 0;
 		File file = null;
 		file = new File(url);
+		LOGGER.info("url " + url);
 		if (file.isDirectory()) {
 			tmp = 1;
-		} else if (file.isFile()) {
+		} else if (file.isFile() && file.canRead() && !fileType(file)
+				&& file.length() <= (Integer.MAX_VALUE)) {
 			tmp = 2;
 		} else if (!file.exists()) {
 			tmp = 3;
-		} else {
+		} else if (file.isFile() && file.canRead()
+				&& (file.length() > (Integer.MAX_VALUE) || fileType(file))) {
 			tmp = 4;
+		} else {
+			tmp = 5;
 		}
 		assignment(tmp, file);
 	}
@@ -85,7 +91,8 @@ public class Resolver {
 	 * @param flag
 	 */
 	private void assignment(int flag, File file) {
-		String str = "test";
+		LOGGER.info("应答标志位 " + flag);
+		String str = "error";
 		Handler handler = new Handler(this.socket);
 		switch (flag) {
 		case 1:
@@ -93,14 +100,42 @@ public class Resolver {
 			str = d.listFromDirectory(file);
 			break;
 		case 2:
+			ReadFile r1 = new ReadFile();
+			str = r1.convertFromFile(file);
 			break;
 		case 3:
+			ReadFile r2 = new ReadFile();
+			str = r2.convertFromFile(new File(Constant.ERROR_404));
 			break;
 		case 4:
+			str = "文件将被下载...";
 			break;
 		default:
+			ReadFile r3 = new ReadFile();
+			str = r3.convertFromFile(new File(Constant.ERROR_500));
 			break;
 		}
 		handler.responseHandler(str);
+	}
+
+	/**
+	 * 返回file是否是给定限制类的文件类型，是返回true，否则返回false
+	 * 
+	 * @param file
+	 *            文件
+	 * @return
+	 */
+	private Boolean fileType(File file) {
+		String name = file.getName();
+		int dot = name.lastIndexOf('.');
+		String ext = name.substring(dot, name.length()).toLowerCase();
+		String[] arr = Constant.EXTEN_NAME.split("\\|");
+		for (String str : arr) {
+			if (ext.equals(str)) {
+				LOGGER.info("文件将被下载处理");
+				return true;
+			}
+		}
+		return false;
 	}
 }

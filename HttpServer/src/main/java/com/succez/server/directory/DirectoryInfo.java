@@ -19,20 +19,16 @@ public class DirectoryInfo {
 			if (c == '.' || c == '~' || c == '$') {
 				continue;
 			}
-			sb.append(convertToHtml(f.getPath()));
+			if (f.isHidden()) {
+				continue;
+			}
+			String s = String.format("<a href='%s'>%s</a><br/>", f.getPath(),
+					f.getName());
+			sb.append(s);
+		}
+		if (sb.length() == 0) {
+			sb.append("该目录为空");
 		}
 		return sb.toString();
-	}
-
-	/**
-	 * 为字符串包装html标签
-	 * 
-	 * @param str
-	 *            字符串
-	 * @return 带html标签的字符串
-	 */
-	private String convertToHtml(String str) {
-		String s = String.format("<a href='%s'>%s</a><br/>", str, str);
-		return s;
 	}
 }

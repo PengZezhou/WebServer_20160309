@@ -17,6 +17,7 @@ import com.succez.server.util.Constant;
 public class Launcher {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(Launcher.class);
+
 	/**
 	 * （程序）启动器入口函数
 	 * 

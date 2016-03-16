@@ -49,4 +49,14 @@ public class Constant {
 	 */
 	public static final String SERVER_ENCODE = "utf-8";
 	public static final int SERVER_CHACHE = 1024*2;
+	
+	/**
+	 * 文件常量
+	 */
+	public static final long FILE_SIZE = 1024*1;
+	public static final String ERROR_404 = System.getProperty("user.dir")
+			+ "\\src\\main\\resources\\error\\404.html";
+	public static final String ERROR_500 = System.getProperty("user.dir")
+			+ "\\src\\main\\resources\\error\\500.html";
+	public static final String EXTEN_NAME = ".pdf|.docx|.xlsx|.iso";
 }
