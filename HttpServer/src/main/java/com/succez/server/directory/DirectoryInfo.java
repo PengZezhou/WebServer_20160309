@@ -13,8 +13,8 @@ public class DirectoryInfo {
 	 */
 	public String listFromDirectory(File file) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<a href='/'>.</a><br/>");
-		sb.append("<a href='javascript:history.go(-1)'>..</a><br/>");
+		sb.append("<a href='/'>根目录</a><br/>");
+		sb.append("<a href='javascript:history.go(-1)'>返回上级</a><br/>");
 		File[] arr = file.listFiles();
 		for (File f : arr) {
 			char c = f.getName().charAt(0);
