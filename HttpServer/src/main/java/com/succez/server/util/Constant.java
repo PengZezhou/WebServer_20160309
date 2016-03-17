@@ -58,5 +58,6 @@ public class Constant {
 			+ "\\src\\main\\resources\\error\\404.html";
 	public static final String ERROR_500 = System.getProperty("user.dir")
 			+ "\\src\\main\\resources\\error\\500.html";
-	public static final String EXTEN_NAME = ".pdf|.docx|.xlsx|.iso";
+	public static final String EXTEN_NAME = ".pdf|.docx|.xlsx|.iso|.ico|.jpg";
+	public static final String HTML_HEAD = "<head><title>·þÎñÆ÷Ä¿Â¼D:\\</title><link rel='shortcut icon' href='/favicon.ico'/></head>";
 }
