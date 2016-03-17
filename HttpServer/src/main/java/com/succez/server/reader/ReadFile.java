@@ -1,6 +1,5 @@
 package com.succez.server.reader;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,6 +7,14 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.succez.server.util.Method;
+
+/**
+ * 文件读取模块
+ * 
+ * @author Peng.Zezhou
+ *
+ */
 public class ReadFile {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ReadFile.class);
@@ -63,24 +70,8 @@ public class ReadFile {
 		} catch (IOException e) {
 			LOGGER.error(" 文件转化出现异常");
 		} finally {
-			closeStream(fis);
+			Method.closeStream(fis);
 		}
 		return b;
-	}
-
-	/**
-	 * 内部方法，关闭流的逻辑封装
-	 * 
-	 * @param closeavle
-	 *            流对象
-	 */
-	private static final void closeStream(Closeable closeavle) {
-		if (closeavle != null) {
-			try {
-				closeavle.close();
-			} catch (IOException e) {
-				LOGGER.error(closeavle.toString() + " 流关闭出现异常");
-			}
-		}
 	}
 }
