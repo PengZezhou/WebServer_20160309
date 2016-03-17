@@ -9,9 +9,21 @@ import org.apache.log4j.Logger;
 import com.succez.server.util.Constant;
 import com.succez.server.util.Method;
 
+/**
+ * 连接器
+ * 
+ * @author Peng.Zezhou
+ *
+ */
 public class Connector {
 	private static final Logger LOGGER = Logger.getLogger(Connector.class);
-	public int requestMonitor(){
+
+	/**
+	 * 请求监听器
+	 * 
+	 * @return
+	 */
+	public int requestMonitor() {
 		LOGGER.info("开始监听请求");
 		int flag = 0;
 		ServerSocket sv = Constant.SERVER_SOCKET;

@@ -9,6 +9,12 @@ import org.slf4j.LoggerFactory;
 
 import com.succez.server.util.Method;
 
+/**
+ * Ó¦´ðÆ÷
+ * 
+ * @author Peng.Zezhou
+ *
+ */
 public class Handler {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Handler.class);
 	private Socket socket;

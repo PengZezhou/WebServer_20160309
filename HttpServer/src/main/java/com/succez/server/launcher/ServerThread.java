@@ -6,6 +6,12 @@ import org.slf4j.LoggerFactory;
 import com.succez.server.connector.Connector;
 import com.succez.server.util.Constant;
 
+/**
+ * 服务器主线程
+ * 
+ * @author Peng.Zezhou
+ *
+ */
 public class ServerThread implements Runnable {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ServerThread.class);

@@ -18,6 +18,12 @@ import com.succez.server.responser.Handler;
 import com.succez.server.util.Constant;
 import com.succez.server.util.Method;
 
+/**
+ * ä¯ÀÀÆ÷ÇëÇó½âÎöÆ÷
+ * 
+ * @author Peng.Zezhou
+ *
+ */
 public class Resolver {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(Resolver.class);

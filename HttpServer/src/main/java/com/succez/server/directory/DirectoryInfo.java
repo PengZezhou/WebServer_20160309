@@ -3,6 +3,12 @@ package com.succez.server.directory;
 import java.io.File;
 import com.succez.server.util.Constant;
 
+/**
+ * 目录列表模块
+ * 
+ * @author Peng.Zezhou
+ *
+ */
 public class DirectoryInfo {
 	/**
 	 * 列出当前文件夹下的列表信息

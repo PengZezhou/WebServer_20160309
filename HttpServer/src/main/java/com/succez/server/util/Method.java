@@ -14,6 +14,12 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 程序公有逻辑与类加载前处理逻辑
+ * 
+ * @author Peng.Zezhou
+ *
+ */
 public class Method {
 	private static final Logger LOGGER = Logger.getLogger(Method.class);
 	private static final Properties pro = getProperties();

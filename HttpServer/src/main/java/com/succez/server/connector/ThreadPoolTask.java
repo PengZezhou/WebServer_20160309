@@ -9,14 +9,22 @@ import com.succez.server.resolver.Resolver;
 public class ThreadPoolTask implements Runnable {
 	private static final Logger LOGGER = Logger.getLogger(ThreadPoolTask.class);
 	private Socket socket;
-	ThreadPoolTask(Socket socket){
+
+	/**
+	 * 构造函数
+	 * 
+	 * @param socket
+	 */
+	ThreadPoolTask(Socket socket) {
 		this.socket = socket;
 	}
+
+	/**
+	 * 线程主逻辑
+	 */
 	public void run() {
-		// TODO Auto-generated method stub
 		LOGGER.info("线程执行中...");
 		Resolver res = new Resolver(socket);
 		res.urlResolve();
 	}
-
 }
