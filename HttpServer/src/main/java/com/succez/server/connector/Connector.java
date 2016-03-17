@@ -7,6 +7,7 @@ import java.net.Socket;
 import org.apache.log4j.Logger;
 
 import com.succez.server.util.Constant;
+import com.succez.server.util.Method;
 
 public class Connector {
 	private static final Logger LOGGER = Logger.getLogger(Connector.class);
@@ -48,13 +49,6 @@ public class Connector {
 		Constant.THREAD_POOL.shutdown();
 		LOGGER.info("线程池已关闭");
 		LOGGER.info("关闭serverSocket...");
-		try {
-			if (Constant.SERVER_SOCKET != null) {
-				Constant.SERVER_SOCKET.close();
-				LOGGER.info("serverSocket已关闭");
-			}
-		} catch (IOException e) {
-			LOGGER.error("关闭serverSocket出现异常");
-		}
+		Method.closeStream(Constant.SERVER_SOCKET);
 	}
 }

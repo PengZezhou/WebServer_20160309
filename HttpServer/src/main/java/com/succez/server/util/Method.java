@@ -1,5 +1,6 @@
 package com.succez.server.util;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -56,13 +57,7 @@ public class Method {
 		} catch (IOException e) {
 			LOGGER.error("配置文件读取，流加载异常");
 		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-					LOGGER.error("配置文件读取，流关闭异常");
-				}
-			}
+			Method.closeStream(stream);
 		}
 		return pro;
 	}
@@ -184,5 +179,21 @@ public class Method {
 				Constant.BLOCK_QUEUE, Constant.HANDLER);
 		LOGGER.info("线程池初始化结束");
 		return thread_pool;
+	}
+
+	/**
+	 * 关闭流的逻辑封装
+	 * 
+	 * @param closeavle
+	 *            流对象
+	 */
+	public static final void closeStream(Closeable closeavle) {
+		if (closeavle != null) {
+			try {
+				closeavle.close();
+			} catch (IOException e) {
+				LOGGER.error(closeavle.toString() + " 流关闭出现异常");
+			}
+		}
 	}
 }

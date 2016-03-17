@@ -1,11 +1,9 @@
 package com.succez.server.directory;
 
 import java.io.File;
-
 import com.succez.server.util.Constant;
 
 public class DirectoryInfo {
-
 	/**
 	 * 列出当前文件夹下的列表信息
 	 * 
@@ -15,7 +13,9 @@ public class DirectoryInfo {
 	 */
 	public String listFromDirectory(File file) {
 		StringBuilder sb = new StringBuilder();
+		sb.append("<html>");
 		sb.append(Constant.HTML_HEAD);
+		sb.append("<body>");
 		sb.append("<a href='/'>根目录</a><br/>");
 		sb.append("<a href='javascript:history.go(-1)'>返回上级</a><br/>");
 		File[] arr = file.listFiles();
@@ -27,15 +27,16 @@ public class DirectoryInfo {
 			} else if (f.isHidden()) {
 				continue;
 			} else if (f.isFile()) {
-				s = String.format(
-						"<a href='%s' target='_blank'>%s</a><br/>",
+				s = String.format("<a href='%s' target='_blank'>%s</a><br/>",
 						f.getPath(), f.getName());
 			} else {
-				s = String.format("<a href='%s'>%s</a><br/>",
-						f.getPath(), f.getName());
+				s = String.format("<a href='%s'>%s</a><br/>", f.getPath(),
+						f.getName());
 			}
 			sb.append(s);
 		}
+		sb.append("</body>");
+		sb.append("</html>");
 		return sb.toString();
 	}
 }

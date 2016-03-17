@@ -7,6 +7,8 @@ import java.net.Socket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.succez.server.util.Method;
+
 public class Handler {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Handler.class);
 	private Socket socket;
@@ -36,20 +38,8 @@ public class Handler {
 		} catch (IOException e) {
 			LOGGER.error("响应异常，IO错误");
 		} finally {
-			if (out != null) {
-				try {
-					out.close();
-				} catch (IOException e) {
-					LOGGER.warn("socket 输出流关闭错误");
-				}
-			}
-			if (socket != null) {
-				try {
-					socket.close();
-				} catch (IOException e) {
-					LOGGER.warn("socket关闭错误");
-				}
-			}
+			Method.closeStream(out);
+			Method.closeStream(socket);
 		}
 	}
 }

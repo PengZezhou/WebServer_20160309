@@ -60,4 +60,10 @@ public class Constant {
 			+ "\\src\\main\\resources\\error\\500.html";
 	public static final String EXTEN_NAME = ".pdf|.docx|.xlsx|.iso|.ico|.jpg";
 	public static final String HTML_HEAD = "<head><title>服务器目录D:\\</title><link rel='shortcut icon' href='/favicon.ico'/></head>";
+
+	/**
+	 * 文件下载常量
+	 */
+	public static final int BYTE_BUFFER_COPACITY = 786432;
+	public static final int BUFFER_SIZE = 131072;
 }

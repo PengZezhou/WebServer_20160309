@@ -16,6 +16,7 @@ import com.succez.server.downloader.FileDownload;
 import com.succez.server.reader.ReadFile;
 import com.succez.server.responser.Handler;
 import com.succez.server.util.Constant;
+import com.succez.server.util.Method;
 
 public class Resolver {
 	private static final Logger LOGGER = LoggerFactory
@@ -49,13 +50,7 @@ public class Resolver {
 		} catch (HttpException e) {
 			LOGGER.info("解析url，出现http异常");
 		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (IOException e) {
-					LOGGER.info("解析url，http关闭连接异常");
-				}
-			}
+			Method.closeStream(con);
 		}
 	}
 

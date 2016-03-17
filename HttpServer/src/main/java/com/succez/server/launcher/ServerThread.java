@@ -10,6 +10,9 @@ public class ServerThread implements Runnable {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ServerThread.class);
 
+	/**
+	 * Ïß³ÌÂß¼­
+	 */
 	public void run() {
 		if (Constant.SERVER_SOCKET.isClosed()
 				|| Constant.THREAD_POOL.isShutdown()) {

@@ -1,6 +1,5 @@
 package com.succez.server.downloader;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,6 +10,9 @@ import java.nio.channels.FileChannel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.succez.server.util.Constant;
+import com.succez.server.util.Method;
 
 public class FileDownload {
 	private static final Logger LOGGER = LoggerFactory
@@ -41,9 +43,8 @@ public class FileDownload {
 			out = socket.getOutputStream();
 			fis = new FileInputStream(file);
 			fileChannel = fis.getChannel();
-
-			ByteBuffer bf = ByteBuffer.allocate(786432);
-			byte[] bytes = new byte[131072];
+			ByteBuffer bf = ByteBuffer.allocate(Constant.BYTE_BUFFER_COPACITY);
+			byte[] bytes = new byte[Constant.BUFFER_SIZE];
 			int nRead, nGet;
 			while ((nRead = fileChannel.read(bf)) != -1) {
 				if (nRead == 0) {
@@ -51,7 +52,7 @@ public class FileDownload {
 				}
 				bf.flip();
 				while (bf.hasRemaining()) {
-					nGet = Math.min(bf.remaining(), 131072);
+					nGet = Math.min(bf.remaining(), Constant.BUFFER_SIZE);
 					bf.get(bytes, 0, nGet);
 					out.write(bytes);
 				}
@@ -60,26 +61,11 @@ public class FileDownload {
 		} catch (IOException e) {
 			LOGGER.error(" 文件下载，NIO出现异常");
 		} finally {
-			closeStream(fis);
-			closeStream(out);
-			closeStream(fileChannel);
+			Method.closeStream(fis);
+			Method.closeStream(out);
+			Method.closeStream(fileChannel);
+			Method.closeStream(socket);
 		}
 		LOGGER.info("开始下载结束");
-	}
-
-	/**
-	 * 内部方法，关闭流的逻辑封装
-	 * 
-	 * @param closeavle
-	 *            流对象
-	 */
-	private static final void closeStream(Closeable closeavle) {
-		if (closeavle != null) {
-			try {
-				closeavle.close();
-			} catch (IOException e) {
-				LOGGER.error(closeavle.toString() + " 流关闭出现异常");
-			}
-		}
 	}
 }
