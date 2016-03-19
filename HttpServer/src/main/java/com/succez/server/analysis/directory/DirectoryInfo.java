@@ -1,4 +1,4 @@
-package com.succez.server.directory;
+package com.succez.server.analysis.directory;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;

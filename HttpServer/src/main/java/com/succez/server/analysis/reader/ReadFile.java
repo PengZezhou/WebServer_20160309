@@ -1,4 +1,4 @@
-package com.succez.server.reader;
+package com.succez.server.analysis.reader;
 
 import java.io.File;
 import java.io.FileInputStream;

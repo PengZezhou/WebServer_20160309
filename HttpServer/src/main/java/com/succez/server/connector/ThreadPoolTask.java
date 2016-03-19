@@ -30,7 +30,6 @@ public class ThreadPoolTask implements Runnable {
 	 */
 	public void run() {
 		LOGGER.info("线程执行中...");
-		Resolver res = new Resolver(socket);
-		res.urlResolve();
+		new Resolver(socket);
 	}
 }

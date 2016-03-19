@@ -184,12 +184,8 @@ public class Method {
 			if (n == 0 || n == -1) {
 				return code;
 			}
-			if (byte3[0] == 0XEF && byte3[1] == 0XBB) {
+			if (byte3[0] == -17 && byte3[1] == -69 && byte3[2] == -65) {
 				code = "UTF-8";
-			} else if (byte3[0] == 0XFF && byte3[1] == 0XFE) {
-				code = "Unicode";
-			} else if (byte3[0] == 0XFE && byte3[1] == 0XFF) {
-				code = "UTF-16";
 			} else {
 				code = "GBK";
 			}
@@ -202,5 +198,29 @@ public class Method {
 		}
 
 		return code;
+	}
+	
+	/**
+	 * 返回file是否是给定限制类的文件类型，是返回true，否则返回false
+	 * 
+	 * @param file
+	 *            文件
+	 * @return
+	 */
+	public static Boolean fileType(File file) {
+		String name = file.getName();
+		int dot = name.lastIndexOf('.');
+		if (dot == -1) {
+			return false;
+		}
+		String ext = name.substring(dot, name.length()).toLowerCase();
+		String[] arr = Constant.EXTEN_NAME.split("\\|");
+		for (String str : arr) {
+			if (ext.equals(str)) {
+				LOGGER.info("文件将被下载处理");
+				return true;
+			}
+		}
+		return false;
 	}
 }

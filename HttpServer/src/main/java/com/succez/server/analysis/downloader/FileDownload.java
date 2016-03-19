@@ -1,4 +1,4 @@
-package com.succez.server.downloader;
+package com.succez.server.analysis.downloader;
 
 import java.io.File;
 import java.io.FileInputStream;
