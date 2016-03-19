@@ -5,8 +5,8 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.succez.server.connector.Connector;
 import com.succez.server.util.Constant;
+import com.succez.server.util.Method;
 
 /**
  * 服务器启动器
@@ -25,7 +25,7 @@ public class Launcher {
 	 */
 	public static void main(String[] args) {
 		LOGGER.info("initing server ...");
-		initServer();
+		Server.getInstance();
 		LOGGER.info("start command monitor ...");
 		commandMonitor();
 		LOGGER.info("exiting server ...");
@@ -59,30 +59,16 @@ public class Launcher {
 	}
 
 	/**
-	 * 初始化服务器数据，启动服务器
-	 */
-	private static final void initServer() {
-		if (Constant.SERVER_SOCKET == null) {
-			LOGGER.warn("server init failed");
-			return;
-		}
-		LOGGER.info("SocketServer created");
-		if (Constant.THREAD_POOL == null) {
-			LOGGER.warn("thread pool init failed");
-			return;
-		}
-		LOGGER.info("thread pool inited");
-		Constant.THREAD_POOL.execute(new ServerThread());
-	}
-
-	/**
 	 * 清理服务器数据，退出服务器
 	 * 
 	 */
 	private static final void exitServer() {
 		LOGGER.info("server cleanning...");
-		Connector connector = new Connector();
-		connector.resourceCleaner();
+		LOGGER.info("关闭线程池...");
+		ThreadPool.getInstance().thread_pool.shutdown();
+		LOGGER.info("线程池已关闭");
+		LOGGER.info("关闭serverSocket...");
+		Method.closeStream(Server.getInstance().server_socket);
 		LOGGER.info("server exited");
 	}
 }

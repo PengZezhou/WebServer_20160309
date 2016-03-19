@@ -6,11 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.UnknownHostException;
 import java.util.Properties;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import org.apache.log4j.Logger;
 
@@ -23,24 +19,6 @@ import org.apache.log4j.Logger;
 public class Method {
 	private static final Logger LOGGER = Logger.getLogger(Method.class);
 	private static final Properties pro = getProperties();
-
-	/**
-	 * 实例化一个ServerSocket
-	 * 
-	 * @return 返回ServerSocket实例，失败返回null
-	 */
-	public static final ServerSocket getOneServer() {
-		try {
-			return new ServerSocket(Constant.PORT, Constant.MAX_CONNECTION,
-					InetAddress.getByName(Constant.IP));
-		} catch (UnknownHostException e) {
-			LOGGER.error("ServerSocket创建失败，不可靠的ip地址");
-		} catch (IOException e) {
-			LOGGER.error("ServerSocket创建失败，IO异常");
-		}
-		LOGGER.info("ServerSocket创建失败，返回null");
-		return null;
-	}
 
 	/**
 	 * 获取配置文件读取对象
@@ -170,21 +148,6 @@ public class Method {
 			result = 30;
 		}
 		return result;
-	}
-
-	/**
-	 * 获取一个线程池实例
-	 * 
-	 * @return 线程池实例
-	 */
-	public static final ThreadPoolExecutor getThreadPool() {
-		LOGGER.info("初始化线程池...");
-		ThreadPoolExecutor thread_pool = new ThreadPoolExecutor(
-				Constant.CORE_POOL_SIZE, Constant.MAX_NUM_POOL_SIZE,
-				Constant.KEEP_ALIVE_TIME, Constant.TIME_UNIT,
-				Constant.BLOCK_QUEUE, Constant.HANDLER);
-		LOGGER.info("线程池初始化结束");
-		return thread_pool;
 	}
 
 	/**
