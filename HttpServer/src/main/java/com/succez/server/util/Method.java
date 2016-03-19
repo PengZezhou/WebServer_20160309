@@ -202,4 +202,42 @@ public class Method {
 			}
 		}
 	}
+
+	/**
+	 * 判断文件的编码格式
+	 * 
+	 * @param fileName
+	 *            :file
+	 * @return 文件编码格式
+	 * @throws Exception
+	 */
+	public static String getFileEncode(File file){
+		InputStream in = null;
+		byte[] byte3 = new byte[3];
+		String code = "GBK";
+		try {
+			in = new FileInputStream(file);
+			int n = in.read(byte3);
+			if (n == 0 || n == -1) {
+				return code;
+			}
+			if (byte3[0] == 0XEF && byte3[1] == 0XBB) {
+				code = "UTF-8";
+			} else if (byte3[0] == 0XFF && byte3[1] == 0XFE) {
+				code = "Unicode";
+			} else if (byte3[0] == 0XFE && byte3[1] == 0XFF) {
+				code = "UTF-16";
+			} else {
+				code = "GBK";
+			}
+		} catch (FileNotFoundException e) {
+			LOGGER.error("判断文件编码，文件未找到");
+		} catch (IOException e) {
+			LOGGER.error("判断文件编码，文件读取异常");
+		}finally{
+			Method.closeStream(in);
+		}
+
+		return code;
+	}
 }

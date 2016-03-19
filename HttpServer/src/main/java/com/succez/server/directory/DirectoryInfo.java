@@ -1,6 +1,11 @@
 package com.succez.server.directory;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.succez.server.util.Constant;
 
 /**
@@ -10,6 +15,7 @@ import com.succez.server.util.Constant;
  *
  */
 public class DirectoryInfo {
+	private static final Logger LOGGER = LoggerFactory.getLogger(DirectoryInfo.class);
 	/**
 	 * 列出当前文件夹下的列表信息
 	 * 
@@ -19,6 +25,9 @@ public class DirectoryInfo {
 	 */
 	public String listFromDirectory(File file) {
 		StringBuilder sb = new StringBuilder();
+		sb.append("HTTP/1.1 200 OK\r\n");
+		sb.append("Connection: Keep-Alive\r\n");
+		sb.append("Content-type:text/html\r\n\r\n");
 		sb.append("<html>");
 		sb.append(Constant.HTML_HEAD);
 		sb.append("<body>");
@@ -34,15 +43,21 @@ public class DirectoryInfo {
 				continue;
 			} else if (f.isFile()) {
 				s = String.format("<a href='%s' target='_blank'>%s</a><br/>",
-						f.getPath(), f.getName());
+						f.getPath().replace('\\', '/'), f.getName());
 			} else {
-				s = String.format("<a href='%s'>%s</a><br/>", f.getPath(),
+				s = String.format("<a href='%s'>%s</a><br/>", f.getPath().replace('\\', '/'),
 						f.getName());
 			}
 			sb.append(s);
 		}
 		sb.append("</body>");
 		sb.append("</html>");
-		return sb.toString();
+		String str = null;
+		try {
+			str = new String(sb.toString().getBytes(),"GBK");
+		} catch (UnsupportedEncodingException e) {
+			LOGGER.error("编码转换，不支持的编码转换");
+		}
+		return str;
 	}
 }
