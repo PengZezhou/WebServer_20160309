@@ -1,0 +1,10 @@
+package com.succez.server.launcher;
+
+public class testLauncher {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
