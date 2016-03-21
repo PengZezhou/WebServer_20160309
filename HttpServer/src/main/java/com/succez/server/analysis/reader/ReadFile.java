@@ -7,6 +7,7 @@ import java.net.Socket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.succez.server.http.Response;
 import com.succez.server.responser.Handler;
 import com.succez.server.util.Method;
 
@@ -46,19 +47,13 @@ public class ReadFile {
 	 */
 	private String convertFromFile() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("HTTP/1.1 200 OK\r\n");
-		sb.append("Connection: Keep-Alive\r\n");
-		int index = file.getName().lastIndexOf(".");
-		if (index != -1) {
-			String prefix = file.getName().substring(index);
-			if (prefix.equals(".html") || prefix.equals(".htm")) {
-				sb.append("Content-type:text/html\r\n\r\n");
-			} else {
-				sb.append("Content-type:text/plain\r\n\r\n");
-			}
-		} else {
-			sb.append("Content-type:text/plain\r\n\r\n");
+		// 设置协议头
+		Response r = new Response();
+		if(Method.fileHtmlRead(file)){
+			r.setContent_Type("text/html");
 		}
+		sb.append(r.toString());
+		
 		String str = null;
 		LOGGER.info("读取文件");
 		byte[] bytes = Method.file2buf(file);

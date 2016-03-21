@@ -41,12 +41,18 @@ public class Constant {
 			+ "\\src\\main\\resources\\error\\404.html";
 	public static final String ERROR_500 = System.getProperty("user.dir")
 			+ "\\src\\main\\resources\\error\\500.html";
-	public static final String EXTEN_NAME = ".pdf|.docx|.xlsx|.iso|.ico|.jpg";
+	
+	/**
+	 * 文件后缀
+	 */
+	public static final String DOWNLOAD_EXTEN_NAME = ".pdf|.docx|.xlsx|.iso|.ico|.jpg";
+	public static final String PLAIN_EXTEN_NAME = ".txt";
+	public static final String HTML_EXTEN_NAME = ".html|.htm";
 	public static final String HTML_HEAD = "<head><title>服务器目录D:\\</title><link rel='shortcut icon' href='/favicon.ico'/></head>";
 
 	/**
 	 * 文件下载常量
 	 */
-	public static final int BYTE_BUFFER_COPACITY = 786432;
-	public static final int BUFFER_SIZE = 131072;
+	public static final int BYTE_BUFFER_COPACITY = 1024*1024;
+	public static final int BUFFER_SIZE = 128*1024;
 }

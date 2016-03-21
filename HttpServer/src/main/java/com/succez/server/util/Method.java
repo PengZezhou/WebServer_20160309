@@ -10,6 +10,8 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import com.succez.server.http.Response;
+
 /**
  * 程序公有逻辑与类加载前处理逻辑
  * 
@@ -207,17 +209,40 @@ public class Method {
 	 *            文件
 	 * @return
 	 */
-	public static Boolean fileType(File file) {
+	public static Boolean fileDownload(File file) {
 		String name = file.getName();
 		int dot = name.lastIndexOf('.');
 		if (dot == -1) {
 			return false;
 		}
 		String ext = name.substring(dot, name.length()).toLowerCase();
-		String[] arr = Constant.EXTEN_NAME.split("\\|");
+		String[] arr = Constant.DOWNLOAD_EXTEN_NAME.split("\\|");
 		for (String str : arr) {
 			if (ext.equals(str)) {
 				LOGGER.info("文件将被下载处理");
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * 判断文件是否是html格式
+	 * 
+	 * @param file
+	 * @return
+	 */
+	public static Boolean fileHtmlRead(File file) {
+		String name = file.getName();
+		int dot = name.lastIndexOf('.');
+		if (dot == -1) {
+			return false;
+		}
+		String ext = name.substring(dot, name.length()).toLowerCase();
+		String[] arr = Constant.HTML_EXTEN_NAME.split("\\|");
+		for (String str : arr) {
+			if (ext.equals(str)) {
+				LOGGER.info("文件是html格式");
 				return true;
 			}
 		}
@@ -263,5 +288,39 @@ public class Method {
 			Method.closeStream(fis);
 		}
 		return b;
+	}
+
+	/**
+	 * 文件夹下的目录信息转化为html格式
+	 * 
+	 * @param file
+	 * @return
+	 */
+	public static String directoryToHtml(File file) {
+		StringBuilder sb = new StringBuilder();
+		Response r = new Response();
+		r.setContent_Type("text/html");
+		sb.append(r.toString());
+		sb.append(Constant.HTML_HEAD);
+		sb.append("<a href='/'>根目录</a><br/>");
+		sb.append("<a href='javascript:history.go(-1)'>返回上级</a><br/>");
+		File[] arr = file.listFiles();
+		for (File f : arr) {
+			String s = null;
+			char c = f.getName().charAt(0);
+			if (c == '.' || c == '~' || c == '$') {
+				continue;
+			} else if (f.isHidden()) {
+				continue;
+			} else if (f.isFile()) {
+				s = String.format("<a href='%s' target='_blank'>%s</a><br/>", f
+						.getPath().replace('\\', '/'), f.getName());
+			} else {
+				s = String.format("<a href='%s'>%s</a><br/>", f.getPath()
+						.replace('\\', '/'), f.getName());
+			}
+			sb.append(s);
+		}
+		return sb.toString();
 	}
 }

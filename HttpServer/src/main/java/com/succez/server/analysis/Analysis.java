@@ -44,7 +44,7 @@ public class Analysis {
 		LOGGER.info("url " + url);
 		if (file.isDirectory()) {
 			type = 1;
-		} else if (file.isFile() && file.canRead() && !Method.fileType(file)
+		} else if (file.isFile() && file.canRead() && !Method.fileDownload(file)
 				&& file.length() <= (Integer.MAX_VALUE)) {
 			type = 2;
 		} else if (!file.exists()) {
@@ -52,7 +52,7 @@ public class Analysis {
 		} else if (file.isFile()
 				&& file.canRead()
 				&& (file.length() > (Integer.MAX_VALUE) || Method
-						.fileType(file))) {
+						.fileDownload(file))) {
 			type = 4;
 		} else {
 			type = 5;
