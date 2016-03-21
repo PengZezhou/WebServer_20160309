@@ -52,7 +52,7 @@ public class FileDownload {
 		try {
 			out = socket.getOutputStream();
 			Response r = new Response();
-			r.setContent_Disposition(String.format("attachment; filename=<file %s>",file.getName()));
+			r.setContent_Disposition(String.format("attachment"));
 			out.write(r.toString().getBytes());
 			fis = new FileInputStream(file);
 			fileChannel = fis.getChannel();
