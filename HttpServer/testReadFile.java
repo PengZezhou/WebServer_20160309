@@ -1,0 +1,10 @@
+package com.succez.server.analysis;
+
+public class testReadFile {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
