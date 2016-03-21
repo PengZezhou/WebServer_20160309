@@ -24,23 +24,26 @@ public class FileDownload {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(FileDownload.class);
 
-	private Socket socket;
-
 	/**
 	 * 构造函数
 	 * 
 	 * @param socket
 	 */
-	public FileDownload(Socket socket) {
+	public FileDownload(Socket socket, File file) {
 		this.socket = socket;
+		this.file = file;
+		this.downloadFile();
 	}
+
+	private Socket socket;
+	private File file = null;
 
 	/**
 	 * 下载指定路径的文件
 	 * 
 	 * @param file
 	 */
-	public void downloadFile(File file) {
+	public void downloadFile() {
 		LOGGER.info("开始执行下载");
 		FileInputStream fis = null;
 		OutputStream out = null;

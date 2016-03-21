@@ -24,8 +24,9 @@ public class Handler {
 	 * 
 	 * @param socket
 	 */
-	public Handler(Socket socket) {
+	public Handler(Socket socket,String str) {
 		this.socket = socket;
+		responseHandler(str);
 	}
 
 	/**
@@ -34,7 +35,7 @@ public class Handler {
 	 * @param str
 	 *            Êä³ö×Ö·û´®
 	 */
-	public void responseHandler(String str) {
+	private void responseHandler(String str) {
 		byte[] bytes = str.getBytes();
 		OutputStream out = null;
 		try {

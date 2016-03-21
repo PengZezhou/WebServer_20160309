@@ -2,10 +2,12 @@ package com.succez.server.analysis.directory;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.net.Socket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.succez.server.responser.Handler;
 import com.succez.server.util.Constant;
 
 /**
@@ -15,7 +17,24 @@ import com.succez.server.util.Constant;
  *
  */
 public class DirectoryInfo {
-	private static final Logger LOGGER = LoggerFactory.getLogger(DirectoryInfo.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(DirectoryInfo.class);
+
+	/**
+	 * 构造函数
+	 * 
+	 * @param socket
+	 *            连接socket
+	 * @param file
+	 *            文件目录
+	 */
+	public DirectoryInfo(Socket socket, File file) {
+		this.file = file;
+		new Handler(socket, this.listFromDirectory());
+	}
+
+	private File file = null;
+
 	/**
 	 * 列出当前文件夹下的列表信息
 	 * 
@@ -23,7 +42,7 @@ public class DirectoryInfo {
 	 *            当前文件夹
 	 * @return 当前文件夹下的列表信息
 	 */
-	public String listFromDirectory(File file) {
+	private String listFromDirectory() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("HTTP/1.1 200 OK\r\n");
 		sb.append("Connection: Keep-Alive\r\n");
@@ -42,11 +61,11 @@ public class DirectoryInfo {
 			} else if (f.isHidden()) {
 				continue;
 			} else if (f.isFile()) {
-				s = String.format("<a href='%s' target='_blank'>%s</a><br/>",
-						f.getPath().replace('\\', '/'), f.getName());
+				s = String.format("<a href='%s' target='_blank'>%s</a><br/>", f
+						.getPath().replace('\\', '/'), f.getName());
 			} else {
-				s = String.format("<a href='%s'>%s</a><br/>", f.getPath().replace('\\', '/'),
-						f.getName());
+				s = String.format("<a href='%s'>%s</a><br/>", f.getPath()
+						.replace('\\', '/'), f.getName());
 			}
 			sb.append(s);
 		}
@@ -54,7 +73,7 @@ public class DirectoryInfo {
 		sb.append("</html>");
 		String str = null;
 		try {
-			str = new String(sb.toString().getBytes(),"GBK");
+			str = new String(sb.toString().getBytes(), "GBK");
 		} catch (UnsupportedEncodingException e) {
 			LOGGER.error("编码转换，不支持的编码转换");
 		}
