@@ -68,6 +68,9 @@ public class Response {
 		Cache_control = cache_control;
 	}
 
+	/**
+	 * 转换为http协议格式输出
+	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(HttpVersion + "\r\n");
