@@ -11,6 +11,7 @@ import java.nio.channels.FileChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.succez.server.http.Response;
 import com.succez.server.util.Constant;
 import com.succez.server.util.Method;
 
@@ -50,6 +51,9 @@ public class FileDownload {
 		FileChannel fileChannel = null;
 		try {
 			out = socket.getOutputStream();
+			Response r = new Response();
+			r.setContent_Disposition(String.format("attachment; filename=<file %s>",file.getName()));
+			out.write(r.toString().getBytes());
 			fis = new FileInputStream(file);
 			fileChannel = fis.getChannel();
 			ByteBuffer bf = ByteBuffer.allocate(Constant.BYTE_BUFFER_COPACITY);

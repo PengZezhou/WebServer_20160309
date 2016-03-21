@@ -2,6 +2,7 @@ package com.succez.server.http;
 
 /**
  * http响应协议头
+ * 
  * @author Peng.Zezhou
  *
  */
@@ -19,6 +20,16 @@ public class Response {
 	private String Content_Type = "text/plain";
 	// 缓存控制
 	private String Cache_control = null;
+	// 强制浏览器下载
+	private String Content_Disposition = null;
+
+	public String getContent_Disposition() {
+		return Content_Disposition;
+	}
+
+	public void setContent_Disposition(String content_Disposition) {
+		Content_Disposition = content_Disposition;
+	}
 
 	public String getHttpVersion() {
 		return HttpVersion;
@@ -88,6 +99,9 @@ public class Response {
 		}
 		if (Cache_control != null) {
 			sb.append("Cache-control: " + Cache_control + "\r\n");
+		}
+		if (Content_Disposition != null) {
+			sb.append("Content-Disposition: " + Content_Disposition + "\r\n");
 		}
 		sb.append("\r\n");
 		return sb.toString();
