@@ -293,7 +293,7 @@ public class Method {
 	/**
 	 * 文件夹下的目录信息转化为html格式
 	 * 
-	 * @param file
+	 * @param file 目录
 	 * @return
 	 */
 	public static String directoryToHtml(File file) {
