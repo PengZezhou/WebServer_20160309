@@ -174,7 +174,7 @@ public class Method {
 	 * @return 文件编码格式
 	 * @throws Exception
 	 */
-	public static String getFileEncode(File file){
+	public static String getFileEncode(File file) {
 		InputStream in = null;
 		byte[] byte3 = new byte[3];
 		String code = "GBK";
@@ -193,13 +193,13 @@ public class Method {
 			LOGGER.error("判断文件编码，文件未找到");
 		} catch (IOException e) {
 			LOGGER.error("判断文件编码，文件读取异常");
-		}finally{
+		} finally {
 			Method.closeStream(in);
 		}
 
 		return code;
 	}
-	
+
 	/**
 	 * 返回file是否是给定限制类的文件类型，是返回true，否则返回false
 	 * 
@@ -222,5 +222,46 @@ public class Method {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * 将文件内容转换成byte数组返回,如果文件不存在、读入错误、文件大小超过2G则返回null
+	 * 
+	 * <pre>
+	 * byte[] b = file2buf(new File(&quot;D:\tmp.txt&quot;));
+	 * </pre>
+	 * 
+	 * @param fobj
+	 *            文件对象 File(!null)
+	 * @return byte数组
+	 * @throws IOException
+	 *             文件输入输出流异常
+	 * 
+	 */
+	public static byte[] file2buf(File fobj) {
+		LOGGER.info("文件开始转换为字节数组...");
+		FileInputStream fis = null;
+		byte[] b = null;
+		try {
+			fis = new FileInputStream(fobj);
+			int length = (int) fobj.length();
+			b = new byte[length];
+			int n = 0;
+			int off = 0;
+			int len = length < 4096 ? length : 4096;
+			while ((n = fis.read(b, off, len)) != -1) {
+				if (0 == n) {
+					break;
+				}
+				off += n;
+				len = len > length - off ? length - off : len;
+			}
+			LOGGER.info("文件开始转换为字节数组结束");
+		} catch (IOException e) {
+			LOGGER.error(" 文件转化出现异常");
+		} finally {
+			Method.closeStream(fis);
+		}
+		return b;
 	}
 }
