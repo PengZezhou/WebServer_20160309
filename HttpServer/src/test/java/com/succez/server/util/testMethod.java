@@ -56,7 +56,6 @@ public class testMethod {
 			in = null;
 			Method.closeStream(in);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
