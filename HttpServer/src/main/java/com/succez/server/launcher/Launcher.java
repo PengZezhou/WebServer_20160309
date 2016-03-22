@@ -30,7 +30,6 @@ public class Launcher {
 		commandMonitor();
 		LOGGER.info("exiting server ...");
 		exitServer();
-
 	}
 
 	/**

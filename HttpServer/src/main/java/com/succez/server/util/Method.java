@@ -227,7 +227,7 @@ public class Method {
 	}
 
 	/**
-	 * 判断文件是否是html格式
+	 * 判断文件是否是以html格式读取
 	 * 
 	 * @param file
 	 * @return
@@ -264,6 +264,11 @@ public class Method {
 	 * 
 	 */
 	public static byte[] file2buf(File fobj) {
+		if (fobj == null || fobj.isDirectory() || !fobj.exists()
+				|| fobj.length() > (1024 * 1024 * 1024 * 2 - 1)) {
+			LOGGER.error("输入参数为null、不是文件、文件不存在或者文件大小超过2G");
+			return null;
+		}
 		LOGGER.info("文件开始转换为字节数组...");
 		FileInputStream fis = null;
 		byte[] b = null;
@@ -293,7 +298,8 @@ public class Method {
 	/**
 	 * 文件夹下的目录信息转化为html格式
 	 * 
-	 * @param file 目录
+	 * @param file
+	 *            目录
 	 * @return
 	 */
 	public static String directoryToHtml(File file) {
