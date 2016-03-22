@@ -44,7 +44,7 @@ public class FileDownload {
 	 * 
 	 * @param file
 	 */
-	public void downloadFile() {
+	private void downloadFile() {
 		LOGGER.info("开始执行下载");
 		FileInputStream fis = null;
 		OutputStream out = null;
