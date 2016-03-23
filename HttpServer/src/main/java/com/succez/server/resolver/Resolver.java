@@ -15,7 +15,7 @@ import com.succez.server.util.Constant;
 import com.succez.server.util.Method;
 
 /**
- * ä¯ÀÀÆ÷ÇëÇó½âÎöÆ÷
+ * è§£æå™¨
  * 
  * @author Peng.Zezhou
  *
@@ -27,7 +27,7 @@ public class Resolver {
 	private DefaultBHttpServerConnection con = null;
 
 	/**
-	 * ¹¹Ôìº¯Êı£¬³õÊ¼»¯socket
+	 * è§£æå®¢æˆ·è¿æ¥
 	 * 
 	 * @param socket
 	 */
@@ -37,21 +37,21 @@ public class Resolver {
 	}
 
 	/**
-	 * url½âÎö´¦Àí£¬°´ÀàĞÍ·Ö·¢µ½ÏÂ²ã´¦Àí
+	 * è§£æå‡ºurlè¯·æ±‚ä¿¡æ¯
 	 */
 	private void urlResolve() {
-		LOGGER.info("¿ªÊ¼½âÎöurl");
+		LOGGER.info("å¼€å§‹è§£æurl");
 		try {
 			con = new DefaultBHttpServerConnection(Constant.SERVER_CHACHE);
 			con.bind(socket);
 			HttpRequest req = con.receiveRequestHeader();
 			String uri = URLDecoder.decode(req.getRequestLine().getUri(),
 					Constant.SERVER_ENCODE);
-			new Analysis(this.socket,uri);
+			new Analysis(this.socket, uri);
 		} catch (IOException e) {
-			LOGGER.info("½âÎöurl£¬³öÏÖIOÒì³£");
+			LOGGER.info("urlè§£æå¼‚å¸¸ï¼ŒIOå¼‚å¸¸");
 		} catch (HttpException e) {
-			LOGGER.info("½âÎöurl£¬³öÏÖhttpÒì³£");
+			LOGGER.info("urlè§£æå¼‚å¸¸ï¼ŒIOå¼‚å¸¸");
 		} finally {
 			Method.closeStream(con);
 		}

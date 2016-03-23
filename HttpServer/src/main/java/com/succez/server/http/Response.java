@@ -1,26 +1,26 @@
 package com.succez.server.http;
 
 /**
- * httpÏìÓ¦Ğ­ÒéÍ·
+ * httpå“åº”ç±»
  * 
  * @author Peng.Zezhou
  *
  */
 public class Response {
 
-	// http°æ±¾
+	// httpï¿½æ±¾
 	private String HttpVersion = "HTTP/1.1 200 OK";
-	// Ó¦´ğÈÕÆÚ
+	// Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	private String Date = null;
-	// Á¬½ÓĞÅÏ¢
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 	private String Connection = "Keep-Alive";
-	// ÄÚÈİ³¤¶È
+	// ï¿½ï¿½ï¿½İ³ï¿½ï¿½ï¿½
 	private String Content_Length = null;
-	// ÄÚÈİÀàĞÍ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	private String Content_Type = "text/plain";
-	// »º´æ¿ØÖÆ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	private String Cache_control = null;
-	// Ç¿ÖÆä¯ÀÀÆ÷ÏÂÔØ
+	// Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	private String Content_Disposition = null;
 
 	public String getContent_Disposition() {
@@ -80,7 +80,7 @@ public class Response {
 	}
 
 	/**
-	 * ×ª»»ÎªhttpĞ­Òé¸ñÊ½Êä³ö
+	 * å°†å“åº”ç±»æŒ‰httpå¯ç†è§£æ ¼å¼è¾“å‡º
 	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

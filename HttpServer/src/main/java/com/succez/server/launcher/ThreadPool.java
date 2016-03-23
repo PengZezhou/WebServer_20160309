@@ -14,13 +14,13 @@ import com.succez.server.util.Method;
 public class ThreadPool {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ThreadPool.class);
-	// Ïß³Ì³Ø
+	// ï¿½ß³Ì³ï¿½
 	public ThreadPoolExecutor thread_pool = null;
 
 	/**
-	 * »ñÈ¡Ïß³Ì³Ø¶ÔÏóµ¥Àı
+	 * çº¿ç¨‹æ± ç±»
 	 * 
-	 * @return Ïß³Ì³Ø¶ÔÏóµ¥Àı
+	 * @return è·å–çº¿ç¨‹æ± å•ä¾‹
 	 */
 	public static ThreadPool getInstance() {
 		if (instance == null) {
@@ -39,7 +39,7 @@ public class ThreadPool {
 	private static ThreadPool instance = null;
 
 	/**
-	 * Ë½ÓĞ¹¹Ôìº¯Êı£¬´´½¨Ïß³Ì³Ø¶ÔÏó
+	 * åˆå§‹åŒ–çº¿ç¨‹æ± 
 	 */
 	private ThreadPool() {
 		initProperties();
@@ -47,7 +47,7 @@ public class ThreadPool {
 	}
 
 	/**
-	 * ¶ÁÈ¡ÅäÖÃÎÄ¼şĞÅÏ¢
+	 * è¯»å–é…ç½®æ–‡ä»¶
 	 */
 	private void initProperties() {
 		this.corePoolSize = Method.getCorePoolSize();
@@ -58,13 +58,13 @@ public class ThreadPool {
 	}
 
 	/**
-	 * ´´½¨Ïß³Ì³ØÊµÀı
+	 * åˆ›å»ºçº¿ç¨‹æ± 
 	 */
 	private void createThreadPool() {
-		LOGGER.info("³õÊ¼»¯Ïß³Ì³Ø...");
+		LOGGER.info("å¼€å§‹åˆ›å»ºçº¿ç¨‹æ± ...");
 		this.thread_pool = new ThreadPoolExecutor(this.corePoolSize,
 				this.maxNumPoolSize, this.keepAliveTime, this.time_unit,
 				this.block_queue, this.handler);
-		LOGGER.info("Ïß³Ì³Ø³õÊ¼»¯½áÊø");
+		LOGGER.info("çº¿ç¨‹æ± åˆ›å»ºç»“æŸ");
 	}
 }

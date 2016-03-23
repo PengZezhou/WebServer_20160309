@@ -1,14 +1,14 @@
 package com.succez.server.util;
 
 /**
- * ³£Á¿¶¨ÒåÀà
+ * å¸¸é‡ç±»
  * 
  * @author Peng.Zezhou
  *
  */
 public class Constant {
 	/**
-	 * ÅäÖÃÎÄ¼şÂ·¾¶
+	 * é…ç½®æ–‡ä»¶è·¯å¾„ï¼Œå¯åŠ¨å™¨æ¨¡å—å¸¸é‡
 	 */
 	public static final String SERVER_CONFIG_INFO = System
 			.getProperty("user.dir")
@@ -18,41 +18,41 @@ public class Constant {
 			+ "\\src\\main\\resources\\log4j.properties";
 
 	/**
-	 * Æô¶¯Æ÷³£Á¿,¿ØÖÆÌ¨ÌáÊ¾ĞÅÏ¢
+	 * å‘½ä»¤æ§åˆ¶å™¨ç›¸å…³ä¿¡æ¯ï¼Œå¯åŠ¨å™¨æ¨¡å—å¸¸é‡
 	 */
-	public static final String TIPS = "½ÓÊÜÃüÁîÁĞ±í£º'exit' | 'help'";
+	public static final String TIPS = "å¯æ¥å—å‘½ä»¤ 'exit' | 'help'";
 	public static final String EXIT = "exit";
 	public static final String HELP = "help";
-	public static final String PROMT = "'exit' ÍË³ö·şÎñÆ÷";
+	public static final String PROMT = "'exit' é€€å‡ºæœåŠ¡å™¨";
 
 	public static final Boolean SHUTDOWN = false;
 
 	/**
-	 * ·şÎñÆ÷³£Á¿
+	 * æœåŠ¡å™¨ç«¯å¸¸é‡ï¼Œè¿æ¥å™¨æ¨¡å—å¸¸é‡
 	 */
 	public static final String SERVER_ENCODE = "utf-8";
 	public static final int SERVER_CHACHE = 1024 * 2;
 
 	/**
-	 * ÎÄ¼ş³£Á¿
+	 * å¼‚å¸¸å“åº”æ–‡ä»¶è·¯å¾„ï¼Œåˆ†æå¤„ç†æ¨¡å—å¸¸é‡
 	 */
 	public static final long FILE_SIZE = 1024 * 1;
 	public static final String ERROR_404 = System.getProperty("user.dir")
 			+ "\\src\\main\\resources\\error\\404.html";
 	public static final String ERROR_500 = System.getProperty("user.dir")
 			+ "\\src\\main\\resources\\error\\500.html";
-	
+
 	/**
-	 * ÎÄ¼şºó×º
+	 * æ–‡ä»¶æ‰©å±•ååˆ—è¡¨å¸¸é‡
 	 */
 	public static final String DOWNLOAD_EXTEN_NAME = ".pdf|.docx|.xlsx|.iso|.ico|.jpg";
 	public static final String PLAIN_EXTEN_NAME = ".txt";
 	public static final String HTML_EXTEN_NAME = ".html|.htm";
-	public static final String HTML_HEAD = "<head><title>·şÎñÆ÷Ä¿Â¼D:\\</title><link rel='shortcut icon' href='/favicon.ico'/></head>";
+	public static final String HTML_HEAD = "<head><title>æœåŠ¡å™¨ç›®å½•D:\\</title><link rel='shortcut icon' href='/favicon.ico'/></head>";
 
 	/**
-	 * ÎÄ¼şÏÂÔØ³£Á¿
+	 * æ–‡ä»¶ä¸‹è½½æ¨¡å—å¸¸é‡
 	 */
-	public static final int BYTE_BUFFER_COPACITY = 1024*1024;
-	public static final int BUFFER_SIZE = 128*1024;
+	public static final int BYTE_BUFFER_COPACITY = 1024 * 1024;
+	public static final int BUFFER_SIZE = 128 * 1024;
 }

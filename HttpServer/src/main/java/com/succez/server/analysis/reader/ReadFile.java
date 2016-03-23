@@ -12,7 +12,7 @@ import com.succez.server.responser.Handler;
 import com.succez.server.util.Method;
 
 /**
- * ÎÄ¼ş¶ÁÈ¡Ä£¿é
+ * æ–‡ä»¶é¢„è§ˆæ¨¡å—
  * 
  * @author Peng.Zezhou
  *
@@ -22,12 +22,12 @@ public class ReadFile {
 			.getLogger(ReadFile.class);
 
 	/**
-	 * ¹¹Ôìº¯Êı
+	 * æ„é€ å‡½æ•°
 	 * 
 	 * @param socket
-	 *            Á¬½Ósocket
+	 *            å®¢æˆ·è¿æ¥socket
 	 * @param file
-	 *            ´ı¶ÁÎÄ¼ş
+	 *            è¯·æ±‚çš„é¢„è§ˆæ–‡ä»¶
 	 */
 	public ReadFile(Socket socket, File file) {
 		this.socket = socket;
@@ -39,28 +39,28 @@ public class ReadFile {
 	private File file = null;
 
 	/**
-	 * ½«ÎÄ¼şÄÚÈİ×ª»¯Îª×Ö·û´®
+	 * æ–‡ä»¶è½¬æ¢ä¸ºå­—ç¬¦ä¸²
 	 * 
 	 * @param file
-	 *            ÎÄ¼şÂ·¾¶
-	 * @return ÄÚÈİ×Ö·û´®
+	 *            è¯·æ±‚çš„é¢„è§ˆæ–‡ä»¶
+	 * @return å­—ç¬¦ä¸²
 	 */
 	private String convertFromFile() {
 		StringBuilder sb = new StringBuilder();
-		// ÉèÖÃĞ­ÒéÍ·
+		// å“åº”å¤´è®¾ç½®
 		Response r = new Response();
-		if(Method.fileHtmlRead(file)){
+		if (Method.fileHtmlRead(file)) {
 			r.setContent_Type("text/html");
 		}
 		sb.append(r.toString());
-		
+
 		String str = null;
-		LOGGER.info("¶ÁÈ¡ÎÄ¼ş");
+		LOGGER.info("é¢„è§ˆæ–‡ä»¶è½¬æ¢å¼€å§‹");
 		byte[] bytes = Method.file2buf(file);
 		try {
 			str = new String(bytes, Method.getFileEncode(file));
 		} catch (UnsupportedEncodingException e) {
-			LOGGER.error("±àÂë×ª»»£¬²»Ö§³ÖµÄ±àÂë¸ñÊ½");
+			LOGGER.error("å­—ç¬¦ä¸²è½¬æ¢æŒ‡å®šç¼–ç è®¾ç½®é”™è¯¯");
 		}
 		sb.append(str);
 		return sb.toString();

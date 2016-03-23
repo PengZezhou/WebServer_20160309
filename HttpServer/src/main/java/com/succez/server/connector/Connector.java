@@ -11,7 +11,7 @@ import com.succez.server.launcher.ThreadPool;
 import com.succez.server.util.Constant;
 
 /**
- * Á¬½ÓÆ÷
+ * è¿æ¥å™¨
  * 
  * @author Peng.Zezhou
  *
@@ -20,12 +20,12 @@ public class Connector {
 	private static final Logger LOGGER = Logger.getLogger(Connector.class);
 
 	/**
-	 * ÇëÇó¼àÌıÆ÷
+	 * è¿æ¥è¯·æ±‚ç®¡ç†å™¨
 	 * 
 	 * @return
 	 */
 	public int requestMonitor() {
-		LOGGER.info("¿ªÊ¼¼àÌıÇëÇó");
+		LOGGER.info("å¼€å§‹æ¥å—è¯·æ±‚çº¿ç¨‹ä»»åŠ¡");
 		int flag = 0;
 		ServerSocket sv = Server.getInstance().server_socket;
 		while (!Constant.SHUTDOWN) {
@@ -35,11 +35,11 @@ public class Connector {
 			}
 			try {
 				Socket socket = sv.accept();
-				// ¶àÏß³Ì´¦Àí
+				// æ‰§è¡Œçº¿ç¨‹æ± ä»»åŠ¡
 				ThreadPool.getInstance().thread_pool
 						.execute(new ThreadPoolTask(socket));
 			} catch (IOException e) {
-				LOGGER.error("¼àÌıÒì³£");
+				LOGGER.error("åˆ›å»ºçº¿ç¨‹ä»»åŠ¡å‡ºé”™");
 				flag = -1;
 			}
 		}

@@ -9,7 +9,7 @@ import com.succez.server.util.Constant;
 import com.succez.server.util.Method;
 
 /**
- * ·şÎñÆ÷Æô¶¯Æ÷
+ * å¯åŠ¨å™¨æ¨¡å—
  * 
  * @author Peng.Zezhou
  *
@@ -19,7 +19,7 @@ public class Launcher {
 			.getLogger(Launcher.class);
 
 	/**
-	 * £¨³ÌĞò£©Æô¶¯Æ÷Èë¿Úº¯Êı
+	 * ç¨‹åºå…¥å£
 	 * 
 	 * @param args
 	 */
@@ -33,9 +33,9 @@ public class Launcher {
 	}
 
 	/**
-	 * ÃüÁî¼àÌıÆ÷£¬½ÓÊÜ²¢´¦Àí¿ØÖÆĞĞµÄ·şÎñÆ÷ÅäÖÃÃüÁî
+	 * å‘½ä»¤ç®¡ç†å™¨ï¼Œæ¥å—ç”¨æˆ·å‘½ä»¤é…ç½®æœåŠ¡å™¨
 	 * <p>
-	 * {@code exit}ÍË³ö·şÎñÆ÷£»{@code help}ÏÔÊ¾·şÎñÆ÷ÃüÁî
+	 * {@code exit}é€€å‡ºæœåŠ¡å™¨{@code help}æ˜¾ç¤ºæç¤ºä¿¡æ¯
 	 */
 	private static final void commandMonitor() {
 		Scanner scanner = new Scanner(System.in);
@@ -58,15 +58,15 @@ public class Launcher {
 	}
 
 	/**
-	 * ÇåÀí·şÎñÆ÷Êı¾İ£¬ÍË³ö·şÎñÆ÷
+	 * é€€å‡ºæœåŠ¡å™¨å‰çš„èµ„æº
 	 * 
 	 */
 	private static final void exitServer() {
 		LOGGER.info("server cleanning...");
-		LOGGER.info("¹Ø±ÕÏß³Ì³Ø...");
+		LOGGER.info("å…³é—­çº¿ç¨‹æ± ...");
 		ThreadPool.getInstance().thread_pool.shutdown();
-		LOGGER.info("Ïß³Ì³ØÒÑ¹Ø±Õ");
-		LOGGER.info("¹Ø±ÕserverSocket...");
+		LOGGER.info("çº¿ç¨‹æ± å…³é—­");
+		LOGGER.info("å…³é—­serversocket...");
 		Method.closeStream(Server.getInstance().server_socket);
 		LOGGER.info("server exited");
 	}

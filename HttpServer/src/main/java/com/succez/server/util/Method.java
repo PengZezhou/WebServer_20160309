@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import com.succez.server.http.Response;
 
 /**
- * ³ÌĞò¹«ÓĞÂß¼­ÓëÀà¼ÓÔØÇ°´¦ÀíÂß¼­
+ * é€šç”¨é€»è¾‘
  * 
  * @author Peng.Zezhou
  *
@@ -23,7 +23,7 @@ public class Method {
 	private static final Properties pro = getProperties();
 
 	/**
-	 * »ñÈ¡ÅäÖÃÎÄ¼ş¶ÁÈ¡¶ÔÏó
+	 * è·å–é…ç½®æ–‡ä»¶ç±»
 	 * 
 	 * @return Properties
 	 */
@@ -32,16 +32,16 @@ public class Method {
 		File file = new File(Constant.SERVER_CONFIG_INFO);
 		InputStream stream = null;
 		if (!file.exists()) {
-			LOGGER.error("ÅäÖÃÎÄ¼şÒÑ±»ÒÆ¶¯");
+			LOGGER.error("é…ç½®æ–‡ä»¶å·²è¢«ç§»åŠ¨");
 			return null;
 		}
 		try {
 			stream = new FileInputStream(file);
 			pro.load(stream);
 		} catch (FileNotFoundException e) {
-			LOGGER.error("ÅäÖÃÎÄ¼şÎŞ·¨ÔÚÖÆ¶¨Î»ÖÃÕÒµ½");
+			LOGGER.error("é…ç½®æ–‡ä»¶è¯»å–å¼‚å¸¸ï¼Œæ–‡ä»¶ä¸å­˜åœ¨");
 		} catch (IOException e) {
-			LOGGER.error("ÅäÖÃÎÄ¼ş¶ÁÈ¡£¬Á÷¼ÓÔØÒì³£");
+			LOGGER.error("é…ç½®æ–‡ä»¶è¯»å–å¼‚å¸¸ï¼ŒIOå¼‚å¸¸");
 		} finally {
 			Method.closeStream(stream);
 		}
@@ -49,131 +49,131 @@ public class Method {
 	}
 
 	/**
-	 * »ñÈ¡ÅäÖÃÎÄ¼şipµØÖ·
+	 * è¯»å–é…ç½®æ–‡ä»¶ipåœ°å€Ö·
 	 * 
-	 * @return ipµØÖ·£¬¶ÁÈ¡Ê§°ÜÄ¬ÈÏ·µ»Ø¡®127.0.0.1¡¯
+	 * @return ipåœ°å€é»˜è®¤è¿”å›ï¼Œæœ¬æœºåœ°å€"127.0.0.1"
 	 */
 	public static final String getIPValue() {
 		return pro.getProperty("ip", "127.0.0.1");
 	}
 
 	/**
-	 * »ñÈ¡ÅäÖÃÎÄ¼ş¶Ë¿Ú
+	 * è¯»å–é…ç½®æ–‡ä»¶ç«¯å£
 	 * 
-	 * @return ¶Ë¿ÚºÅ£¬¶ÁÈ¡Ê§°ÜÄ¬ÈÏ·µ»Ø¡®80¡¯
+	 * @return é»˜è®¤ç«¯å£åœ°å€ä¸º80
 	 */
 	public static final int getPortValue() {
 		int result = 80;
 		try {
 			result = Integer.parseInt(pro.getProperty("port", "80"));
 		} catch (NumberFormatException e) {
-			LOGGER.warn("¶Ë¿ÚºÅ×ª»»ÎªÕûÊıÒì³££¬Îª±ÜÃâÏµÍ³ÍË³ö£¬·µ»ØÄ¬ÈÏÖµ¡®80¡¯");
+			LOGGER.warn("é…ç½®æ–‡ä»¶ç«¯å£åœ°å€å¼‚å¸¸");
 		}
 		if (result < 1 || result > 65535) {
-			LOGGER.warn("¶Ë¿ÚºÅ²»ÔÚãĞÖµ¼ä£¬ÏµÍ³Ê¹ÓÃÄ¬ÈÏÖµ");
+			LOGGER.warn("é…ç½®æ–‡ä»¶ç«¯å£åœ°å€ä¸åœ¨èŒƒå›´å†…");
 			result = 80;
 		}
 		return result;
 	}
 
 	/**
-	 * »ñÈ¡ÅäÖÃÎÄ¼ş×î´óä¯ÀÀÆ÷Á¬½ÓÊı
+	 * è¯»å–å…è®¸æœ€å¤§è¿æ¥æ•°
 	 * 
-	 * @return Á¬½ÓÊı×î´óÖµ£¬¶ÁÈ¡Ê§°ÜÄ¬ÈÏ·µ»Ø¡®50¡¯
+	 * @return é»˜è®¤è¿”å›æœ€å¤§è¿æ¥æ•°50
 	 */
 	public static final int getMaxConValue() {
 		int result = 50;
 		try {
 			result = Integer.parseInt(pro.getProperty("max-connection", "50"));
 		} catch (NumberFormatException e) {
-			LOGGER.warn("×î´óÁ¬½ÓÊı×ª»»ÎªÕûÊıÒì³££¬Îª±ÜÃâÏµÍ³ÍË³ö£¬·µ»ØÄ¬ÈÏÖµ¡®50¡¯");
+			LOGGER.warn("é…ç½®æ–‡ä»¶ï¼Œæœ€å¤§è¿æ¥æ•°å¼‚å¸¸");
 		}
 		if (result < 1 || result > 1000) {
-			LOGGER.warn("ä¯ÀÀÆ÷×î´óÁ¬½ÓÊı²»ÔÚãĞÖµ¼ä£¬ÏµÍ³Ê¹ÓÃÄ¬ÈÏÖµ");
+			LOGGER.warn("æœ€å¤§è¿æ¥æ•°ä¸åœ¨èŒƒå›´å†…");
 			result = 5;
 		}
 		return result;
 	}
 
 	/**
-	 * »ñÈ¡ÅäÖÃÎÄ¼şÏß³Ì³ØÎ¬»¤Ïß³ÌµÄ×îÉÙÊıÁ¿
+	 * é…ç½®æ–‡ä»¶è¯»å–æœ€å°çº¿ç¨‹æ± å¤§å°
 	 * 
-	 * @return Ïß³Ì³ØÎ¬»¤Ïß³ÌµÄ×îÉÙÊıÁ¿
+	 * @return é»˜è®¤æœ€å°ä¸º5
 	 */
 	public static final int getCorePoolSize() {
 		int result = 5;
 		try {
 			result = Integer.parseInt(pro.getProperty("corePoolSize", "5"));
 		} catch (NumberFormatException e) {
-			LOGGER.warn("×îĞ¡Ïß³ÌÊı×ª»»ÎªÕûÊıÒì³££¬Îª±ÜÃâÏµÍ³ÍË³ö£¬·µ»ØÄ¬ÈÏÖµ¡®5¡¯");
+			LOGGER.warn("é…ç½®æ–‡ä»¶æœ€å°çº¿ç¨‹æ± å¤§å°å¼‚å¸¸");
 		}
 		if (result < 1 || result > 1000) {
-			LOGGER.warn("Ïß³Ì³ØÅäÖÃ¾¯¸æ£¬CorePoolSize²»ÔÚãĞÖµ¼ä£¬ÏµÍ³Ê¹ÓÃÄ¬ÈÏÖµ");
+			LOGGER.warn("æœ€å°çº¿ç¨‹æ± å¤§å°ä¸åœ¨èŒƒå›´å†…");
 			result = 5;
 		}
 		return result;
 	}
 
 	/**
-	 * »ñÈ¡ÅäÖÃÎÄ¼şÏß³Ì³ØÎ¬»¤Ïß³ÌµÄ×î´óÊıÁ¿
+	 * è¯»å–é…ç½®æ–‡ä»¶æœ€å¤§çº¿ç¨‹æ•°
 	 * 
-	 * @return Ïß³Ì³ØÎ¬»¤Ïß³ÌµÄ×î´óÊıÁ¿
+	 * @return çº¿ç¨‹æ•°
 	 */
 	public static final int getMaxNumPoolSize() {
 		int result = 20;
 		try {
 			result = Integer.parseInt(pro.getProperty("maximumPoolSize", "20"));
 		} catch (NumberFormatException e) {
-			LOGGER.warn("×î´óÏß³ÌÊı×ª»»ÎªÕûÊıÒì³££¬Îª±ÜÃâÏµÍ³ÍË³ö£¬·µ»ØÄ¬ÈÏÖµ¡®20¡¯");
+			LOGGER.warn("æœ€å¤§çº¿ç¨‹æ•°é‡é”™è¯¯");
 		}
 		if (result < 1 || result > 10000) {
-			LOGGER.warn("Ïß³Ì³ØÅäÖÃ¾¯¸æ£¬CorePoolSize²»ÔÚãĞÖµ¼ä£¬ÏµÍ³Ê¹ÓÃÄ¬ÈÏÖµ");
+			LOGGER.warn("çº¿ç¨‹æ•°è®¾ç½®ä¸åœ¨èŒƒå›´å†…");
 			result = 20;
 		}
 		return result;
 	}
 
 	/**
-	 * »ñÈ¡ÅäÖÃÎÄ¼şÏß³Ì³ØÎ¬»¤Ïß³ÌËùÔÊĞíµÄ¿ÕÏĞÊ±¼ä (Ãë)
+	 * è¯»å–é…ç½®æ–‡ä»¶ KeepAliveTime
 	 * 
-	 * @return Ïß³Ì³ØÎ¬»¤Ïß³ÌËùÔÊĞíµÄ¿ÕÏĞÊ±¼ä
+	 * @return KeepAliveTimeå€¼
 	 */
 	public static final int getKeepAliveTime() {
 		int result = 30;
 		try {
 			result = Integer.parseInt(pro.getProperty("keepAliveTime", "60"));
 		} catch (NumberFormatException e) {
-			LOGGER.warn("Ïß³ÌÔÊĞí¿ÕÏĞÊ±¼ä×ª»»ÎªÕûÊıÒì³££¬Îª±ÜÃâÏµÍ³ÍË³ö£¬·µ»ØÄ¬ÈÏÖµ¡®30¡¯");
+			LOGGER.warn("ä¿æ´»æ—¶é—´è½¬æ¢é”™è¯¯");
 		}
 		if (result < 20 || result > 6000) {
-			LOGGER.warn("Ïß³Ì³ØÅäÖÃ¾¯¸æ£¬CorePoolSize²»ÔÚãĞÖµ¼ä£¬ÏµÍ³Ê¹ÓÃÄ¬ÈÏÖµ");
+			LOGGER.warn("ä¿æ´»æ—¶é—´ä¸åœ¨é˜ˆå€¼å†…");
 			result = 30;
 		}
 		return result;
 	}
 
 	/**
-	 * ¹Ø±ÕÁ÷µÄÂß¼­·â×°
+	 * æµå…³é—­å°è£…
 	 * 
 	 * @param closeavle
-	 *            Á÷¶ÔÏó
+	 *            å¯å…³é—­å¯¹è±¡
 	 */
 	public static final void closeStream(Closeable closeavle) {
 		if (closeavle != null) {
 			try {
 				closeavle.close();
 			} catch (IOException e) {
-				LOGGER.error(closeavle.toString() + " Á÷¹Ø±Õ³öÏÖÒì³£");
+				LOGGER.error(closeavle.toString() + "å…³é—­å‡ºç°å¼‚å¸¸");
 			}
 		}
 	}
 
 	/**
-	 * ÅĞ¶ÏÎÄ¼şµÄ±àÂë¸ñÊ½
+	 * è·å–æ–‡ä»¶ç¼–ç æ ¼å¼
 	 * 
 	 * @param fileName
-	 *            :file
-	 * @return ÎÄ¼ş±àÂë¸ñÊ½
+	 *            å¾…è·å–çš„æ–‡ä»¶
+	 * @return æ–‡ä»¶ç¼–ç æ ¼å¼
 	 * @throws Exception
 	 */
 	public static String getFileEncode(File file) {
@@ -192,9 +192,9 @@ public class Method {
 				code = "GBK";
 			}
 		} catch (FileNotFoundException e) {
-			LOGGER.error("ÅĞ¶ÏÎÄ¼ş±àÂë£¬ÎÄ¼şÎ´ÕÒµ½");
+			LOGGER.error("è·å–æ–‡ä»¶ç¼–ç å¤±è´¥ï¼Œæ–‡ä»¶æœªæ‰¾åˆ°");
 		} catch (IOException e) {
-			LOGGER.error("ÅĞ¶ÏÎÄ¼ş±àÂë£¬ÎÄ¼ş¶ÁÈ¡Òì³£");
+			LOGGER.error("è·å–æ–‡ä»¶ç¼–ç å¤±è´¥ï¼ŒIOå¼‚å¸¸");
 		} finally {
 			Method.closeStream(in);
 		}
@@ -203,10 +203,10 @@ public class Method {
 	}
 
 	/**
-	 * ·µ»ØfileÊÇ·ñÊÇ¸ø¶¨ÏŞÖÆÀàµÄÎÄ¼şÀàĞÍ£¬ÊÇ·µ»Øtrue£¬·ñÔò·µ»Øfalse
+	 * åˆ¤æ–­æ–‡ä»¶æ˜¯å¦æ˜¯å¯ä¸‹è½½ç±»å‹
 	 * 
 	 * @param file
-	 *            ÎÄ¼ş
+	 *            å¾…åˆ¤æ–­æ–‡ä»¶
 	 * @return
 	 */
 	public static Boolean fileDownload(File file) {
@@ -219,7 +219,7 @@ public class Method {
 		String[] arr = Constant.DOWNLOAD_EXTEN_NAME.split("\\|");
 		for (String str : arr) {
 			if (ext.equals(str)) {
-				LOGGER.info("ÎÄ¼ş½«±»ÏÂÔØ´¦Àí");
+				LOGGER.info("æ–‡ä»¶å°†è¢«ä¸‹è½½å¤„ç†");
 				return true;
 			}
 		}
@@ -227,7 +227,7 @@ public class Method {
 	}
 
 	/**
-	 * ÅĞ¶ÏÎÄ¼şÊÇ·ñÊÇÒÔhtml¸ñÊ½¶ÁÈ¡
+	 * è¯»å–htmlæ–‡ä»¶
 	 * 
 	 * @param file
 	 * @return
@@ -242,7 +242,7 @@ public class Method {
 		String[] arr = Constant.HTML_EXTEN_NAME.split("\\|");
 		for (String str : arr) {
 			if (ext.equals(str)) {
-				LOGGER.info("ÎÄ¼şÊÇhtml¸ñÊ½");
+				LOGGER.info("è§£æhtmlæ–‡ä»¶");
 				return true;
 			}
 		}
@@ -250,26 +250,26 @@ public class Method {
 	}
 
 	/**
-	 * ½«ÎÄ¼şÄÚÈİ×ª»»³ÉbyteÊı×é·µ»Ø,Èç¹ûÎÄ¼ş²»´æÔÚ¡¢¶ÁÈë´íÎó¡¢ÎÄ¼ş´óĞ¡³¬¹ı2GÔò·µ»Ønull
+	 * å°†æ–‡ä»¶è½¬åŒ–ä¸ºå­—èŠ‚æ•°ç»„
 	 * 
 	 * <pre>
 	 * byte[] b = file2buf(new File(&quot;D:\tmp.txt&quot;));
 	 * </pre>
 	 * 
 	 * @param fobj
-	 *            ÎÄ¼ş¶ÔÏó File(!null)
-	 * @return byteÊı×é
+	 *            æ–‡ä»¶
+	 * @return å­—èŠ‚æ•°ç»„
 	 * @throws IOException
-	 *             ÎÄ¼şÊäÈëÊä³öÁ÷Òì³£
+	 *             IOå¼‚å¸¸
 	 * 
 	 */
 	public static byte[] file2buf(File fobj) {
 		if (fobj == null || fobj.isDirectory() || !fobj.exists()
 				|| fobj.length() > (1024 * 1024 * 1024 * 2 - 1)) {
-			LOGGER.error("ÊäÈë²ÎÊıÎªnull¡¢²»ÊÇÎÄ¼ş¡¢ÎÄ¼ş²»´æÔÚ»òÕßÎÄ¼ş´óĞ¡³¬¹ı2G");
+			LOGGER.error("æ–‡ä»¶ä¸ºnullï¼Œæ–‡ä»¶æ˜¯æ–‡ä»¶å¤¹ï¼Œæ–‡ä»¶ä¸å­˜åœ¨ï¼Œæˆ–è€…æ–‡ä»¶å¤§å°è¶…è¿‡2G");
 			return null;
 		}
-		LOGGER.info("ÎÄ¼ş¿ªÊ¼×ª»»Îª×Ö½ÚÊı×é...");
+		LOGGER.info("å¼€å§‹å­—èŠ‚è½¬æ¢...");
 		FileInputStream fis = null;
 		byte[] b = null;
 		try {
@@ -286,9 +286,9 @@ public class Method {
 				off += n;
 				len = len > length - off ? length - off : len;
 			}
-			LOGGER.info("ÎÄ¼ş¿ªÊ¼×ª»»Îª×Ö½ÚÊı×é½áÊø");
+			LOGGER.info("å­—èŠ‚è½¬æ¢ç»“æŸ");
 		} catch (IOException e) {
-			LOGGER.error(" ÎÄ¼ş×ª»¯³öÏÖÒì³£");
+			LOGGER.error("å­—èŠ‚è½¬æ¢å‡ºç°å¼‚å¸¸");
 		} finally {
 			Method.closeStream(fis);
 		}
@@ -296,10 +296,10 @@ public class Method {
 	}
 
 	/**
-	 * ÎÄ¼ş¼ĞÏÂµÄÄ¿Â¼ĞÅÏ¢×ª»¯Îªhtml¸ñÊ½
+	 * å°†ç›®å½•ä¿¡æ¯è½¬åŒ–ä¸ºhtmlæ ¼å¼
 	 * 
 	 * @param file
-	 *            Ä¿Â¼
+	 *            ç›®å½•
 	 * @return
 	 */
 	public static String directoryToHtml(File file) {
@@ -308,8 +308,8 @@ public class Method {
 		r.setContent_Type("text/html");
 		sb.append(r.toString());
 		sb.append(Constant.HTML_HEAD);
-		sb.append("<a href='/'>¸ùÄ¿Â¼</a><br/>");
-		sb.append("<a href='javascript:history.go(-1)'>·µ»ØÉÏ¼¶</a><br/>");
+		sb.append("<a href='/'>.</a><br/>");
+		sb.append("<a href='javascript:history.go(-1)'>..</a><br/>");
 		File[] arr = file.listFiles();
 		for (File f : arr) {
 			String s = null;

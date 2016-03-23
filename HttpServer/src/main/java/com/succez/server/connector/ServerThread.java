@@ -7,7 +7,7 @@ import com.succez.server.launcher.Server;
 import com.succez.server.launcher.ThreadPool;
 
 /**
- * ·şÎñÆ÷Ö÷Ïß³Ì
+ * æœåŠ¡å™¨çº¿ç¨‹
  * 
  * @author Peng.Zezhou
  *
@@ -17,7 +17,7 @@ public class ServerThread implements Runnable {
 			.getLogger(ServerThread.class);
 
 	/**
-	 * Ïß³ÌÂß¼­
+	 * ä¸»è¦åŠŸèƒ½å‡½æ•°
 	 */
 	public void run() {
 		if (Server.getInstance().server_socket.isClosed()

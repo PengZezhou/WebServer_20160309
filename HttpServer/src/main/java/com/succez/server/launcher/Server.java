@@ -15,9 +15,9 @@ public class Server {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Server.class);
 
 	/**
-	 * »ñÈ¡·şÎñÆ÷ µ¥Àı¶ÔÏó
+	 * æœåŠ¡å™¨ç±»
 	 * 
-	 * @return ·şÎñÆ÷ µ¥Àı¶ÔÏó
+	 * @return æœåŠ¡å™¨å®ä¾‹
 	 */
 	public static Server getInstance() {
 		if (instance == null) {
@@ -26,7 +26,7 @@ public class Server {
 		return instance;
 	}
 
-	// Ïß³Ì³Ø
+	// æœåŠ¡å™¨çº¿ç¨‹æ± 
 	public ThreadPool pool = null;
 	// serversocket
 	public ServerSocket server_socket = null;
@@ -37,19 +37,19 @@ public class Server {
 	private static Server instance = null;
 
 	/**
-	 * ¹¹Ôìº¯Êı
+	 * æ„é€ å‡½æ•°
 	 */
 	private Server() {
 		initProperties();
 		if (server_socket == null || pool == null) {
-			LOGGER.error("·şÎñÆ÷³õÊ¼»¯Ê§°Ü");
+			LOGGER.error("æœåŠ¡å™¨åˆå§‹åŒ–å¤±è´¥");
 			return;
 		}
 		pool.thread_pool.execute(new ServerThread());
 	}
 
 	/**
-	 * ³õÊ¼»¯ÅäÖÃĞÅÏ¢
+	 * è¯»å–é…ç½®æ–‡ä»¶
 	 */
 	private void initProperties() {
 		this.port = Method.getPortValue();
@@ -60,19 +60,18 @@ public class Server {
 	}
 
 	/**
-	 * ´´½¨serversocketÊµÀı
+	 * åˆ›å»ºserversocket
 	 */
 	private void createServerSocket() {
 		try {
 			server_socket = new ServerSocket(this.port, this.max_connection,
 					InetAddress.getByName(this.ip));
-			LOGGER.error("ServerSocket´´½¨³É¹¦");
+			LOGGER.error("ServerSocketåˆ›å»ºæˆåŠŸ");
 			return;
 		} catch (UnknownHostException e) {
-			LOGGER.error("ServerSocket´´½¨Ê§°Ü£¬²»¿É¿¿µÄipµØÖ·");
+			LOGGER.error("ServerSocketåˆ›å»ºå¤±è´¥ï¼Œä½ç½®çš„ä¸»æœºåœ°å€");
 		} catch (IOException e) {
-			LOGGER.error("ServerSocket´´½¨Ê§°Ü£¬IOÒì³£");
+			LOGGER.error("ServerSocketåˆ›å»ºå¤±è´¥ï¼ŒIOå¼‚å¸¸");
 		}
-		LOGGER.info("ServerSocket´´½¨Ê§°Ü£¬·µ»Ønull");
 	}
 }

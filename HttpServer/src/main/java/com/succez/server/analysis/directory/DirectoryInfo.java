@@ -11,7 +11,7 @@ import com.succez.server.responser.Handler;
 import com.succez.server.util.Method;
 
 /**
- * Ä¿Â¼ÁĞ±íÄ£¿é
+ * æ–‡ä»¶ç›®å½•åˆ—è¡¨æ¨¡å—
  * 
  * @author Peng.Zezhou
  *
@@ -21,12 +21,12 @@ public class DirectoryInfo {
 			.getLogger(DirectoryInfo.class);
 
 	/**
-	 * ¹¹Ôìº¯Êı
+	 * ç›®å½•ä¸‹æ–‡ä»¶åˆ—è¡¨
 	 * 
 	 * @param socket
-	 *            Á¬½Ósocket
+	 *            å®¢æˆ·è¿æ¥socket
 	 * @param file
-	 *            ÎÄ¼şÄ¿Â¼
+	 *            ç”¨æˆ·è¯·æ±‚çš„æ–‡ä»¶å¤¹
 	 */
 	public DirectoryInfo(Socket socket, File file) {
 		this.file = file;
@@ -36,18 +36,18 @@ public class DirectoryInfo {
 	private File file = null;
 
 	/**
-	 * ÁĞ³öµ±Ç°ÎÄ¼ş¼ĞÏÂµÄÁĞ±íĞÅÏ¢
+	 * åˆ—å‡ºç›®å½•æ–‡ä»¶ä¿¡æ¯
 	 * 
 	 * @param file
-	 *            µ±Ç°ÎÄ¼ş¼Ğ
-	 * @return µ±Ç°ÎÄ¼ş¼ĞÏÂµÄÁĞ±íĞÅÏ¢
+	 *            ç”¨æˆ·è¯·æ±‚çš„æ–‡ä»¶å¤¹
+	 * @return æ–‡ä»¶åˆ—è¡¨ä¿¡æ¯
 	 */
 	private String listFromDirectory() {
 		String str = null;
 		try {
 			str = new String(Method.directoryToHtml(file).getBytes(), "GBK");
 		} catch (UnsupportedEncodingException e) {
-			LOGGER.error("±àÂë×ª»»£¬²»Ö§³ÖµÄ±àÂë×ª»»");
+			LOGGER.error("æ–‡ä»¶åˆ—è¡¨ä¿¡æ¯è½¬æ¢å‡ºé”™");
 		}
 		return str;
 	}

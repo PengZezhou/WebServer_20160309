@@ -17,7 +17,7 @@ public class Analysis {
 			.getLogger(Analysis.class);
 
 	/**
-	 * 构造函数
+	 * 璇锋眰鍒嗙被澶勭悊
 	 * 
 	 * @param socket
 	 * @param url
@@ -34,7 +34,7 @@ public class Analysis {
 	private int type;
 
 	/**
-	 * 分析url类型
+	 * 鑾峰彇璇锋眰绫诲瀷
 	 * 
 	 * @param url
 	 * @return
@@ -44,7 +44,8 @@ public class Analysis {
 		LOGGER.info("url " + url);
 		if (file.isDirectory()) {
 			type = 1;
-		} else if (file.isFile() && file.canRead() && !Method.fileDownload(file)
+		} else if (file.isFile() && file.canRead()
+				&& !Method.fileDownload(file)
 				&& file.length() <= (Integer.MAX_VALUE)) {
 			type = 2;
 		} else if (!file.exists()) {
@@ -60,12 +61,12 @@ public class Analysis {
 	}
 
 	/**
-	 * 处理url
+	 * 澶勭悊url璇锋眰
 	 * 
 	 * @param url
 	 */
 	private void processUrl() {
-		LOGGER.info("应答标志位 " + type);
+		LOGGER.info("璇锋眰绫诲瀷  " + type);
 		File file = new File(url);
 		switch (type) {
 		case 1:

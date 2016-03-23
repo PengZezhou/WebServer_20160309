@@ -16,7 +16,7 @@ import com.succez.server.util.Constant;
 import com.succez.server.util.Method;
 
 /**
- * ÎÄ¼şÏÂÔØÄ£¿é
+ * æ–‡ä»¶ä¸‹è½½æ¨¡å—
  * 
  * @author Peng.Zezhou
  *
@@ -26,7 +26,7 @@ public class FileDownload {
 			.getLogger(FileDownload.class);
 
 	/**
-	 * ¹¹Ôìº¯Êı
+	 * æ„é€ å‡½æ•°
 	 * 
 	 * @param socket
 	 */
@@ -40,12 +40,12 @@ public class FileDownload {
 	private File file = null;
 
 	/**
-	 * ÏÂÔØÖ¸¶¨Â·¾¶µÄÎÄ¼ş
+	 * ä¸‹è½½æ–‡ä»¶
 	 * 
 	 * @param file
 	 */
 	private void downloadFile() {
-		LOGGER.info("¿ªÊ¼Ö´ĞĞÏÂÔØ");
+		LOGGER.info("å¼€å§‹ä¸‹è½½æ–‡ä»¶");
 		FileInputStream fis = null;
 		OutputStream out = null;
 		FileChannel fileChannel = null;
@@ -72,13 +72,13 @@ public class FileDownload {
 				bf.clear();
 			}
 		} catch (IOException e) {
-			LOGGER.error(" ÎÄ¼şÏÂÔØ£¬NIO³öÏÖÒì³£");
+			LOGGER.error("æ–‡ä»¶ä¸‹è½½å‡ºç°å¼‚å¸¸");
 		} finally {
 			Method.closeStream(fis);
 			Method.closeStream(out);
 			Method.closeStream(fileChannel);
 			Method.closeStream(socket);
 		}
-		LOGGER.info("¿ªÊ¼ÏÂÔØ½áÊø");
+		LOGGER.info("æ–‡ä»¶ä¸‹è½½ç»“æŸ");
 	}
 }

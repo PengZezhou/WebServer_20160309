@@ -50,7 +50,7 @@ public class testMethod {
 	@Test
 	public void testCloseStream() {
 		try {
-			FileInputStream in = new FileInputStream("D:\\²»Í¬±àÂëµÄTXT\\ANSI±àÂë.txt");
+			FileInputStream in = new FileInputStream("D:\\ä¸åŒç¼–ç çš„TXT\\ANSIç¼–ç .txt");
 			Method.closeStream(in);
 
 			in = null;
@@ -62,33 +62,33 @@ public class testMethod {
 
 	@Test
 	public void testGetFileEncode() {
-		String path = "D:\\²»Í¬±àÂëµÄTXT\\ANSI±àÂë.txt";
+		String path = "D:\\ä¸åŒç¼–ç çš„TXT\\ANSIç¼–ç .txt";
 		String code = Method.getFileEncode(new File(path));
 		Assert.assertEquals("GBK", code);
 
-		path = "D:\\²»Í¬±àÂëµÄTXT\\utf8±àÂë.txt";
+		path = "D:\\ä¸åŒç¼–ç çš„TXT\\utf8ç¼–ç .txt";
 		code = Method.getFileEncode(new File(path));
 		Assert.assertEquals("UTF-8", code);
 
-		path = "D:\\²»Í¬±àÂëµÄTXT\\unicode±àÂë.txt";
+		path = "D:\\ä¸åŒç¼–ç çš„TXT\\unicodeç¼–ç .txt";
 		code = Method.getFileEncode(new File(path));
 		Assert.assertEquals("GBK", code);
 	}
 
 	@Test
 	public void testFileDownload() {
-		String path = "D:\\²»Í¬±àÂëµÄTXT\\ANSI±àÂë.txt";
+		String path = "D:\\ä¸åŒç¼–ç çš„TXT\\ANSIç¼–ç .txt";
 		Assert.assertEquals(false, Method.fileDownload(new File(path))
 				.booleanValue());
 
-		path = "D:\\Éè¼ÆÊé\\¸ÅÒªÉè¼ÆËµÃ÷ÊéÄ£°å.docx";
+		path = "D:\\è®¾è®¡ä¹¦\\æ¦‚è¦è®¾è®¡è¯´æ˜ä¹¦æ¨¡æ¿.docx";
 		Assert.assertEquals(true, Method.fileDownload(new File(path))
 				.booleanValue());
 	}
 
 	@Test
 	public void testFileHtmlRead() {
-		String path = "D:\\²»Í¬±àÂëµÄTXT\\ANSI±àÂë.txt";
+		String path = "D:\\ä¸åŒç¼–ç çš„TXT\\ANSIç¼–ç .txt";
 		Assert.assertEquals(false, Method.fileHtmlRead(new File(path))
 				.booleanValue());
 
@@ -99,7 +99,7 @@ public class testMethod {
 
 	@Test
 	public void testFile2buf() {
-		String path = "D:\\²»Í¬±àÂëµÄTXT\\ANSI±àÂë.txt";
+		String path = "D:\\ä¸åŒç¼–ç çš„TXT\\ANSIç¼–ç .txt";
 		File file = new File(path);
 		byte[] bytes = Method.file2buf(file);
 		Assert.assertNotNull(bytes);
@@ -109,7 +109,7 @@ public class testMethod {
 		bytes = Method.file2buf(file);
 		Assert.assertNull(bytes);
 
-		file = new File("D:\\µç×ÓÊé\\java¶àÏß³ÌÉè¼ÆÄ£Ê½.pdf");
+		file = new File("D:\\ç”µå­ä¹¦\\javaç¨‹åºæ€§èƒ½ä¼˜åŒ– .pdf");
 		Assert.assertNotNull(Method.file2buf(file));
 
 		file = null;
@@ -119,7 +119,7 @@ public class testMethod {
 
 	@Test
 	public void testDirectoryToHtml() {
-		String path = "D:\\²»Í¬±àÂëµÄTXT";
+		String path = "D:\\ä¸åŒç¼–ç çš„TXT";
 		File file = new File(path);
 		String str = Method.directoryToHtml(file);
 		Assert.assertNotNull(str);

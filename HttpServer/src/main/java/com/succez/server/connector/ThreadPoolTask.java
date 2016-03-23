@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import com.succez.server.resolver.Resolver;
 
 /**
- * µ¥¸öÇëÇóÈÎÎñÏß³Ì
+ * çº¿ç¨‹æ± ä»»åŠ¡
  * 
  * @author Peng.Zezhou
  *
@@ -17,7 +17,7 @@ public class ThreadPoolTask implements Runnable {
 	private Socket socket;
 
 	/**
-	 * ¹¹Ôìº¯Êı
+	 * socketè¿æ¥
 	 * 
 	 * @param socket
 	 */
@@ -26,10 +26,10 @@ public class ThreadPoolTask implements Runnable {
 	}
 
 	/**
-	 * Ïß³ÌÖ÷Âß¼­
+	 * ä¸»è¦ä»»åŠ¡
 	 */
 	public void run() {
-		LOGGER.info("Ïß³ÌÖ´ĞĞÖĞ...");
+		LOGGER.info("å¼€å§‹å¤„ç†å¤–éƒ¨è¯·æ±‚");
 		new Resolver(socket);
 	}
 }

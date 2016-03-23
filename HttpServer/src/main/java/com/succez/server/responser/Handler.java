@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.succez.server.util.Method;
 
 /**
- * Ó¦´ğÆ÷
+ * å“åº”å™¨
  * 
  * @author Peng.Zezhou
  *
@@ -20,7 +20,7 @@ public class Handler {
 	private Socket socket;
 
 	/**
-	 * ¹¹Ôìº¯Êı
+	 * æ„é€ å‡½æ•°
 	 * 
 	 * @param socket
 	 */
@@ -30,10 +30,10 @@ public class Handler {
 	}
 
 	/**
-	 * ÏìÓ¦ä¯ÀÀÆ÷
+	 * å“åº”å®¢æˆ·ç«¯
 	 * 
 	 * @param str
-	 *            Êä³ö×Ö·û´®
+	 *            å¾…ä¼ è¾“å­—ç¬¦
 	 */
 	private void responseHandler(String str) {
 		byte[] bytes = str.getBytes();
@@ -43,7 +43,7 @@ public class Handler {
 			out.write(bytes);
 			out.flush();
 		} catch (IOException e) {
-			LOGGER.error("ÏìÓ¦Òì³££¬IO´íÎó");
+			LOGGER.error("å“åº”å¼‚å¸¸ï¼ŒIOå¼‚å¸¸");
 		} finally {
 			Method.closeStream(out);
 			Method.closeStream(socket);
