@@ -30,7 +30,7 @@ public class Connector {
 				break;
 			}
 			try {
-				Socket socket = Server.getInstance().getServerSocket().accept();
+				Socket socket = Server.getInstance().startListen();
 				// 执行线程池任务
 				Server.getInstance().excuteTask(socket);
 			} catch (IOException e) {

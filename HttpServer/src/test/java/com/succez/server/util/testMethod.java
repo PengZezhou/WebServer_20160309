@@ -11,41 +11,7 @@ import org.junit.Test;
 @SuppressWarnings("deprecation")
 public class testMethod {
 
-	@Test
-	public void testGetIPValue() {
-		String ip = Method.getIPValue();
-		Assert.assertEquals(ip, "192.168.7.185");
-	}
 
-	@Test
-	public void testGetPortValue() {
-		int port = Method.getPortValue();
-		Assert.assertEquals(8050, port);
-	}
-
-	@Test
-	public void testGetMaxConValue() {
-		int con = Method.getMaxConValue();
-		Assert.assertEquals(100, con);
-	}
-
-	@Test
-	public void testGetCorePoolSize() {
-		int size = Method.getCorePoolSize();
-		Assert.assertEquals(5, size);
-	}
-
-	@Test
-	public void testGetMaxNumPoolSize() {
-		int size = Method.getMaxNumPoolSize();
-		Assert.assertEquals(20, size);
-	}
-
-	@Test
-	public void testGetKeepAliveTime() {
-		int time = Method.getKeepAliveTime();
-		Assert.assertEquals(60, time);
-	}
 
 	@Test
 	public void testCloseStream() {

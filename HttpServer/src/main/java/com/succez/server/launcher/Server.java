@@ -5,7 +5,6 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
@@ -15,8 +14,9 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.succez.server.connector.ServerThread;
+import com.succez.server.connector.Connector;
 import com.succez.server.connector.ThreadPoolTask;
+import com.succez.server.util.ConfigInfo;
 import com.succez.server.util.Constant;
 import com.succez.server.util.Method;
 
@@ -68,24 +68,25 @@ public class Server {
 	}
 
 	/**
-	 * 获取server_socket
+	 * 启动server_socket监听
 	 * 
 	 * @return
+	 * @throws IOException
 	 */
-	public ServerSocket getServerSocket() {
-		return server_socket;
+	public Socket startListen() throws IOException {
+		return this.server_socket.accept();
 	}
 
 	// 服务器线程池
 	private ThreadPool pool = null;
 	// serversocket
 	private ServerSocket server_socket = null;
-	private boolean stop = false;
-	private int port = 8080;
-	private int max_connection = 100;
-	private String ip = "127.0.0.1";
+	private boolean stop;
+	private int port;
+	private int max_connection;
+	private String ip;
 	private static Server instance = null;
-	private Config config = new Config();
+	private ConfigInfo config = new ConfigInfo(Constant.SERVER_CONFIG_INFO);
 
 	/**
 	 * 构造函数
@@ -103,11 +104,12 @@ public class Server {
 	 * 读取配置文件
 	 */
 	private void initProperties() {
-		this.port = config.getPortValue();
-		this.max_connection = config.getMaxConValue();
-		this.ip = config.getIPValue();
-		createServerSocket();
+		this.ip = config.getString("ip");
+		this.max_connection = config.getInt("max-connection");
+		this.port = config.getInt("port");
+		this.createServerSocket();
 		this.pool = new ThreadPool();
+		this.stop = false;
 	}
 
 	/**
@@ -123,124 +125,6 @@ public class Server {
 			LOGGER.error("ServerSocket创建失败，位置的主机地址");
 		} catch (IOException e) {
 			LOGGER.error("ServerSocket创建失败，IO异常");
-		}
-	}
-
-	/**
-	 * 配置文件内部类
-	 * 
-	 * @author Peng.Zezhou
-	 *
-	 */
-	class Config {
-		private Properties pro = Method
-				.getProperties(Constant.SERVER_CONFIG_INFO);
-
-		/**
-		 * 读取配置文件ip地址ַ
-		 * 
-		 * @return ip地址默认返回，本机地址"127.0.0.1"
-		 */
-		public String getIPValue() {
-			return pro.getProperty("ip", "127.0.0.1");
-		}
-
-		/**
-		 * 读取配置文件端口
-		 * 
-		 * @return 默认端口地址为80
-		 */
-		public int getPortValue() {
-			int result = 80;
-			try {
-				result = Integer.parseInt(pro.getProperty("port", "80"));
-			} catch (NumberFormatException e) {
-				LOGGER.warn("配置文件端口地址异常");
-			}
-			if (result < 1 || result > 65535) {
-				LOGGER.warn("配置文件端口地址不在范围内");
-				result = 80;
-			}
-			return result;
-		}
-
-		/**
-		 * 读取允许最大连接数
-		 * 
-		 * @return 默认返回最大连接数50
-		 */
-		public int getMaxConValue() {
-			int result = 50;
-			try {
-				result = Integer.parseInt(pro.getProperty("max-connection",
-						"50"));
-			} catch (NumberFormatException e) {
-				LOGGER.warn("配置文件，最大连接数异常");
-			}
-			if (result < 1 || result > 1000) {
-				LOGGER.warn("最大连接数不在范围内");
-				result = 5;
-			}
-			return result;
-		}
-
-		/**
-		 * 配置文件读取最小线程池大小
-		 * 
-		 * @return 默认最小为5
-		 */
-		public int getCorePoolSize() {
-			int result = 5;
-			try {
-				result = Integer.parseInt(pro.getProperty("corePoolSize", "5"));
-			} catch (NumberFormatException e) {
-				LOGGER.warn("配置文件最小线程池大小异常");
-			}
-			if (result < 1 || result > 1000) {
-				LOGGER.warn("最小线程池大小不在范围内");
-				result = 5;
-			}
-			return result;
-		}
-
-		/**
-		 * 读取配置文件最大线程数
-		 * 
-		 * @return 线程数
-		 */
-		public int getMaxNumPoolSize() {
-			int result = 20;
-			try {
-				result = Integer.parseInt(pro.getProperty("maximumPoolSize",
-						"20"));
-			} catch (NumberFormatException e) {
-				LOGGER.warn("最大线程数量错误");
-			}
-			if (result < 1 || result > 10000) {
-				LOGGER.warn("线程数设置不在范围内");
-				result = 20;
-			}
-			return result;
-		}
-
-		/**
-		 * 读取配置文件 KeepAliveTime
-		 * 
-		 * @return KeepAliveTime值
-		 */
-		public int getKeepAliveTime() {
-			int result = 30;
-			try {
-				result = Integer.parseInt(pro
-						.getProperty("keepAliveTime", "60"));
-			} catch (NumberFormatException e) {
-				LOGGER.warn("保活时间转换错误");
-			}
-			if (result < 20 || result > 6000) {
-				LOGGER.warn("保活时间不在阈值内");
-				result = 30;
-			}
-			return result;
 		}
 	}
 
@@ -276,9 +160,9 @@ public class Server {
 		 * 读取配置文件
 		 */
 		private void initProperties() {
-			this.corePoolSize = config.getCorePoolSize();
-			this.maxNumPoolSize = config.getMaxNumPoolSize();
-			this.keepAliveTime = config.getKeepAliveTime();
+			this.corePoolSize = config.getInt("corePoolSize");
+			this.maxNumPoolSize = config.getInt("maximumPoolSize");
+			this.keepAliveTime = config.getInt("keepAliveTime");
 			this.block_queue = new ArrayBlockingQueue<Runnable>(5);
 			this.handler = new ThreadPoolExecutor.DiscardOldestPolicy();
 		}
@@ -292,6 +176,29 @@ public class Server {
 					this.maxNumPoolSize, this.keepAliveTime, this.time_unit,
 					this.block_queue, this.handler);
 			LOGGER.info("线程池创建结束");
+		}
+	}
+
+	/**
+	 * 服务器线程内部类
+	 * 
+	 * @author Peng.Zezhou
+	 *
+	 */
+	public class ServerThread implements Runnable {
+		/**
+		 * 主要功能函数
+		 */
+		public void run() {
+			if (Server.getInstance().isStop()) {
+				return;
+			}
+			Connector connector = new Connector();
+			if (-1 == connector.requestMonitor()) {
+				LOGGER.info("server fail inited");
+			} else {
+				LOGGER.info("server inited");
+			}
 		}
 	}
 }
