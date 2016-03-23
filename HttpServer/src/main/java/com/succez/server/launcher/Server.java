@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.succez.server.connector.Connector;
-import com.succez.server.connector.ThreadPoolTask;
+import com.succez.server.resolver.Resolver;
 import com.succez.server.util.ConfigInfo;
 import com.succez.server.util.Constant;
 import com.succez.server.util.Method;
@@ -185,7 +185,7 @@ public class Server {
 	 * @author Peng.Zezhou
 	 *
 	 */
-	public class ServerThread implements Runnable {
+	class ServerThread implements Runnable {
 		/**
 		 * 主要功能函数
 		 */
@@ -199,6 +199,33 @@ public class Server {
 			} else {
 				LOGGER.info("server inited");
 			}
+		}
+	}
+	/**
+	 * 线程池任务
+	 * 
+	 * @author Peng.Zezhou
+	 *
+	 */
+	
+	class ThreadPoolTask implements Runnable {
+		private Socket socket;
+
+		/**
+		 * socket连接
+		 * 
+		 * @param socket
+		 */
+		public ThreadPoolTask(Socket socket) {
+			this.socket = socket;
+		}
+
+		/**
+		 * 主要任务
+		 */
+		public void run() {
+			LOGGER.info("开始处理外部请求");
+			new Resolver(socket);
 		}
 	}
 }
