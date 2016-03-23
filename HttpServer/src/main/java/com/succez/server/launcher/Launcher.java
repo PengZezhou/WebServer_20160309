@@ -28,8 +28,6 @@ public class Launcher {
 		Server.getInstance();
 		LOGGER.info("start command monitor ...");
 		commandMonitor();
-		LOGGER.info("exiting server ...");
-		exitServer();
 	}
 
 	/**
@@ -45,6 +43,8 @@ public class Launcher {
 		while (true) {
 			str = scanner.nextLine();
 			if (Constant.EXIT.equals(str)) {
+				LOGGER.info("exiting server ...");
+				Server.getInstance().stop();
 				break;
 			} else if (Constant.HELP.equals(str)) {
 				System.out.println(Constant.PROMT);
@@ -53,21 +53,7 @@ public class Launcher {
 				continue;
 			}
 		}
-		scanner.close();
+		Method.closeStream(scanner);
 		LOGGER.info("command monitor exited");
-	}
-
-	/**
-	 * 退出服务器前的资源
-	 * 
-	 */
-	private static final void exitServer() {
-		LOGGER.info("server cleanning...");
-		LOGGER.info("关闭线程池...");
-		ThreadPool.getInstance().thread_pool.shutdown();
-		LOGGER.info("线程池关闭");
-		LOGGER.info("关闭serversocket...");
-		Method.closeStream(Server.getInstance().server_socket);
-		LOGGER.info("server exited");
 	}
 }

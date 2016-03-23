@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.succez.server.launcher.Server;
-import com.succez.server.launcher.ThreadPool;
 
 /**
  * 服务器线程
@@ -20,8 +19,7 @@ public class ServerThread implements Runnable {
 	 * 主要功能函数
 	 */
 	public void run() {
-		if (Server.getInstance().server_socket.isClosed()
-				|| ThreadPool.getInstance().thread_pool.isShutdown()) {
+		if (Server.getInstance().isStop()) {
 			return;
 		}
 		Connector connector = new Connector();

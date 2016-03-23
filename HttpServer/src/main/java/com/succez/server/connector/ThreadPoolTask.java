@@ -21,7 +21,7 @@ public class ThreadPoolTask implements Runnable {
 	 * 
 	 * @param socket
 	 */
-	ThreadPoolTask(Socket socket) {
+	public ThreadPoolTask(Socket socket) {
 		this.socket = socket;
 	}
 

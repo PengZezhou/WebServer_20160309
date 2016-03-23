@@ -3,12 +3,14 @@ package com.succez.server.launcher;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.UnknownHostException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.succez.server.connector.ServerThread;
+import com.succez.server.connector.ThreadPoolTask;
 import com.succez.server.util.Method;
 
 public class Server {
@@ -26,11 +28,48 @@ public class Server {
 		return instance;
 	}
 
+	/**
+	 * 清理服务器资源
+	 */
+	public void stop() {
+		LOGGER.info("server cleanning...");
+		stop = true;
+		LOGGER.info("关闭线程池...");
+		pool.thread_pool.shutdown();
+		LOGGER.info("线程池关闭");
+		LOGGER.info("关闭serversocket...");
+		Method.closeStream(server_socket);
+		LOGGER.info("server exited");
+	}
+	
+	/**
+	 * 判断服务器是否停止
+	 * @return
+	 */
+	public boolean isStop(){
+		return this.stop;
+	}
+	
+	/**
+	 * 执行线程任务
+	 * @param socket
+	 */
+	public void excuteTask(Socket socket){
+		pool.thread_pool.execute(new ThreadPoolTask(socket));
+	}
+	
+	/**
+	 * 获取server_socket
+	 * @return
+	 */
+	public ServerSocket getServerSocket(){
+		return server_socket;
+	}
 	// 服务器线程池
-	public ThreadPool pool = null;
+	private ThreadPool pool = null;
 	// serversocket
-	public ServerSocket server_socket = null;
-
+	private ServerSocket server_socket = null;
+	private boolean stop = false;
 	private int port = 8080;
 	private int max_connection = 100;
 	private String ip = "127.0.0.1";
