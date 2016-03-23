@@ -20,16 +20,15 @@ import com.succez.server.http.Response;
  */
 public class Method {
 	private static final Logger LOGGER = Logger.getLogger(Method.class);
-	private static final Properties pro = getProperties();
 
 	/**
 	 * 获取配置文件类
 	 * 
 	 * @return Properties
 	 */
-	private static final Properties getProperties() {
+	public static final Properties getProperties(String path) {
 		Properties pro = new Properties();
-		File file = new File(Constant.SERVER_CONFIG_INFO);
+		File file = new File(path);
 		InputStream stream = null;
 		if (!file.exists()) {
 			LOGGER.error("配置文件已被移动");
@@ -46,110 +45,6 @@ public class Method {
 			Method.closeStream(stream);
 		}
 		return pro;
-	}
-
-	/**
-	 * 读取配置文件ip地址ַ
-	 * 
-	 * @return ip地址默认返回，本机地址"127.0.0.1"
-	 */
-	public static final String getIPValue() {
-		return pro.getProperty("ip", "127.0.0.1");
-	}
-
-	/**
-	 * 读取配置文件端口
-	 * 
-	 * @return 默认端口地址为80
-	 */
-	public static final int getPortValue() {
-		int result = 80;
-		try {
-			result = Integer.parseInt(pro.getProperty("port", "80"));
-		} catch (NumberFormatException e) {
-			LOGGER.warn("配置文件端口地址异常");
-		}
-		if (result < 1 || result > 65535) {
-			LOGGER.warn("配置文件端口地址不在范围内");
-			result = 80;
-		}
-		return result;
-	}
-
-	/**
-	 * 读取允许最大连接数
-	 * 
-	 * @return 默认返回最大连接数50
-	 */
-	public static final int getMaxConValue() {
-		int result = 50;
-		try {
-			result = Integer.parseInt(pro.getProperty("max-connection", "50"));
-		} catch (NumberFormatException e) {
-			LOGGER.warn("配置文件，最大连接数异常");
-		}
-		if (result < 1 || result > 1000) {
-			LOGGER.warn("最大连接数不在范围内");
-			result = 5;
-		}
-		return result;
-	}
-
-	/**
-	 * 配置文件读取最小线程池大小
-	 * 
-	 * @return 默认最小为5
-	 */
-	public static final int getCorePoolSize() {
-		int result = 5;
-		try {
-			result = Integer.parseInt(pro.getProperty("corePoolSize", "5"));
-		} catch (NumberFormatException e) {
-			LOGGER.warn("配置文件最小线程池大小异常");
-		}
-		if (result < 1 || result > 1000) {
-			LOGGER.warn("最小线程池大小不在范围内");
-			result = 5;
-		}
-		return result;
-	}
-
-	/**
-	 * 读取配置文件最大线程数
-	 * 
-	 * @return 线程数
-	 */
-	public static final int getMaxNumPoolSize() {
-		int result = 20;
-		try {
-			result = Integer.parseInt(pro.getProperty("maximumPoolSize", "20"));
-		} catch (NumberFormatException e) {
-			LOGGER.warn("最大线程数量错误");
-		}
-		if (result < 1 || result > 10000) {
-			LOGGER.warn("线程数设置不在范围内");
-			result = 20;
-		}
-		return result;
-	}
-
-	/**
-	 * 读取配置文件 KeepAliveTime
-	 * 
-	 * @return KeepAliveTime值
-	 */
-	public static final int getKeepAliveTime() {
-		int result = 30;
-		try {
-			result = Integer.parseInt(pro.getProperty("keepAliveTime", "60"));
-		} catch (NumberFormatException e) {
-			LOGGER.warn("保活时间转换错误");
-		}
-		if (result < 20 || result > 6000) {
-			LOGGER.warn("保活时间不在阈值内");
-			result = 30;
-		}
-		return result;
 	}
 
 	/**

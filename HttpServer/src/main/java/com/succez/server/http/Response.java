@@ -8,19 +8,19 @@ package com.succez.server.http;
  */
 public class Response {
 
-	// http�汾
+	// http协议头
 	private String HttpVersion = "HTTP/1.1 200 OK";
-	// Ӧ������
+	// 日期
 	private String Date = null;
-	// ������Ϣ
+	// 保活时间
 	private String Connection = "Keep-Alive";
-	// ���ݳ���
+	// 内容长度
 	private String Content_Length = null;
-	// ��������
+	// 内容类型
 	private String Content_Type = "text/plain";
-	// �������
+	// 缓存控制
 	private String Cache_control = null;
-	// ǿ�����������
+	// 强制下载
 	private String Content_Disposition = null;
 
 	public String getContent_Disposition() {
