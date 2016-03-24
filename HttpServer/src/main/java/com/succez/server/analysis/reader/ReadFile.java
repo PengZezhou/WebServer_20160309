@@ -1,15 +1,14 @@
 package com.succez.server.analysis.reader;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.Socket;
+import java.io.IOException;
+import java.io.PrintStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.succez.server.analysis.FileConfig;
 import com.succez.server.http.Response;
-import com.succez.server.responser.Handler;
 import com.succez.server.util.Method;
 
 /**
@@ -25,18 +24,19 @@ public class ReadFile {
 	/**
 	 * 构造函数
 	 * 
-	 * @param socket
-	 *            客户连接socket
+	 * @param pstream
+	 *            写客户端流
 	 * @param file
 	 *            请求的预览文件
 	 */
-	public ReadFile(Socket socket, File file) {
-		this.socket = socket;
+	public ReadFile(PrintStream pstream, File file) {
+		this.pstream = pstream;
 		this.file = file;
-		new Handler(this.socket, this.convertFromFile());
+		convertFromFile();
+		Method.closeStream(this.pstream);
 	}
 
-	private Socket socket = null;
+	private PrintStream pstream = null;
 	private File file = null;
 
 	/**
@@ -46,26 +46,24 @@ public class ReadFile {
 	 *            请求的预览文件
 	 * @return 字符串
 	 */
-	private String convertFromFile() {
-		StringBuilder sb = new StringBuilder();
+	private void convertFromFile() {
 		// 响应头设置
 		Response r = new Response();
 		String encode = Method.getFileEncode(file);
+		if (encode.toLowerCase().equals("gbk")) {
+			r.setContent_Type("text/plain;charset=" + encode);
+		}
 		if (fileHtmlRead(file)) {
 			r.setContent_Type("text/html;charset=" + encode);
 		}
-		sb.append(r.toString());
+		this.pstream.println(r.toString());
 
-		String str = null;
 		LOGGER.info("预览文件转换开始");
-		byte[] bytes = Method.file2buf(file);
 		try {
-			str = new String(bytes, encode);
-		} catch (UnsupportedEncodingException e) {
-			LOGGER.error("字符串转换指定编码设置错误");
+			this.pstream.write(Method.file2buf(file));
+		} catch (IOException e) {
+			LOGGER.info("文件写入流出错，IO异常");
 		}
-		sb.append(str);
-		return sb.toString();
 	}
 
 	/**

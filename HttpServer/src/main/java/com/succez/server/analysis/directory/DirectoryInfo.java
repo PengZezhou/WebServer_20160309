@@ -1,13 +1,9 @@
 package com.succez.server.analysis.directory;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.Socket;
+import java.io.PrintStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.succez.server.responser.Handler;
+import com.succez.server.http.Response;
 import com.succez.server.util.Method;
 
 /**
@@ -17,38 +13,52 @@ import com.succez.server.util.Method;
  *
  */
 public class DirectoryInfo {
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(DirectoryInfo.class);
-
+	
+	private PrintStream pstream;
 	/**
 	 * 目录下文件列表
 	 * 
-	 * @param socket
-	 *            客户连接socket
+	 * @param pstream
+	 *            写客户端流
 	 * @param file
 	 *            用户请求的文件夹
 	 */
-	public DirectoryInfo(Socket socket, File file) {
-		this.file = file;
-		new Handler(socket, this.listFromDirectory());
+	public DirectoryInfo(PrintStream pstream, File file) {
+		this.pstream = pstream;
+		directoryToHtml(file);
+		Method.closeStream(this.pstream);
 	}
-
-	private File file = null;
-
+	
 	/**
-	 * 列出目录文件信息
+	 * 将目录信息转化为html格式
 	 * 
 	 * @param file
-	 *            用户请求的文件夹
-	 * @return 文件列表信息
+	 *            目录
+	 * @return
 	 */
-	private String listFromDirectory() {
-		String str = null;
-		try {
-			str = new String(Method.directoryToHtml(file).getBytes(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			LOGGER.error("文件列表信息转换出错");
+	private void directoryToHtml(File file) {
+		Response r = new Response();
+		r.setContent_Type("text/html;charset=utf-8");
+		this.pstream.println(r.toString());
+		this.pstream.println("<head><title>disk-D:\\</title><link rel='shortcut icon' href='/favicon.ico'/></head>");
+		this.pstream.println("<a href='/'>.</a><br/>");
+		this.pstream.println("<a href='javascript:history.go(-1)'>..</a><br/>");
+		File[] arr = file.listFiles();
+		for (File f : arr) {
+			String s = null;
+			char c = f.getName().charAt(0);
+			if (c == '.' || c == '~' || c == '$') {
+				continue;
+			} else if (f.isHidden()) {
+				continue;
+			} else if (f.isFile()) {
+				s = String.format("<a href='%s' target='_blank'>%s</a><br/>", f
+						.getPath().replace('\\', '/'), f.getName());
+			} else {
+				s = String.format("<a href='%s'>%s</a><br/>", f.getPath()
+						.replace('\\', '/'), f.getName());
+			}
+			this.pstream.println(s);
 		}
-		return str;
 	}
 }

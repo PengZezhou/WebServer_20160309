@@ -3,8 +3,7 @@ package com.succez.server.analysis.downloader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Socket;
+import java.io.PrintStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
@@ -28,15 +27,15 @@ public class FileDownload {
 	/**
 	 * 构造函数
 	 * 
-	 * @param socket
+	 * @param pstream
 	 */
-	public FileDownload(Socket socket, File file) {
-		this.socket = socket;
+	public FileDownload(PrintStream pstream, File file) {
+		this.pstream = pstream;
 		this.file = file;
 		this.downloadFile();
 	}
 
-	private Socket socket;
+	private PrintStream pstream;
 	private File file = null;
 
 	/**
@@ -47,13 +46,13 @@ public class FileDownload {
 	private void downloadFile() {
 		LOGGER.info("开始下载文件");
 		FileInputStream fis = null;
-		OutputStream out = null;
 		FileChannel fileChannel = null;
 		try {
-			out = socket.getOutputStream();
 			Response r = new Response();
+			r.setContent_Type("application/octet-stream");
 			r.setContent_Disposition(String.format("attachment"));
-			out.write(r.toString().getBytes());
+			this.pstream.println(r.toString());
+			
 			fis = new FileInputStream(file);
 			fileChannel = fis.getChannel();
 			ByteBuffer bf = ByteBuffer.allocate(Constant.BYTE_BUFFER_COPACITY);
@@ -67,7 +66,7 @@ public class FileDownload {
 				while (bf.hasRemaining()) {
 					nGet = Math.min(bf.remaining(), Constant.BUFFER_SIZE);
 					bf.get(bytes, 0, nGet);
-					out.write(bytes);
+					this.pstream.write(bytes);
 				}
 				bf.clear();
 			}
@@ -75,9 +74,8 @@ public class FileDownload {
 			LOGGER.error("文件下载出现异常");
 		} finally {
 			Method.closeStream(fis);
-			Method.closeStream(out);
+			Method.closeStream(this.pstream);
 			Method.closeStream(fileChannel);
-			Method.closeStream(socket);
 		}
 		LOGGER.info("文件下载结束");
 	}

@@ -1,7 +1,7 @@
 package com.succez.server.analysis;
 
 import java.io.File;
-import java.net.Socket;
+import java.io.PrintStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,14 +20,14 @@ public class Analysis {
 	 * @param socket
 	 * @param url
 	 */
-	public Analysis(Socket socket, String url) {
+	public Analysis(PrintStream pstream, String url) {
 		this.url = url;
-		this.socket = socket;
+		this.pstream = pstream;
 		this.urlType();
 		this.processUrl();
 	}
 
-	private Socket socket;
+	private PrintStream pstream;
 	private String url;
 	private int type;
 
@@ -65,20 +65,20 @@ public class Analysis {
 		File file = new File(url);
 		switch (type) {
 		case 1:
-			new DirectoryInfo(socket, file);
+			new DirectoryInfo(pstream, file);
 			break;
 		case 2:
-			new ReadFile(socket, file);
+			new ReadFile(pstream, file);
 			break;
 		case 3:
-			new ReadFile(socket, new File(FileConfig.getInstance()
+			new ReadFile(pstream, new File(FileConfig.getInstance()
 					.getError_404()));
 			break;
 		case 4:
-			new FileDownload(socket, file);
+			new FileDownload(pstream, file);
 			break;
 		default:
-			new ReadFile(socket, new File(FileConfig.getInstance()
+			new ReadFile(pstream, new File(FileConfig.getInstance()
 					.getError_500()));
 			break;
 		}

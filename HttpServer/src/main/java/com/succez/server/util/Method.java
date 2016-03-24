@@ -10,8 +10,6 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import com.succez.server.http.Response;
-
 /**
  * 通用逻辑
  * 
@@ -141,40 +139,5 @@ public class Method {
 			Method.closeStream(fis);
 		}
 		return b;
-	}
-
-	/**
-	 * 将目录信息转化为html格式
-	 * 
-	 * @param file
-	 *            目录
-	 * @return
-	 */
-	public static String directoryToHtml(File file) {
-		StringBuilder sb = new StringBuilder();
-		Response r = new Response();
-		r.setContent_Type("text/html;charset=gbk");
-		sb.append(r.toString());
-		sb.append("<head><title>disk-D:\\</title><link rel='shortcut icon' href='/favicon.ico'/></head>");
-		sb.append("<a href='/'>.</a><br/>");
-		sb.append("<a href='javascript:history.go(-1)'>..</a><br/>");
-		File[] arr = file.listFiles();
-		for (File f : arr) {
-			String s = null;
-			char c = f.getName().charAt(0);
-			if (c == '.' || c == '~' || c == '$') {
-				continue;
-			} else if (f.isHidden()) {
-				continue;
-			} else if (f.isFile()) {
-				s = String.format("<a href='%s' target='_blank'>%s</a><br/>", f
-						.getPath().replace('\\', '/'), f.getName());
-			} else {
-				s = String.format("<a href='%s'>%s</a><br/>", f.getPath()
-						.replace('\\', '/'), f.getName());
-			}
-			sb.append(s);
-		}
-		return sb.toString();
 	}
 }

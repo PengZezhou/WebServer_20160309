@@ -17,7 +17,7 @@ public class Response {
 	// 内容长度
 	private String Content_Length = null;
 	// 内容类型
-	private String Content_Type = "text/plain";
+	private String Content_Type = "text/plain;charset=utf-8";
 	// 缓存控制
 	private String Cache_control = null;
 	// 强制下载
@@ -103,7 +103,6 @@ public class Response {
 		if (Content_Disposition != null) {
 			sb.append("Content-Disposition: " + Content_Disposition + "\r\n");
 		}
-		sb.append("\r\n");
 		return sb.toString();
 	}
 }

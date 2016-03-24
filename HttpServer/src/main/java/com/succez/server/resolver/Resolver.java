@@ -1,6 +1,7 @@
 package com.succez.server.resolver;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.net.URLDecoder;
 
@@ -47,7 +48,7 @@ public class Resolver {
 			HttpRequest req = con.receiveRequestHeader();
 			String uri = URLDecoder.decode(req.getRequestLine().getUri(),
 					Constant.SERVER_ENCODE);
-			new Analysis(this.socket, uri);
+			new Analysis(new PrintStream(this.socket.getOutputStream(),true), uri);
 		} catch (IOException e) {
 			LOGGER.info("url解析异常，IO异常");
 		} catch (HttpException e) {
