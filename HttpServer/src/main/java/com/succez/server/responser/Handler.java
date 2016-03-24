@@ -36,9 +36,10 @@ public class Handler {
 	 *            待传输字符
 	 */
 	private void responseHandler(String str) {
-		byte[] bytes = str.getBytes();
+		byte[] bytes;
 		OutputStream out = null;
 		try {
+			bytes = str.getBytes("GBK");
 			out = socket.getOutputStream();
 			out.write(bytes);
 			out.flush();

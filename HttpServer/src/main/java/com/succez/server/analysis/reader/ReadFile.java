@@ -50,8 +50,9 @@ public class ReadFile {
 		StringBuilder sb = new StringBuilder();
 		// 响应头设置
 		Response r = new Response();
+		String encode = Method.getFileEncode(file);
 		if (fileHtmlRead(file)) {
-			r.setContent_Type("text/html");
+			r.setContent_Type("text/html;charset=" + encode);
 		}
 		sb.append(r.toString());
 
@@ -59,7 +60,7 @@ public class ReadFile {
 		LOGGER.info("预览文件转换开始");
 		byte[] bytes = Method.file2buf(file);
 		try {
-			str = new String(bytes, Method.getFileEncode(file));
+			str = new String(bytes, encode);
 		} catch (UnsupportedEncodingException e) {
 			LOGGER.error("字符串转换指定编码设置错误");
 		}

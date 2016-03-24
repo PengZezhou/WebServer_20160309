@@ -153,7 +153,7 @@ public class Method {
 	public static String directoryToHtml(File file) {
 		StringBuilder sb = new StringBuilder();
 		Response r = new Response();
-		r.setContent_Type("text/html");
+		r.setContent_Type("text/html;charset=gbk");
 		sb.append(r.toString());
 		sb.append("<head><title>disk-D:\\</title><link rel='shortcut icon' href='/favicon.ico'/></head>");
 		sb.append("<a href='/'>.</a><br/>");

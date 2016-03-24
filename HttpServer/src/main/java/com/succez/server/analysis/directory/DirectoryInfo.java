@@ -45,7 +45,7 @@ public class DirectoryInfo {
 	private String listFromDirectory() {
 		String str = null;
 		try {
-			str = new String(Method.directoryToHtml(file).getBytes(), "GBK");
+			str = new String(Method.directoryToHtml(file).getBytes(), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			LOGGER.error("文件列表信息转换出错");
 		}
