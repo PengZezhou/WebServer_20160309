@@ -25,19 +25,23 @@ public class Connector {
 	public int requestMonitor() {
 		LOGGER.info("开始接受请求线程任务");
 		int flag = 0;
+		Server sv = Server.getInstance();
+		Socket socket;
 		while (!Constant.SHUTDOWN) {
-			if (Server.getInstance().isStop()) {
+			if (Server.isStop()) {
 				break;
 			}
 			try {
-				Socket socket = Server.getInstance().startListen();
+				LOGGER.info("监听请求"+sv.getServerSocket().toString());
+				socket = sv.getServerSocket().accept();
 				// 执行线程池任务
-				Server.getInstance().excuteTask(socket);
+				sv.excuteTask(socket);
 			} catch (IOException e) {
 				LOGGER.error("创建线程任务出错");
 				flag = -1;
 			}
 		}
+		LOGGER.info("退出监听任务");
 		return flag;
 	}
 }

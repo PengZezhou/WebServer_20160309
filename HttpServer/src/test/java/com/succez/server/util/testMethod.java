@@ -42,28 +42,6 @@ public class testMethod {
 	}
 
 	@Test
-	public void testFileDownload() {
-		String path = "D:\\不同编码的TXT\\ANSI编码.txt";
-		Assert.assertEquals(false, Method.fileDownload(new File(path))
-				.booleanValue());
-
-		path = "D:\\设计书\\概要设计说明书模板.docx";
-		Assert.assertEquals(true, Method.fileDownload(new File(path))
-				.booleanValue());
-	}
-
-	@Test
-	public void testFileHtmlRead() {
-		String path = "D:\\不同编码的TXT\\ANSI编码.txt";
-		Assert.assertEquals(false, Method.fileHtmlRead(new File(path))
-				.booleanValue());
-
-		path = "D:\\clonegithub\\WebServer_20160309\\HttpServer\\target\\classes\\error\\404.html";
-		Assert.assertEquals(true, Method.fileHtmlRead(new File(path))
-				.booleanValue());
-	}
-
-	@Test
 	public void testFile2buf() {
 		String path = "D:\\不同编码的TXT\\ANSI编码.txt";
 		File file = new File(path);

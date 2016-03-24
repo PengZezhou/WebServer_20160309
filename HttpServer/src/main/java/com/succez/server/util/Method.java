@@ -98,53 +98,6 @@ public class Method {
 	}
 
 	/**
-	 * 判断文件是否是可下载类型
-	 * 
-	 * @param file
-	 *            待判断文件
-	 * @return
-	 */
-	public static Boolean fileDownload(File file) {
-		String name = file.getName();
-		int dot = name.lastIndexOf('.');
-		if (dot == -1) {
-			return false;
-		}
-		String ext = name.substring(dot, name.length()).toLowerCase();
-		String[] arr = Constant.DOWNLOAD_EXTEN_NAME.split("\\|");
-		for (String str : arr) {
-			if (ext.equals(str)) {
-				LOGGER.info("文件将被下载处理");
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * 读取html文件
-	 * 
-	 * @param file
-	 * @return
-	 */
-	public static Boolean fileHtmlRead(File file) {
-		String name = file.getName();
-		int dot = name.lastIndexOf('.');
-		if (dot == -1) {
-			return false;
-		}
-		String ext = name.substring(dot, name.length()).toLowerCase();
-		String[] arr = Constant.HTML_EXTEN_NAME.split("\\|");
-		for (String str : arr) {
-			if (ext.equals(str)) {
-				LOGGER.info("解析html文件");
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * 将文件转化为字节数组
 	 * 
 	 * <pre>
@@ -202,7 +155,7 @@ public class Method {
 		Response r = new Response();
 		r.setContent_Type("text/html");
 		sb.append(r.toString());
-		sb.append(Constant.HTML_HEAD);
+		sb.append("<head><title>disk-D:\\</title><link rel='shortcut icon' href='/favicon.ico'/></head>");
 		sb.append("<a href='/'>.</a><br/>");
 		sb.append("<a href='javascript:history.go(-1)'>..</a><br/>");
 		File[] arr = file.listFiles();

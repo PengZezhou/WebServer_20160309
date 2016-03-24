@@ -7,6 +7,7 @@ import java.net.Socket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.succez.server.analysis.FileConfig;
 import com.succez.server.http.Response;
 import com.succez.server.responser.Handler;
 import com.succez.server.util.Method;
@@ -49,7 +50,7 @@ public class ReadFile {
 		StringBuilder sb = new StringBuilder();
 		// 响应头设置
 		Response r = new Response();
-		if (Method.fileHtmlRead(file)) {
+		if (fileHtmlRead(file)) {
 			r.setContent_Type("text/html");
 		}
 		sb.append(r.toString());
@@ -64,5 +65,28 @@ public class ReadFile {
 		}
 		sb.append(str);
 		return sb.toString();
+	}
+
+	/**
+	 * 读取html文件
+	 * 
+	 * @param file
+	 * @return
+	 */
+	private Boolean fileHtmlRead(File file) {
+		String name = file.getName();
+		int dot = name.lastIndexOf('.');
+		if (dot == -1) {
+			return false;
+		}
+		String ext = name.substring(dot, name.length()).toLowerCase();
+		String[] arr = FileConfig.getInstance().getHtml_extern().split("\\|");
+		for (String str : arr) {
+			if (ext.equals(str)) {
+				LOGGER.info("解析html文件");
+				return true;
+			}
+		}
+		return false;
 	}
 }

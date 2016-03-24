@@ -42,7 +42,7 @@ public class Server {
 		LOGGER.info("server cleanning...");
 		stop = true;
 		LOGGER.info("关闭线程池...");
-		pool.thread_pool.shutdown();
+		pool.shutdown();;
 		LOGGER.info("线程池关闭");
 		LOGGER.info("关闭serversocket...");
 		Method.closeStream(server_socket);
@@ -54,8 +54,8 @@ public class Server {
 	 * 
 	 * @return
 	 */
-	public boolean isStop() {
-		return this.stop;
+	public static boolean isStop() {
+		return stop;
 	}
 
 	/**
@@ -64,24 +64,19 @@ public class Server {
 	 * @param socket
 	 */
 	public void excuteTask(Socket socket) {
-		pool.thread_pool.execute(new ThreadPoolTask(socket));
+		pool.execute(new ThreadPoolTask(socket));
 	}
 
-	/**
-	 * 启动server_socket监听
-	 * 
-	 * @return
-	 * @throws IOException
-	 */
-	public Socket startListen() throws IOException {
-		return this.server_socket.accept();
+
+	public ServerSocket getServerSocket() {
+		return this.server_socket;
 	}
 
 	// 服务器线程池
-	private ThreadPool pool = null;
+	private ThreadPoolExecutor pool = null;
 	// serversocket
 	private ServerSocket server_socket = null;
-	private boolean stop;
+	private static boolean stop = false;
 	private int port;
 	private int max_connection;
 	private String ip;
@@ -97,7 +92,8 @@ public class Server {
 			LOGGER.error("服务器初始化失败");
 			return;
 		}
-		pool.thread_pool.execute(new ServerThread());
+		pool.execute(new ServerThread());
+		LOGGER.info("服务器初始化完成");
 	}
 
 	/**
@@ -107,9 +103,9 @@ public class Server {
 		this.ip = config.getString("ip");
 		this.max_connection = config.getInt("max-connection");
 		this.port = config.getInt("port");
+		this.pool = new Pools().getExecutor();
 		this.createServerSocket();
-		this.pool = new ThreadPool();
-		this.stop = false;
+		stop = false;
 	}
 
 	/**
@@ -117,9 +113,9 @@ public class Server {
 	 */
 	private void createServerSocket() {
 		try {
-			server_socket = new ServerSocket(this.port, this.max_connection,
+			this.server_socket = new ServerSocket(this.port, this.max_connection,
 					InetAddress.getByName(this.ip));
-			LOGGER.error("ServerSocket创建成功");
+			LOGGER.info("ServerSocket创建成功");
 			return;
 		} catch (UnknownHostException e) {
 			LOGGER.error("ServerSocket创建失败，位置的主机地址");
@@ -134,7 +130,7 @@ public class Server {
 	 * @author Peng.Zezhou
 	 *
 	 */
-	class ThreadPool {
+	class Pools {
 		public ThreadPoolExecutor getExecutor() {
 			return this.thread_pool;
 		}
@@ -151,7 +147,7 @@ public class Server {
 		/**
 		 * 初始化线程池
 		 */
-		private ThreadPool() {
+		private Pools() {
 			initProperties();
 			createThreadPool();
 		}
@@ -190,7 +186,7 @@ public class Server {
 		 * 主要功能函数
 		 */
 		public void run() {
-			if (Server.getInstance().isStop()) {
+			if (Server.isStop()) {
 				return;
 			}
 			Connector connector = new Connector();

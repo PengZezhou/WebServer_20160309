@@ -16,6 +16,9 @@ public class Constant {
 	public static final String LOG4J_CONFIG_INFO = System
 			.getProperty("user.dir")
 			+ "\\src\\main\\resources\\log4j.properties";
+	public static final String FILE_CONFIG_INFO = System
+			.getProperty("user.dir")
+			+ "\\src\\main\\resources\\file.properties";
 
 	/**
 	 * 命令控制器相关信息，启动器模块常量
@@ -37,18 +40,6 @@ public class Constant {
 	 * 异常响应文件路径，分析处理模块常量
 	 */
 	public static final long FILE_SIZE = 1024 * 1;
-	public static final String ERROR_404 = System.getProperty("user.dir")
-			+ "\\src\\main\\resources\\error\\404.html";
-	public static final String ERROR_500 = System.getProperty("user.dir")
-			+ "\\src\\main\\resources\\error\\500.html";
-
-	/**
-	 * 文件扩展名列表常量
-	 */
-	public static final String DOWNLOAD_EXTEN_NAME = ".pdf|.docx|.xlsx|.iso|.ico|.jpg";
-	public static final String PLAIN_EXTEN_NAME = ".txt";
-	public static final String HTML_EXTEN_NAME = ".html|.htm";
-	public static final String HTML_HEAD = "<head><title>服务器目录D:\\</title><link rel='shortcut icon' href='/favicon.ico'/></head>";
 
 	/**
 	 * 文件下载模块常量
