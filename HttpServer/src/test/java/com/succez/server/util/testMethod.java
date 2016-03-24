@@ -60,12 +60,4 @@ public class testMethod {
 		bytes = Method.file2buf(file);
 		Assert.assertNull(bytes);
 	}
-
-	@Test
-	public void testDirectoryToHtml() {
-		String path = "D:\\不同编码的TXT";
-		File file = new File(path);
-		String str = Method.directoryToHtml(file);
-		Assert.assertNotNull(str);
-	}
 }
