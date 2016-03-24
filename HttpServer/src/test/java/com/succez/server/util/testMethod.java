@@ -41,7 +41,7 @@ public class testMethod {
 		Assert.assertEquals("GBK", code);
 	}
 
-	@Test
+	@Test 
 	public void testFile2buf() {
 		String path = "D:\\不同编码的TXT\\ANSI编码.txt";
 		File file = new File(path);
