@@ -5,7 +5,6 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.URLDecoder;
 
-import org.apache.http.impl.DefaultBHttpServerConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +12,6 @@ import com.succez.server.analysis.Analysis;
 import com.succez.server.analysis.FileConfig;
 import com.succez.server.http.Request;
 import com.succez.server.util.Constant;
-import com.succez.server.util.Method;
 
 /**
  * 解析器
@@ -25,7 +23,6 @@ public class Resolver {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(Resolver.class);
 	private Socket socket;
-	private DefaultBHttpServerConnection con = null;
 
 	/**
 	 * 解析客户连接
@@ -55,7 +52,6 @@ public class Resolver {
 		} catch (IOException e) {
 			LOGGER.info("url解析异常，IO异常");
 		} finally {
-			Method.closeStream(con);
 		}
 	}
 }
