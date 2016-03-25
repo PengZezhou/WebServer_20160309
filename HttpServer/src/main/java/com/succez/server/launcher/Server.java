@@ -42,7 +42,8 @@ public class Server {
 		LOGGER.info("server cleanning...");
 		stop = true;
 		LOGGER.info("关闭线程池...");
-		pool.shutdown();;
+		pool.shutdown();
+		;
 		LOGGER.info("线程池关闭");
 		LOGGER.info("关闭serversocket...");
 		Method.closeStream(server_socket);
@@ -66,7 +67,6 @@ public class Server {
 	public void excuteTask(Socket socket) {
 		pool.execute(new ThreadPoolTask(socket));
 	}
-
 
 	public ServerSocket getServerSocket() {
 		return this.server_socket;
@@ -113,8 +113,8 @@ public class Server {
 	 */
 	private void createServerSocket() {
 		try {
-			this.server_socket = new ServerSocket(this.port, this.max_connection,
-					InetAddress.getByName(this.ip));
+			this.server_socket = new ServerSocket(this.port,
+					this.max_connection, InetAddress.getByName(this.ip));
 			LOGGER.info("ServerSocket创建成功");
 			return;
 		} catch (UnknownHostException e) {
@@ -197,13 +197,14 @@ public class Server {
 			}
 		}
 	}
+
 	/**
 	 * 线程池任务
 	 * 
 	 * @author Peng.Zezhou
 	 *
 	 */
-	
+
 	class ThreadPoolTask implements Runnable {
 		private Socket socket;
 

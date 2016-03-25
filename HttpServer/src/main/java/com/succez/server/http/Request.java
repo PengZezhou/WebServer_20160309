@@ -39,6 +39,11 @@ public class Request {
 		return body;
 	}
 
+	/**
+	 * 请求绑定socket
+	 * 
+	 * @param socket
+	 */
 	public void bind(Socket socket) {
 		try {
 			BufferedReader b = new BufferedReader(new InputStreamReader(

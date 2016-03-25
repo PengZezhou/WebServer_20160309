@@ -52,7 +52,7 @@ public class FileDownload {
 			r.setContent_Type("application/octet-stream");
 			r.setContent_Disposition(String.format("attachment"));
 			this.pstream.println(r.toString());
-			
+
 			fis = new FileInputStream(file);
 			fileChannel = fis.getChannel();
 			ByteBuffer bf = ByteBuffer.allocate(Constant.BYTE_BUFFER_COPACITY);

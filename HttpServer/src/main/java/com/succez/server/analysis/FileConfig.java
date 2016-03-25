@@ -31,26 +31,26 @@ public class FileConfig {
 	private String html_extern;
 
 	public String getError_404() {
-		return error_404.substring(1, this.error_404.length()-1);
+		return error_404.substring(1, this.error_404.length() - 1);
 	}
 
 	public String getError_500() {
-		return error_500.substring(1, this.error_500.length()-1);
+		return error_500.substring(1, this.error_500.length() - 1);
 	}
 
 	public String getDownload_extern() {
-		return download_extern.substring(1, this.download_extern.length()-1);
+		return download_extern.substring(1, this.download_extern.length() - 1);
 	}
 
 	public String getPlain_extern() {
-		return plain_extern.substring(1, this.plain_extern.length()-1);
+		return plain_extern.substring(1, this.plain_extern.length() - 1);
 	}
 
 	public String getHtml_extern() {
-		return html_extern.substring(1, this.html_extern.length()-1);
+		return html_extern.substring(1, this.html_extern.length() - 1);
 	}
 
 	public String getNot_support() {
-		return not_support.substring(1, this.not_support.length()-1);
+		return not_support.substring(1, this.not_support.length() - 1);
 	}
 }
