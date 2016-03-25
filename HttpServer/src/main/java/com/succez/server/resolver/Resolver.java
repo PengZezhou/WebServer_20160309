@@ -5,13 +5,13 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.URLDecoder;
 
-import org.apache.http.HttpException;
-import org.apache.http.HttpRequest;
 import org.apache.http.impl.DefaultBHttpServerConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.succez.server.analysis.Analysis;
+import com.succez.server.analysis.FileConfig;
+import com.succez.server.http.Request;
 import com.succez.server.util.Constant;
 import com.succez.server.util.Method;
 
@@ -43,15 +43,16 @@ public class Resolver {
 	private void urlResolve() {
 		LOGGER.info("开始解析url");
 		try {
-			con = new DefaultBHttpServerConnection(Constant.SERVER_CHACHE);
-			con.bind(socket);
-			HttpRequest req = con.receiveRequestHeader();
-			String uri = URLDecoder.decode(req.getRequestLine().getUri(),
-					Constant.SERVER_ENCODE);
-			new Analysis(new PrintStream(this.socket.getOutputStream(),true), uri);
+			Request r = new Request();
+			r.bind(socket);
+			String uri = URLDecoder.decode(r.getUrl(), Constant.SERVER_ENCODE);
+			if (!r.getType().equals("GET")) {
+				uri = System.getProperty("user.dir")
+						+ FileConfig.getInstance().getNot_support();
+			}
+			new Analysis(new PrintStream(this.socket.getOutputStream(), true),
+					uri);
 		} catch (IOException e) {
-			LOGGER.info("url解析异常，IO异常");
-		} catch (HttpException e) {
 			LOGGER.info("url解析异常，IO异常");
 		} finally {
 			Method.closeStream(con);

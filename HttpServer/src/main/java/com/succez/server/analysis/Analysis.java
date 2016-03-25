@@ -71,15 +71,15 @@ public class Analysis {
 			new ReadFile(pstream, file);
 			break;
 		case 3:
-			new ReadFile(pstream, new File(FileConfig.getInstance()
-					.getError_404()));
+			new ReadFile(pstream, new File(System.getProperty("user.dir")
+					+ FileConfig.getInstance().getError_404()));
 			break;
 		case 4:
 			new FileDownload(pstream, file);
 			break;
 		default:
-			new ReadFile(pstream, new File(FileConfig.getInstance()
-					.getError_500()));
+			new ReadFile(pstream, new File(System.getProperty("user.dir")
+					+ FileConfig.getInstance().getError_500()));
 			break;
 		}
 	}
