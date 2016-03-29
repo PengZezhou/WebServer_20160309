@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
@@ -23,19 +24,19 @@ import com.succez.server.util.Method;
 public class FileDownload {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(FileDownload.class);
-
+ 
 	/**
 	 * 构造函数
 	 * 
 	 * @param pstream
 	 */
-	public FileDownload(PrintStream pstream, File file) {
-		this.pstream = pstream;
+	public FileDownload(Socket socket, File file) {
+		this.socket = socket;
 		this.file = file;
 		this.downloadFile();
 	}
 
-	private PrintStream pstream;
+	private Socket socket;
 	private File file = null;
 
 	/**
@@ -45,13 +46,15 @@ public class FileDownload {
 	 */
 	private void downloadFile() {
 		LOGGER.info("开始下载文件");
+		PrintStream pstream = null;
 		FileInputStream fis = null;
 		FileChannel fileChannel = null;
 		try {
 			Response r = new Response();
+			pstream = new PrintStream(this.socket.getOutputStream(), true);
 			r.setContent_Type("application/octet-stream");
 			r.setContent_Disposition(String.format("attachment"));
-			this.pstream.println(r.toString());
+			pstream.println(r.toString());
 
 			fis = new FileInputStream(file);
 			fileChannel = fis.getChannel();
@@ -66,7 +69,7 @@ public class FileDownload {
 				while (bf.hasRemaining()) {
 					nGet = Math.min(bf.remaining(), Constant.BUFFER_SIZE);
 					bf.get(bytes, 0, nGet);
-					this.pstream.write(bytes);
+					pstream.write(bytes);
 				}
 				bf.clear();
 			}
@@ -74,7 +77,7 @@ public class FileDownload {
 			LOGGER.error("文件下载出现异常");
 		} finally {
 			Method.closeStream(fis);
-			Method.closeStream(this.pstream);
+			Method.closeStream(pstream);
 			Method.closeStream(fileChannel);
 		}
 		LOGGER.info("文件下载结束");

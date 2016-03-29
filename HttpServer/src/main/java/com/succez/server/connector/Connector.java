@@ -32,8 +32,9 @@ public class Connector {
 				break;
 			}
 			try {
-				LOGGER.info("监听请求"+sv.getServerSocket().toString());
+				LOGGER.info("服务器地址"+sv.getServerSocket().toString());
 				socket = sv.getServerSocket().accept();
+				LOGGER.info("客户端连接"+socket.getInetAddress().getHostAddress()+":"+socket.getPort());
 				// 执行线程池任务
 				sv.excuteTask(socket);
 			} catch (IOException e) {

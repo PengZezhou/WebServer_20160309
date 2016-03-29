@@ -1,7 +1,6 @@
 package com.succez.server.resolver;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.Socket;
 import java.net.URLDecoder;
 
@@ -47,8 +46,7 @@ public class Resolver {
 				uri = System.getProperty("user.dir")
 						+ FileConfig.getInstance().getNot_support();
 			}
-			new Analysis(new PrintStream(this.socket.getOutputStream(), true),
-					uri);
+			new Analysis(this.socket, uri);
 		} catch (IOException e) {
 			LOGGER.info("url解析异常，IO异常");
 		} finally {

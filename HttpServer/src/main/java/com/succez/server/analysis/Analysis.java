@@ -1,7 +1,9 @@
 package com.succez.server.analysis;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.net.Socket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,14 +21,17 @@ public class Analysis {
 	 * 
 	 * @param socket
 	 * @param url
+	 * @throws IOException 
 	 */
-	public Analysis(PrintStream pstream, String url) {
+	public Analysis(Socket socket, String url) throws IOException {
 		this.url = url;
-		this.pstream = pstream;
+		this.socket = socket;
+		this.pstream = new PrintStream(this.socket.getOutputStream(), true);
 		this.urlType();
 		this.processUrl();
 	}
 
+	private Socket socket;
 	private PrintStream pstream;
 	private String url;
 	private int type;
@@ -75,7 +80,7 @@ public class Analysis {
 					+ FileConfig.getInstance().getError_404()));
 			break;
 		case 4:
-			new FileDownload(pstream, file);
+			new FileDownload(this.socket, file);
 			break;
 		default:
 			new ReadFile(pstream, new File(System.getProperty("user.dir")
