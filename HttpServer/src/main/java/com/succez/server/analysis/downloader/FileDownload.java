@@ -51,43 +51,21 @@ public class FileDownload {
 		PrintStream pstream = null;
 		FileInputStream fis = null;
 		FileChannel fileChannel = null;
-		long beginPosition = 0;
 		try {
-			Response r = new Response();
 			pstream = new PrintStream(this.socket.getOutputStream(), true);
-			r.setContent_Type("application/octet-stream");
-			r.setContent_Disposition(String.format("attachment"));
-			pstream.println(r.toString());
-
 			fis = new FileInputStream(file);
 			fileChannel = fis.getChannel();
 			ByteBuffer bf = ByteBuffer.allocate(Constant.BYTE_BUFFER_COPACITY);
 			byte[] bytes = new byte[Constant.BUFFER_SIZE];
-			int nRead, nGet;
+			Response r = new Response();
 
-			beginPosition = DownLoadingFile.isExist(this.socket, this.file);
-			LOGGER.info("文件下载起始位置 " + beginPosition);
-			while ((nRead = fileChannel.read(bf, beginPosition)) != -1) {
-				if (nRead == 0) {
-					continue;
-				}
-				bf.flip();
-				while (bf.hasRemaining()) {
-					nGet = Math.min(bf.remaining(), Constant.BUFFER_SIZE);
-					bf.get(bytes, 0, nGet);
-					pstream.write(bytes);
-					beginPosition += nGet;
-				}
-				bf.clear();
-			}
+			r.setContent_Type("application/octet-stream");
+			r.setContent_Disposition(String.format("attachment"));
+			r.setContent_Range(this.responseRange());
+			LOGGER.info("response报文" + r.toString());
+			pstream.println(r.toString());
 
-			if (beginPosition < this.file.length()) {
-				DownLoadingFile.add(this.socket, this.file, beginPosition);
-				LOGGER.info("添加中断记录，文件下载中断位置 " + beginPosition);
-			} else {
-				DownLoadingFile.remove(this.socket, this.file);
-				LOGGER.info("文件下载完成，记录列表中移除 ");
-			}
+			this.download(pstream, fileChannel, bf, bytes);
 		} catch (IOException e) {
 			LOGGER.error("文件下载出现异常");
 		} finally {
@@ -96,5 +74,71 @@ public class FileDownload {
 			Method.closeStream(fileChannel);
 		}
 		LOGGER.info("文件下载结束");
+	}
+
+	/**
+	 * 下载文件内容
+	 * 
+	 * @param pstream
+	 * @param fileChannel
+	 * @param bf
+	 * @param bytes
+	 * @throws IOException
+	 */
+	private void download(PrintStream pstream, FileChannel fileChannel,
+			ByteBuffer bf, byte[] bytes) throws IOException {
+		long beginPosition;
+		int nRead;
+		int nGet;
+		beginPosition = DownLoadingFile.isExist(this.socket, this.file);
+		LOGGER.info("文件下载起始位置 " + beginPosition);
+		while ((nRead = fileChannel.read(bf, beginPosition)) != -1) {
+			if (nRead == 0) {
+				continue;
+			}
+			bf.flip();
+			while (bf.hasRemaining()) {
+				nGet = Math.min(bf.remaining(), Constant.BUFFER_SIZE);
+				bf.get(bytes, 0, nGet);
+				pstream.write(bytes);
+				beginPosition += nGet;
+			}
+			bf.clear();
+		}
+
+		if (beginPosition < this.file.length()) {
+			DownLoadingFile.add(this.socket, this.file, beginPosition);
+			LOGGER.info("添加中断记录，文件下载中断位置 " + beginPosition);
+		} else {
+			DownLoadingFile.remove(this.socket, this.file);
+			LOGGER.info("文件下载完成，记录列表中移除 ");
+		}
+	}
+
+	/**
+	 * 解析request的Range部分，返回response的content-range部分
+	 * 
+	 * @return
+	 */
+	private String responseRange() {
+		if (this.range == null) {
+			return null;
+		} else {
+			StringBuilder sb = new StringBuilder();
+			String[] strs = this.range.split("=");
+			sb.append(strs[0]);
+			sb.append(' ');
+			String[] strs2 = strs[1].split("-");
+			if (strs2.length > 1) {
+				sb.append(strs[1]);
+			} else {
+				sb.append(strs2[0]);
+				sb.append('-');
+				sb.append(this.file.length() - 1);
+			}
+			sb.append('/');
+			sb.append(this.file.length());
+			return sb.toString();
+		}
 	}
 }
