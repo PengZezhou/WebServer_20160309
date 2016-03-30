@@ -15,7 +15,7 @@ public class Response {
 	// 保活时间
 	private String Connection = "Keep-Alive";
 	// 内容长度
-	private String Content_Length = null;
+	private long Content_Length = 0;
 	// 内容类型
 	private String Content_Type = "text/plain;charset=utf-8";
 	// 缓存控制
@@ -65,11 +65,11 @@ public class Response {
 		Connection = connection;
 	}
 
-	public String getContent_Length() {
+	public long getContent_Length() {
 		return Content_Length;
 	}
 
-	public void setContent_Length(String content_Length) {
+	public void setContent_Length(long content_Length) {
 		Content_Length = content_Length;
 	}
 
@@ -101,7 +101,7 @@ public class Response {
 		if (Connection != null) {
 			sb.append("Connection: " + Connection + "\r\n");
 		}
-		if (Content_Length != null) {
+		if (Content_Length != 0) {
 			sb.append("Content-Length: " + Content_Length + "\r\n");
 		}
 		if (Content_Type != null) {

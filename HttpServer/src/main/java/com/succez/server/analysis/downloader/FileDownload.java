@@ -62,6 +62,7 @@ public class FileDownload {
 			r.setContent_Type("application/octet-stream");
 			r.setContent_Disposition(String.format("attachment"));
 			r.setContent_Range(this.responseRange());
+			r.setContent_Length(this.file.length());
 			LOGGER.info("response报文" + r.toString());
 			pstream.println(r.toString());
 
