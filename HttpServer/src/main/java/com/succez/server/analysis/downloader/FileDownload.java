@@ -24,7 +24,7 @@ import com.succez.server.util.Method;
 public class FileDownload {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(FileDownload.class);
- 
+
 	/**
 	 * 构造函数
 	 * 
@@ -49,6 +49,7 @@ public class FileDownload {
 		PrintStream pstream = null;
 		FileInputStream fis = null;
 		FileChannel fileChannel = null;
+		long beginPosition = 0;
 		try {
 			Response r = new Response();
 			pstream = new PrintStream(this.socket.getOutputStream(), true);
@@ -61,7 +62,11 @@ public class FileDownload {
 			ByteBuffer bf = ByteBuffer.allocate(Constant.BYTE_BUFFER_COPACITY);
 			byte[] bytes = new byte[Constant.BUFFER_SIZE];
 			int nRead, nGet;
-			while ((nRead = fileChannel.read(bf)) != -1) {
+
+			beginPosition = DownLoadingFile
+					.isExist(this.socket, this.file);
+			LOGGER.info("文件下载起始位置 " + beginPosition);
+			while ((nRead = fileChannel.read(bf, beginPosition)) != -1) {
 				if (nRead == 0) {
 					continue;
 				}
@@ -70,8 +75,17 @@ public class FileDownload {
 					nGet = Math.min(bf.remaining(), Constant.BUFFER_SIZE);
 					bf.get(bytes, 0, nGet);
 					pstream.write(bytes);
+					beginPosition += nGet;
 				}
 				bf.clear();
+			}
+
+			if (beginPosition < this.file.length()) {
+				DownLoadingFile.add(this.socket, this.file, beginPosition);
+				LOGGER.info("添加中断记录，文件下载中断位置 " + beginPosition);
+			} else {
+				DownLoadingFile.remove(this.socket, this.file);
+				LOGGER.info("文件下载完成，记录列表中移除 ");
 			}
 		} catch (IOException e) {
 			LOGGER.error("文件下载出现异常");

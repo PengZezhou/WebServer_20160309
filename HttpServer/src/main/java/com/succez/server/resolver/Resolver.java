@@ -42,6 +42,7 @@ public class Resolver {
 			Request r = new Request();
 			r.bind(socket);
 			String uri = URLDecoder.decode(r.getUrl(), Constant.SERVER_ENCODE);
+			LOGGER.info("url " + uri);
 			if (!r.getType().equals("GET")) {
 				uri = System.getProperty("user.dir")
 						+ FileConfig.getInstance().getNot_support();

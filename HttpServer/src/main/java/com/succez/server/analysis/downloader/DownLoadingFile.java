@@ -21,7 +21,7 @@ public class DownLoadingFile {
 	 *            客户端连接
 	 * @param file
 	 *            待下载文件
-	 * @return 如果在中断记录，则返回已传输长度，否则返回{@code -1}
+	 * @return 如果在中断记录，则返回已传输长度，否则返回{@code 0}
 	 */
 	public static long isExist(Socket socket, File file) {
 		DownLoadingFile df = new DownLoadingFile(socket.getInetAddress()
@@ -32,7 +32,7 @@ public class DownLoadingFile {
 				return tmp.length;
 			}
 		}
-		return -1;
+		return 0;
 	}
 
 	/**

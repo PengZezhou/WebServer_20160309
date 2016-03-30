@@ -44,7 +44,6 @@ public class Analysis {
 	 */
 	private void urlType() {
 		File file = new File(url);
-		LOGGER.info("url " + url);
 		if (file.isDirectory()) {
 			type = 1;
 		} else if (file.isFile() && file.canRead() && !fileDownload(file)

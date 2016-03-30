@@ -22,6 +22,16 @@ public class Response {
 	private String Cache_control = null;
 	// 强制下载
 	private String Content_Disposition = null;
+	// 文件下载范围
+	private String Content_Range = null;
+
+	public String getContent_Range() {
+		return Content_Range;
+	}
+
+	public void setContent_Range(String content_Range) {
+		Content_Range = content_Range;
+	}
 
 	public String getContent_Disposition() {
 		return Content_Disposition;
@@ -102,6 +112,9 @@ public class Response {
 		}
 		if (Content_Disposition != null) {
 			sb.append("Content-Disposition: " + Content_Disposition + "\r\n");
+		}
+		if (Content_Range != null) {
+			sb.append("Content-Range: " + Content_Range + "\r\n");
 		}
 		return sb.toString();
 	}
