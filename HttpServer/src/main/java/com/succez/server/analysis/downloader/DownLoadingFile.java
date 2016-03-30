@@ -23,16 +23,16 @@ public class DownLoadingFile {
 	 *            待下载文件
 	 * @return 如果在中断记录，则返回已传输长度，否则返回{@code 0}
 	 */
-	public static long isExist(Socket socket, File file) {
+	public static boolean isExist(Socket socket, File file, long index) {
 		DownLoadingFile df = new DownLoadingFile(socket.getInetAddress()
-				.getHostAddress(), socket.getPort(), file.getPath(), 0);
+				.getHostAddress(), file.getPath(), 0);
 		for (DownLoadingFile tmp : fileList) {
-			if (tmp.host.equals(df.host) && tmp.port == df.port
-					&& tmp.path.equals(df.path)) {
-				return tmp.length;
+			if (tmp.host.equals(df.host) && tmp.path.equals(df.path)
+					&& tmp.length == index) {
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	}
 
 	/**
@@ -43,12 +43,12 @@ public class DownLoadingFile {
 	 * @param file
 	 *            待下载文件
 	 */
-	public static void remove(Socket socket, File file) {
+	public static void remove(Socket socket, File file, long index) {
 		DownLoadingFile df = new DownLoadingFile(socket.getInetAddress()
-				.getHostAddress(), socket.getPort(), file.getPath(), 0);
+				.getHostAddress(), file.getPath(), index);
 		for (DownLoadingFile tmp : fileList) {
-			if (tmp.host.equals(df.host) && tmp.port == df.port
-					&& tmp.path.equals(df.path)) {
+			if (tmp.host.equals(df.host) && tmp.path.equals(df.path)
+					&& tmp.length == df.length) {
 				fileList.remove(tmp);
 				break;
 			}
@@ -67,7 +67,7 @@ public class DownLoadingFile {
 	 */
 	public static void add(Socket socket, File file, long length) {
 		DownLoadingFile df = new DownLoadingFile(socket.getInetAddress()
-				.getHostAddress(), socket.getPort(), file.getPath(), length);
+				.getHostAddress(), file.getPath(), length);
 		fileList.add(df);
 	}
 
@@ -83,16 +83,14 @@ public class DownLoadingFile {
 	 * @param length
 	 *            文件已下载长度
 	 */
-	private DownLoadingFile(String host, int port, String path, long length) {
+	private DownLoadingFile(String host, String path, long length) {
 		this.host = host;
-		this.port = port;
 		this.path = path;
 		this.length = length;
 
 	}
 
 	private String host;
-	private int port;
 	private String path;
 	private long length;
 }

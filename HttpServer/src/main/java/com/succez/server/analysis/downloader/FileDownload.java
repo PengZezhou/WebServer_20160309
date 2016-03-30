@@ -91,7 +91,12 @@ public class FileDownload {
 		long beginPosition;
 		int nRead;
 		int nGet;
-		beginPosition = DownLoadingFile.isExist(this.socket, this.file);
+		beginPosition = getBeginPosition();
+		/*
+		 * if (!DownLoadingFile.isExist(this.socket, this.file, beginPosition))
+		 * { DownLoadingFile.add(this.socket, this.file, beginPosition);
+		 * LOGGER.info("添加中断记录，文件下载中断位置 " + beginPosition); }
+		 */
 		LOGGER.info("文件下载起始位置 " + beginPosition);
 		while ((nRead = fileChannel.read(bf, beginPosition)) != -1) {
 			if (nRead == 0) {
@@ -107,13 +112,11 @@ public class FileDownload {
 			bf.clear();
 		}
 
-		if (beginPosition < this.file.length()) {
-			DownLoadingFile.add(this.socket, this.file, beginPosition);
-			LOGGER.info("添加中断记录，文件下载中断位置 " + beginPosition);
-		} else {
-			DownLoadingFile.remove(this.socket, this.file);
-			LOGGER.info("文件下载完成，记录列表中移除 ");
-		}
+		/*
+		 * DownLoadingFile.remove(this.socket, this.file,
+		 * this.getBeginPosition()); LOGGER.info("文件下载完成，记录列表中移除 ");
+		 */
+
 	}
 
 	/**
@@ -140,6 +143,20 @@ public class FileDownload {
 			sb.append('/');
 			sb.append(this.file.length());
 			return sb.toString();
+		}
+	}
+
+	/**
+	 * 获取请求下载起始地址
+	 * 
+	 * @return
+	 */
+	private long getBeginPosition() {
+		if (this.range == null) {
+			return 0;
+		} else {
+			String[] strs2 = this.range.split("=")[1].split("-");
+			return Long.parseLong(strs2[0]);
 		}
 	}
 }
