@@ -67,7 +67,7 @@ public class FileDownload {
 				r.setHttpVersion("HTTP/1.1 206 Partial Content");
 			}
 			LOGGER.info("response报文" + r.toString());
-			pstream.println(r.toString());
+			r.toStream(pstream);
 
 			this.download(pstream, fileChannel, bf, bytes);
 		} catch (IOException e) {

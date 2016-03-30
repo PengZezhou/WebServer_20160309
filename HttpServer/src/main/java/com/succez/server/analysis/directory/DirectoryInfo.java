@@ -39,7 +39,7 @@ public class DirectoryInfo {
 	private void directoryToHtml(File file) {
 		Response r = new Response();
 		r.setContent_Type("text/html;charset=utf-8");
-		this.pstream.println(r.toString());
+		r.toStream(this.pstream);
 		this.pstream.println("<head><title>disk-D:\\</title><link rel='shortcut icon' href='/favicon.ico'/></head>");
 		this.pstream.println("<a href='/'>.</a><br/>");
 		this.pstream.println("<a href='javascript:history.go(-1)'>..</a><br/>");

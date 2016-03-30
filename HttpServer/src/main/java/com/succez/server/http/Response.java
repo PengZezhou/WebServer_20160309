@@ -1,5 +1,7 @@
 package com.succez.server.http;
 
+import java.io.PrintStream;
+
 /**
  * http响应类
  * 
@@ -9,113 +11,112 @@ package com.succez.server.http;
 public class Response {
 
 	// http协议头
-	private String HttpVersion = "HTTP/1.1 200 OK";
+	private String httpVersion = "HTTP/1.1 200 OK";
 	// 日期
-	private String Date = null;
+	private String date = null;
 	// 保活时间
-	private String Connection = "Keep-Alive";
+	private String connection = "Keep-Alive";
 	// 内容长度
-	private long Content_Length = 0;
+	private long content_Length = 0;
 	// 内容类型
-	private String Content_Type = "text/plain;charset=utf-8";
+	private String content_Type = "text/plain;charset=utf-8";
 	// 缓存控制
-	private String Cache_control = null;
+	private String cache_control = null;
 	// 强制下载
-	private String Content_Disposition = null;
+	private String content_Disposition = null;
 	// 文件下载范围
-	private String Content_Range = null;
+	private String content_Range = null;
 
 	public String getContent_Range() {
-		return Content_Range;
+		return content_Range;
 	}
 
 	public void setContent_Range(String content_Range) {
-		Content_Range = content_Range;
+		this.content_Range = content_Range;
 	}
 
 	public String getContent_Disposition() {
-		return Content_Disposition;
+		return content_Disposition;
 	}
 
 	public void setContent_Disposition(String content_Disposition) {
-		Content_Disposition = content_Disposition;
+		this.content_Disposition = content_Disposition;
 	}
 
 	public String getHttpVersion() {
-		return HttpVersion;
+		return httpVersion;
 	}
 
 	public void setHttpVersion(String httpVersion) {
-		this.HttpVersion = httpVersion;
+		this.httpVersion = httpVersion;
 	}
 
 	public String getDate() {
-		return Date;
+		return this.date;
 	}
 
 	public void setDate(String date) {
-		Date = date;
+		this.date = date;
 	}
 
 	public String getConnection() {
-		return Connection;
+		return this.connection;
 	}
 
 	public void setConnection(String connection) {
-		Connection = connection;
+		this.connection = connection;
 	}
 
 	public long getContent_Length() {
-		return Content_Length;
+		return this.content_Length;
 	}
 
 	public void setContent_Length(long content_Length) {
-		Content_Length = content_Length;
+		this.content_Length = content_Length;
 	}
 
 	public String getContent_Type() {
-		return Content_Type;
+		return this.content_Type;
 	}
 
 	public void setContent_Type(String content_Type) {
-		Content_Type = content_Type;
+		this.content_Type = content_Type;
 	}
 
 	public String getCache_control() {
-		return Cache_control;
+		return this.cache_control;
 	}
 
 	public void setCache_control(String cache_control) {
-		Cache_control = cache_control;
+		this.cache_control = cache_control;
 	}
 
 	/**
 	 * 将响应类按http可理解格式输出
 	 */
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(HttpVersion + "\r\n");
-		if (Date != null) {
-			sb.append("Date: " + Date + "\r\n");
+	public void toStream(PrintStream ps) {
+		ps.println(httpVersion);
+		if (date != null) {
+			ps.println("Date: " + date);
 		}
-		if (Connection != null) {
-			sb.append("Connection: " + Connection + "\r\n");
+		if (connection != null) {
+			ps.println("Connection: " + connection);
 		}
-		if (Content_Length != 0) {
-			sb.append("Content-Length: " + Content_Length + "\r\n");
+		if (content_Length != 0) {
+			ps.println("Content-Length: " + content_Length);
 		}
-		if (Content_Type != null) {
-			sb.append("Content-Type: " + Content_Type + "\r\n");
+		if (content_Type != null) {
+			ps.println("Content-Type: " + content_Type);
 		}
-		if (Cache_control != null) {
-			sb.append("Cache-control: " + Cache_control + "\r\n");
+		if (cache_control != null) {
+			ps.println("Cache-control: " + cache_control);
 		}
-		if (Content_Disposition != null) {
-			sb.append("Content-Disposition: " + Content_Disposition + "\r\n");
+		if (content_Disposition != null) {
+			ps.println("Content-Disposition: " + content_Disposition);
 		}
-		if (Content_Range != null) {
-			sb.append("Content-Range: " + Content_Range + "\r\n");
+		if (content_Range != null) {
+			ps.println("Content-Range: " + content_Range);
 		}
-		return sb.toString();
+		ps.println();
 	}
 }
