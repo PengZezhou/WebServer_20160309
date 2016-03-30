@@ -62,8 +62,8 @@ public class FileDownload {
 			r.setContent_Type("application/octet-stream");
 			r.setContent_Disposition(String.format("attachment"));
 			r.setContent_Range(this.responseRange());
-			r.setContent_Length(this.file.length()-this.getBeginPosition());
-			if(this.getBeginPosition()!=0){
+			r.setContent_Length(this.file.length() - this.getBeginPosition());
+			if (this.getBeginPosition() != 0) {
 				r.setHttpVersion("HTTP/1.1 206 Partial Content");
 			}
 			LOGGER.info("response报文" + r.toString());
@@ -95,11 +95,7 @@ public class FileDownload {
 		int nRead;
 		int nGet;
 		beginPosition = getBeginPosition();
-		/*
-		 * if (!DownLoadingFile.isExist(this.socket, this.file, beginPosition))
-		 * { DownLoadingFile.add(this.socket, this.file, beginPosition);
-		 * LOGGER.info("添加中断记录，文件下载中断位置 " + beginPosition); }
-		 */
+
 		LOGGER.info("文件下载起始位置 " + beginPosition);
 		while ((nRead = fileChannel.read(bf, beginPosition)) != -1) {
 			if (nRead == 0) {
@@ -114,12 +110,6 @@ public class FileDownload {
 			}
 			bf.clear();
 		}
-
-		/*
-		 * DownLoadingFile.remove(this.socket, this.file,
-		 * this.getBeginPosition()); LOGGER.info("文件下载完成，记录列表中移除 ");
-		 */
-
 	}
 
 	/**
