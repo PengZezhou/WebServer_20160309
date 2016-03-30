@@ -47,7 +47,8 @@ public class Resolver {
 				uri = System.getProperty("user.dir")
 						+ FileConfig.getInstance().getNot_support();
 			}
-			new Analysis(this.socket, uri);
+			String range = r.getHead().get("Range");
+			new Analysis(this.socket, uri, range);
 		} catch (IOException e) {
 			LOGGER.info("url解析异常，IO异常");
 		} finally {

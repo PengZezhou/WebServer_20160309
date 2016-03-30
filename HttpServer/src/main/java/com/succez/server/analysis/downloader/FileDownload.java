@@ -30,14 +30,16 @@ public class FileDownload {
 	 * 
 	 * @param pstream
 	 */
-	public FileDownload(Socket socket, File file) {
+	public FileDownload(Socket socket, File file, String range) {
 		this.socket = socket;
 		this.file = file;
+		this.range = range;
 		this.downloadFile();
 	}
 
 	private Socket socket;
 	private File file = null;
+	private String range;
 
 	/**
 	 * 下载文件
@@ -63,8 +65,7 @@ public class FileDownload {
 			byte[] bytes = new byte[Constant.BUFFER_SIZE];
 			int nRead, nGet;
 
-			beginPosition = DownLoadingFile
-					.isExist(this.socket, this.file);
+			beginPosition = DownLoadingFile.isExist(this.socket, this.file);
 			LOGGER.info("文件下载起始位置 " + beginPosition);
 			while ((nRead = fileChannel.read(bf, beginPosition)) != -1) {
 				if (nRead == 0) {

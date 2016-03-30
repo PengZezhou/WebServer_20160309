@@ -21,16 +21,18 @@ public class Analysis {
 	 * 
 	 * @param socket
 	 * @param url
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	public Analysis(Socket socket, String url) throws IOException {
+	public Analysis(Socket socket, String url, String range) throws IOException {
 		this.url = url;
+		this.range = range;
 		this.socket = socket;
 		this.pstream = new PrintStream(this.socket.getOutputStream(), true);
 		this.urlType();
 		this.processUrl();
 	}
 
+	private String range;
 	private Socket socket;
 	private PrintStream pstream;
 	private String url;
@@ -79,7 +81,7 @@ public class Analysis {
 					+ FileConfig.getInstance().getError_404()));
 			break;
 		case 4:
-			new FileDownload(this.socket, file);
+			new FileDownload(this.socket, file, this.range);
 			break;
 		default:
 			new ReadFile(pstream, new File(System.getProperty("user.dir")
