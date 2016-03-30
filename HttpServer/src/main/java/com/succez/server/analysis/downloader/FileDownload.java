@@ -62,7 +62,10 @@ public class FileDownload {
 			r.setContent_Type("application/octet-stream");
 			r.setContent_Disposition(String.format("attachment"));
 			r.setContent_Range(this.responseRange());
-			r.setContent_Length(this.file.length());
+			r.setContent_Length(this.file.length()-this.getBeginPosition());
+			if(this.getBeginPosition()!=0){
+				r.setHttpVersion("HTTP/1.1 206 Partial Content");
+			}
 			LOGGER.info("response报文" + r.toString());
 			pstream.println(r.toString());
 
