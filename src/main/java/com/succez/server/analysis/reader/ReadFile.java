@@ -57,7 +57,7 @@ public class ReadFile {
 		if (fileHtmlRead(file)) {
 			r.setContent_Type(Constant.HTML_FORMAT + encode);
 		}
-		r.toStream(this.pstream);;
+		r.toStream(this.pstream);
 
 		LOGGER.info("预览文件转换开始");
 		try {

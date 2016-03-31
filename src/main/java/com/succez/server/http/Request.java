@@ -68,7 +68,7 @@ public class Request {
 				}
 			}
 			LOGGER.info("协议解析完成");
-			LOGGER.info("head info "+ head.toString());
+			LOGGER.info("head info " + head.toString());
 		} catch (IOException e) {
 			LOGGER.info("协议解析错误，IO异常");
 		} catch (IndexOutOfBoundsException e) {

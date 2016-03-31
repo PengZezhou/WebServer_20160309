@@ -148,7 +148,8 @@ public class FileDownload {
 		if (this.range == null) {
 			return 0;
 		} else {
-			String[] strs2 = this.range.split(Constant.EQUAL)[1].split(Constant.BREAK);
+			String[] strs2 = this.range.split(Constant.EQUAL)[1]
+					.split(Constant.BREAK);
 			return Long.parseLong(strs2[0]);
 		}
 	}

@@ -81,10 +81,9 @@ public class Method {
 			}
 			if (byte3[0] == -17 && byte3[1] == -69 && byte3[2] == -65) {
 				code = "UTF-8";
-			} else if(byte3[0] == 35 && byte3[1] == 32 && byte3[2] == 112){
+			} else if (byte3[0] == 35 && byte3[1] == 32 && byte3[2] == 112) {
 				code = "UTF-8";
-			}
-			else {
+			} else {
 				code = "GBK";
 			}
 		} catch (FileNotFoundException e) {

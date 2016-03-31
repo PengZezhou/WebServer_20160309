@@ -48,7 +48,7 @@ public class Constant {
 	 */
 	public static final int BYTE_BUFFER_COPACITY = 1024 * 1024;
 	public static final int BUFFER_SIZE = 128 * 1024;
-	
+
 	/**
 	 * 配置文件常量
 	 */
@@ -58,13 +58,14 @@ public class Constant {
 	public static final String CORE_SIZE = "corePoolSize";
 	public static final String MAX_SIZE = "maximumPoolSize";
 	public static final String KEEP_ALIVE_TIME = "keepAliveTime";
-	
+
 	public static final String ERROR_404 = "error-404";
 	public static final String ERROR_500 = "error-500";
 	public static final String NOT_SUPPORT = "not-support";
 	public static final String EXTERN_DOWNLOAD = "download-extern-name";
 	public static final String EXTERN_PLAIN = "palin-extern-name";
 	public static final String EXTERN_HTML = "html-extern-name";
+
 	/**
 	 * 字符常量
 	 */
@@ -75,7 +76,7 @@ public class Constant {
 	public static final String HTML_CONTENT_TYPE1 = "application/octet-stream";
 	public static final String HTML_CONTENT_DIS = "attachment";
 	public static final String HTML_ALIVE = "Keep-Alive";
-	
+
 	/**
 	 * 符号常量
 	 */
