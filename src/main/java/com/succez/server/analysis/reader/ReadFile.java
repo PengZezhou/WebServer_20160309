@@ -34,7 +34,6 @@ public class ReadFile {
 		this.pstream = pstream;
 		this.file = file;
 		convertFromFile();
-		Method.closeStream(this.pstream);
 	}
 
 	private PrintStream pstream = null;
@@ -64,6 +63,8 @@ public class ReadFile {
 			this.pstream.write(Method.file2buf(file));
 		} catch (IOException e) {
 			LOGGER.info("文件写入流出错，IO异常");
+		} finally {
+			Method.closeStream(this.pstream);
 		}
 	}
 
