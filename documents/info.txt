@@ -1,0 +1,2 @@
+工程使用eclipse，jdk1.8，集成slf4j,m2e，HttpClient，JUnit；
+主要技术有：ServerSocket，Socket，Http协议，线程池，文件NIO；
