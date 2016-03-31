@@ -1,2 +1,2 @@
-工程使用eclipse，jdk1.8，集成slf4j,m2e，HttpClient，JUnit；
-主要技术有：ServerSocket，Socket，Http协议，线程池，文件NIO；
+锟斤拷锟斤拷使锟斤拷eclipse锟斤拷jdk1.8锟斤拷锟斤拷锟斤拷slf4j,m2e锟斤拷HttpClient锟斤拷JUnit锟斤拷
+锟斤拷要锟斤拷锟斤拷锟叫ｏ拷ServerSocket锟斤拷Socket锟斤拷Http协锟介，锟竭程池ｏ拷锟侥硷拷NIO锟斤拷
