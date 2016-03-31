@@ -30,66 +30,41 @@ public class Analysis {
 		this.socket = socket;
 		this.pstream = new PrintStream(this.socket.getOutputStream(), true);
 		this.urlType();
-		this.processUrl();
 	}
 
 	private String range;
 	private Socket socket;
 	private PrintStream pstream;
 	private String url;
-	private int type;
 
 	/**
-	 * 获取请求类型
-	 * 
+	 * 获取请求类型并分发处理
+	 * <p>目录：包装目录信息为html格式
+	 * <p>文件：小文件可读，用文本信息处理展示
+	 * <p>文件：文件不存在，返回404错误信息
+	 * <p>文件：大文件可读，用NIO读取，支持断点续传
+	 * <p>File ：未知错误，返回500服务器错误，未支持此功能
 	 * @param url
 	 * @return
 	 */
 	private void urlType() {
 		File file = new File(url);
 		if (file.isDirectory()) {
-			type = 1;
+			new DirectoryInfo(pstream, file);
 		} else if (file.isFile() && file.canRead() && !fileDownload(file)
 				&& file.length() <= (Integer.MAX_VALUE)) {
-			type = 2;
-		} else if (!file.exists()) {
-			type = 3;
-		} else if (file.isFile() && file.canRead()
-				&& (file.length() > (Integer.MAX_VALUE) || fileDownload(file))) {
-			type = 4;
-		} else {
-			type = 5;
-		}
-	}
-
-	/**
-	 * 处理url请求
-	 * 
-	 * @param url
-	 */
-	private void processUrl() {
-		LOGGER.info("请求类型  " + type);
-		File file = new File(url);
-		switch (type) {
-		case 1:
-			new DirectoryInfo(pstream, file);
-			break;
-		case 2:
 			new ReadFile(pstream, file);
-			break;
-		case 3:
+		} else if (!file.exists()) {
 			new ReadFile(pstream, new File(
 					System.getProperty(Constant.USER_DIR)
 							+ FileConfig.getInstance().getError_404()));
-			break;
-		case 4:
+		} else if (file.isFile() && file.canRead()
+				&& (file.length() > (Integer.MAX_VALUE) || fileDownload(file))) {
 			new FileDownload(this.socket, file, this.range);
-			break;
-		default:
+		} else {
 			new ReadFile(pstream, new File(
 					System.getProperty(Constant.USER_DIR)
 							+ FileConfig.getInstance().getError_500()));
-			break;
 		}
 	}
 
