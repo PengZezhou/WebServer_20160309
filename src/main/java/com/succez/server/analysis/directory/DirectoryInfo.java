@@ -28,7 +28,6 @@ public class DirectoryInfo {
 	public DirectoryInfo(PrintStream pstream, File file) {
 		this.pstream = pstream;
 		directoryToHtml(file);
-		Method.closeStream(this.pstream);
 	}
 
 	/**
@@ -63,5 +62,6 @@ public class DirectoryInfo {
 			}
 			this.pstream.println(s);
 		}
+		Method.closeStream(this.pstream);
 	}
 }
