@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.succez.server.analysis.directory.DirectoryInfo;
 import com.succez.server.analysis.downloader.FileDownload;
 import com.succez.server.analysis.reader.ReadFile;
+import com.succez.server.util.Constant;
 
 public class Analysis {
 	private static final Logger LOGGER = LoggerFactory
@@ -77,15 +78,17 @@ public class Analysis {
 			new ReadFile(pstream, file);
 			break;
 		case 3:
-			new ReadFile(pstream, new File(System.getProperty("user.dir")
-					+ FileConfig.getInstance().getError_404()));
+			new ReadFile(pstream, new File(
+					System.getProperty(Constant.USER_DIR)
+							+ FileConfig.getInstance().getError_404()));
 			break;
 		case 4:
 			new FileDownload(this.socket, file, this.range);
 			break;
 		default:
-			new ReadFile(pstream, new File(System.getProperty("user.dir")
-					+ FileConfig.getInstance().getError_500()));
+			new ReadFile(pstream, new File(
+					System.getProperty(Constant.USER_DIR)
+							+ FileConfig.getInstance().getError_500()));
 			break;
 		}
 	}
@@ -99,13 +102,13 @@ public class Analysis {
 	 */
 	private Boolean fileDownload(File file) {
 		String name = file.getName();
-		int dot = name.lastIndexOf('.');
+		int dot = name.lastIndexOf(Constant.DOT);
 		if (dot == -1) {
 			return false;
 		}
 		String ext = name.substring(dot, name.length()).toLowerCase();
 		String[] arr = FileConfig.getInstance().getDownload_extern()
-				.split("\\|");
+				.split(Constant.VERTICAL);
 		for (String str : arr) {
 			if (ext.equals(str)) {
 				LOGGER.info("文件将被下载处理");

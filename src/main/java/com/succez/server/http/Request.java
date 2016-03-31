@@ -10,6 +10,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.succez.server.util.Constant;
+
 public class Request {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Request.class);
 
@@ -49,7 +51,7 @@ public class Request {
 			BufferedReader b = new BufferedReader(new InputStreamReader(
 					socket.getInputStream()));
 			String str = b.readLine();
-			String[] strs = str.split(" ");
+			String[] strs = str.split(Constant.SPACE);
 			this.type = strs[0];
 			this.url = strs[1];
 			this.version = strs[2];
@@ -57,8 +59,8 @@ public class Request {
 				if (str.isEmpty()) {
 					break;
 				} else {
-					if (str.indexOf(':') != -1) {
-						strs = str.split(":");
+					if (str.indexOf(Constant.COLON) != -1) {
+						strs = str.split(Constant.COLON);
 						this.head.put(strs[0], strs[1]);
 					} else {
 						this.body = str;

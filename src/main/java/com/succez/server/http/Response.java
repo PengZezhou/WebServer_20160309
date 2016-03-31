@@ -2,6 +2,8 @@ package com.succez.server.http;
 
 import java.io.PrintStream;
 
+import com.succez.server.util.Constant;
+
 /**
  * http响应类
  * 
@@ -11,15 +13,16 @@ import java.io.PrintStream;
 public class Response {
 
 	// http协议头
-	private String httpVersion = "HTTP/1.1 200 OK";
+	private String httpVersion = Constant.HTML_200;
 	// 日期
 	private String date = null;
 	// 保活时间
-	private String connection = "Keep-Alive";
+	private String connection = Constant.HTML_ALIVE;
 	// 内容长度
 	private long content_Length = 0;
 	// 内容类型
-	private String content_Type = "text/plain;charset=utf-8";
+	private String content_Type = Constant.PLAIN_FORMAT
+			+ Constant.SERVER_ENCODE;
 	// 缓存控制
 	private String cache_control = null;
 	// 强制下载

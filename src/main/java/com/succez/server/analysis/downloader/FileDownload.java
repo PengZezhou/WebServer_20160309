@@ -59,12 +59,12 @@ public class FileDownload {
 			byte[] bytes = new byte[Constant.BUFFER_SIZE];
 			Response r = new Response();
 
-			r.setContent_Type("application/octet-stream");
-			r.setContent_Disposition(String.format("attachment"));
+			r.setContent_Type(Constant.HTML_CONTENT_TYPE1);
+			r.setContent_Disposition(String.format(Constant.HTML_CONTENT_DIS));
 			r.setContent_Range(this.responseRange());
 			r.setContent_Length(this.file.length() - this.getBeginPosition());
 			if (this.getBeginPosition() != 0) {
-				r.setHttpVersion("HTTP/1.1 206 Partial Content");
+				r.setHttpVersion(Constant.HTML_206);
 			}
 			LOGGER.info("response报文" + r.toString());
 			r.toStream(pstream);
@@ -122,18 +122,18 @@ public class FileDownload {
 			return null;
 		} else {
 			StringBuilder sb = new StringBuilder();
-			String[] strs = this.range.split("=");
+			String[] strs = this.range.split(Constant.EQUAL);
 			sb.append(strs[0]);
 			sb.append(' ');
-			String[] strs2 = strs[1].split("-");
+			String[] strs2 = strs[1].split(Constant.BREAK);
 			if (strs2.length > 1) {
 				sb.append(strs[1]);
 			} else {
 				sb.append(strs2[0]);
-				sb.append('-');
+				sb.append(Constant.BREAK);
 				sb.append(this.file.length() - 1);
 			}
-			sb.append('/');
+			sb.append(Constant.SLASH);
 			sb.append(this.file.length());
 			return sb.toString();
 		}
@@ -148,7 +148,7 @@ public class FileDownload {
 		if (this.range == null) {
 			return 0;
 		} else {
-			String[] strs2 = this.range.split("=")[1].split("-");
+			String[] strs2 = this.range.split(Constant.EQUAL)[1].split(Constant.BREAK);
 			return Long.parseLong(strs2[0]);
 		}
 	}

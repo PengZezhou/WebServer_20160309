@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.succez.server.analysis.FileConfig;
 import com.succez.server.http.Response;
+import com.succez.server.util.Constant;
 import com.succez.server.util.Method;
 
 /**
@@ -50,11 +51,11 @@ public class ReadFile {
 		// 响应头设置
 		Response r = new Response();
 		String encode = Method.getFileEncode(file);
-		if (encode.toLowerCase().equals("gbk")) {
-			r.setContent_Type("text/plain;charset=" + encode);
+		if (encode.toLowerCase().equals(Constant.GBK_ENCODE)) {
+			r.setContent_Type(Constant.PLAIN_FORMAT + encode);
 		}
 		if (fileHtmlRead(file)) {
-			r.setContent_Type("text/html;charset=" + encode);
+			r.setContent_Type(Constant.HTML_FORMAT + encode);
 		}
 		r.toStream(this.pstream);;
 

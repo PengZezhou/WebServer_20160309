@@ -15,12 +15,12 @@ public class FileConfig {
 
 	private FileConfig() {
 		ConfigInfo config = new ConfigInfo(Constant.FILE_CONFIG_INFO);
-		this.error_404 = config.getString("error-404");
-		this.error_500 = config.getString("error-500");
-		this.not_support = config.getString("not-support");
-		this.download_extern = config.getString("download-extern-name");
-		this.plain_extern = config.getString("palin-extern-name");
-		this.html_extern = config.getString("html-extern-name");
+		this.error_404 = config.getString(Constant.ERROR_404);
+		this.error_500 = config.getString(Constant.ERROR_500);
+		this.not_support = config.getString(Constant.NOT_SUPPORT);
+		this.download_extern = config.getString(Constant.EXTERN_DOWNLOAD);
+		this.plain_extern = config.getString(Constant.EXTERN_PLAIN);
+		this.html_extern = config.getString(Constant.EXTERN_HTML);
 	}
 
 	private String not_support;

@@ -100,9 +100,9 @@ public class Server {
 	 * 读取配置文件
 	 */
 	private void initProperties() {
-		this.ip = config.getString("ip");
-		this.max_connection = config.getInt("max-connection");
-		this.port = config.getInt("port");
+		this.ip = config.getString(Constant.IP);
+		this.max_connection = config.getInt(Constant.MAX_CON);
+		this.port = config.getInt(Constant.PORT);
 		this.pool = new Pools().getExecutor();
 		this.createServerSocket();
 		stop = false;
@@ -156,9 +156,9 @@ public class Server {
 		 * 读取配置文件
 		 */
 		private void initProperties() {
-			this.corePoolSize = config.getInt("corePoolSize");
-			this.maxNumPoolSize = config.getInt("maximumPoolSize");
-			this.keepAliveTime = config.getInt("keepAliveTime");
+			this.corePoolSize = config.getInt(Constant.CORE_SIZE);
+			this.maxNumPoolSize = config.getInt(Constant.MAX_SIZE);
+			this.keepAliveTime = config.getInt(Constant.KEEP_ALIVE_TIME);
 			this.block_queue = new ArrayBlockingQueue<Runnable>(5);
 			this.handler = new ThreadPoolExecutor.DiscardOldestPolicy();
 		}
