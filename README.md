@@ -19,3 +19,4 @@
 4，可以考虑使用socket NIO代替socket+线程池处理。
 5，可以自定义异常类，监视程序。
 6，通过请求文件类型，分析返回对应http的content-type，可将这部分抽象为专用类或模块。
+7，根据request即可分析得到应答头信息，request类可以进一步抽象，避免下层类处理response。
