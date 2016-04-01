@@ -100,25 +100,32 @@ public class Response {
 	public void toStream(PrintStream ps) {
 		ps.println(httpVersion);
 		if (date != null) {
-			ps.println("Date: " + date);
+			ps.println("Date: ");
+			ps.print(date);
 		}
 		if (connection != null) {
-			ps.println("Connection: " + connection);
+			ps.println("Connection: ");
+			ps.print(connection);
 		}
 		if (content_Length != 0) {
-			ps.println("Content-Length: " + content_Length);
+			ps.println("Content-Length: ");
+			ps.print(content_Length);
 		}
 		if (content_Type != null) {
-			ps.println("Content-Type: " + content_Type);
+			ps.println("Content-Type: ");
+			ps.print(content_Type);
 		}
 		if (cache_control != null) {
-			ps.println("Cache-control: " + cache_control);
+			ps.println("Cache-control: ");
+			ps.print(cache_control);
 		}
 		if (content_Disposition != null) {
-			ps.println("Content-Disposition: " + content_Disposition);
+			ps.println("Content-Disposition: ");
+			ps.print(content_Disposition);
 		}
 		if (content_Range != null) {
-			ps.println("Content-Range: " + content_Range);
+			ps.println("Content-Range: ");
+			ps.print(content_Range);
 		}
 		ps.println();
 	}
