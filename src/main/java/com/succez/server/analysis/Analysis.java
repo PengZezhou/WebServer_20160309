@@ -39,11 +39,17 @@ public class Analysis {
 
 	/**
 	 * 获取请求类型并分发处理
-	 * <p>目录：包装目录信息为html格式
-	 * <p>文件：小文件可读，用文本信息处理展示
-	 * <p>文件：文件不存在，返回404错误信息
-	 * <p>文件：大文件可读，用NIO读取，支持断点续传
-	 * <p>File ：未知错误，返回500服务器错误，未支持此功能
+	 * <p>
+	 * 目录：包装目录信息为html格式
+	 * <p>
+	 * 文件：小文件可读，用文本信息处理展示
+	 * <p>
+	 * 文件：文件不存在，返回404错误信息
+	 * <p>
+	 * 文件：大文件可读，用NIO读取，支持断点续传
+	 * <p>
+	 * File ：未知错误，返回500服务器错误，未支持此功能
+	 * 
 	 * @param url
 	 * @return
 	 */
@@ -52,14 +58,14 @@ public class Analysis {
 		if (file.isDirectory()) {
 			new DirectoryInfo(pstream, file);
 		} else if (file.isFile() && file.canRead() && !fileDownload(file)
-				&& file.length() <= (Integer.MAX_VALUE)) {
+				&& file.length() <= Constant.FILE_SIZE) {
 			new ReadFile(pstream, file);
 		} else if (!file.exists()) {
 			new ReadFile(pstream, new File(
 					System.getProperty(Constant.USER_DIR)
 							+ FileConfig.getInstance().getError_404()));
 		} else if (file.isFile() && file.canRead()
-				&& (file.length() > (Integer.MAX_VALUE) || fileDownload(file))) {
+				&& (file.length() > Constant.FILE_SIZE || fileDownload(file))) {
 			new FileDownload(this.socket, file, this.range);
 		} else {
 			new ReadFile(pstream, new File(

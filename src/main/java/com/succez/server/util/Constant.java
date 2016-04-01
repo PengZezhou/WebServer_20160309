@@ -12,13 +12,11 @@ public class Constant {
 	 */
 	public static final String USER_DIR = "user.dir";
 	public static final String SERVER_CONFIG_INFO = System
-			.getProperty("user.dir")
+			.getProperty(USER_DIR)
 			+ "\\src\\main\\resources\\server.properties";
-	public static final String LOG4J_CONFIG_INFO = System
-			.getProperty("user.dir")
+	public static final String LOG4J_CONFIG_INFO = System.getProperty(USER_DIR)
 			+ "\\src\\main\\resources\\log4j.properties";
-	public static final String FILE_CONFIG_INFO = System
-			.getProperty("user.dir")
+	public static final String FILE_CONFIG_INFO = System.getProperty(USER_DIR)
 			+ "\\src\\main\\resources\\file.properties";
 
 	/**
@@ -39,9 +37,9 @@ public class Constant {
 	public static final int SERVER_CHACHE = 1024 * 2;
 
 	/**
-	 * 异常响应文件路径，分析处理模块常量
+	 * 同步传输文件最大容量
 	 */
-	public static final long FILE_SIZE = 1024 * 1;
+	public static final long FILE_SIZE = 1024 * 1014;
 
 	/**
 	 * 文件下载模块常量
@@ -55,6 +53,7 @@ public class Constant {
 	public static final String IP = "ip";
 	public static final String PORT = "port";
 	public static final String MAX_CON = "max-connection";
+
 	public static final String CORE_SIZE = "corePoolSize";
 	public static final String MAX_SIZE = "maximumPoolSize";
 	public static final String KEEP_ALIVE_TIME = "keepAliveTime";
