@@ -51,10 +51,12 @@ public class ReadFile {
 		Response r = new Response();
 		String encode = Method.getFileEncode(file);
 		if (encode.toLowerCase().equals(Constant.GBK_ENCODE)) {
-			r.setContent_Type(Constant.PLAIN_FORMAT + encode);
+			r.setContent_Type(new StringBuilder(Constant.PLAIN_FORMAT).append(
+					encode).toString());
 		}
 		if (fileHtmlRead(file)) {
-			r.setContent_Type(Constant.HTML_FORMAT + encode);
+			r.setContent_Type(new StringBuilder(Constant.HTML_FORMAT).append(
+					encode).toString());
 		}
 		r.toStream(this.pstream);
 
