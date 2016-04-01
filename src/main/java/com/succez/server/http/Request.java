@@ -21,22 +21,47 @@ public class Request {
 	private String url;
 	private String body;
 
+	/**
+	 * 获取请求类型
+	 * 
+	 * @return
+	 */
 	public String getType() {
 		return type;
 	}
 
+	/**
+	 * 获取http协议版本
+	 * 
+	 * @return
+	 */
 	public String getVersion() {
 		return version;
 	}
 
+	/**
+	 * 获取协议头
+	 * 
+	 * @return
+	 */
 	public Map<String, String> getHead() {
 		return head;
 	}
 
+	/**
+	 * 获取请求地址
+	 * 
+	 * @return
+	 */
 	public String getUrl() {
 		return url;
 	}
 
+	/**
+	 * 获取请求实体信息
+	 * 
+	 * @return
+	 */
 	public String getBody() {
 		return body;
 	}

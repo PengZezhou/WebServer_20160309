@@ -75,7 +75,12 @@ public class Constant {
 	public static final String HTML_CONTENT_TYPE1 = "application/octet-stream";
 	public static final String HTML_CONTENT_DIS = "attachment";
 	public static final String HTML_ALIVE = "Keep-Alive";
-
+	
+	/**
+	 * http协议常量
+	 */
+	public static final String HTTP_GET = "GET";
+	public static final String HTTP_RANGE = "Range";
 	/**
 	 * 符号常量
 	 */

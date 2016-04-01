@@ -43,11 +43,11 @@ public class Resolver {
 			r.bind(socket);
 			String uri = URLDecoder.decode(r.getUrl(), Constant.SERVER_ENCODE);
 			LOGGER.info("url " + uri);
-			if (!r.getType().equals("GET")) {
-				uri = System.getProperty("user.dir")
+			if (!r.getType().equals(Constant.HTTP_GET)) {
+				uri = System.getProperty(Constant.USER_DIR)
 						+ FileConfig.getInstance().getNot_support();
 			}
-			String range = r.getHead().get("Range");
+			String range = r.getHead().get(Constant.HTTP_RANGE);
 			new Analysis(this.socket, uri, range);
 		} catch (IOException e) {
 			LOGGER.info("url解析异常，IO异常");
