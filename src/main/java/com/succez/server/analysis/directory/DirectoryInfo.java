@@ -47,20 +47,24 @@ public class DirectoryInfo {
 		this.pstream.println("<a href='javascript:history.go(-1)'>..</a><br/>");
 		File[] arr = file.listFiles();
 		for (File f : arr) {
-			String s = null;
 			char c = f.getName().charAt(0);
 			if (c == '.' || c == '~' || c == '$') {
 				continue;
 			} else if (f.isHidden()) {
 				continue;
 			} else if (f.isFile()) {
-				s = String.format("<a href='%s' target='_blank'>%s</a><br/>", f
-						.getPath().replace('\\', '/'), f.getName());
+				this.pstream.println("<a href='");
+				this.pstream.println(f.getPath().replace('\\', '/'));
+				this.pstream.println("' target='_blank'>");
+				this.pstream.println(f.getName());
+				this.pstream.println("</a><br/>");
 			} else {
-				s = String.format("<a href='%s'>%s</a><br/>", f.getPath()
-						.replace('\\', '/'), f.getName());
+				this.pstream.println("<a href='");
+				this.pstream.println(f.getPath().replace('\\', '/'));
+				this.pstream.println("'>");
+				this.pstream.println(f.getName());
+				this.pstream.println("</a><br/>");
 			}
-			this.pstream.println(s);
 		}
 		Method.closeStream(this.pstream);
 	}
