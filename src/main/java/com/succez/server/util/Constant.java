@@ -8,7 +8,7 @@ package com.succez.server.util;
  */
 public class Constant {
 	/**
-	 * 配置文件路径，启动器模块常量
+	 * 配置文件路径
 	 */
 	public static final String USER_DIR = "user.dir";
 	public static final String SERVER_CONFIG_INFO = System
